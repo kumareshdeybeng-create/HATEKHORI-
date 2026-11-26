@@ -31,24 +31,36 @@
     .install-banner {
       background: linear-gradient(90deg, #065f46, #0f766e);
       color: #fff;
-      padding: 10px 14px;
+      padding: 9px 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      font-size: 13px;
+      gap: 8px;
+      font-size: 12px;
       position: sticky;
       top: 0;
       z-index: 100;
     }
+    .banner-btns { display: flex; gap: 6px; flex-shrink: 0; }
     .install-btn {
       background: #facc15;
       color: #1e293b;
       border: none;
       border-radius: 8px;
-      padding: 7px 12px;
+      padding: 6px 10px;
       font-weight: 700;
-      font-size: 12px;
+      font-size: 11px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .share-btn {
+      background: #22c55e;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-weight: 700;
+      font-size: 11px;
       cursor: pointer;
       white-space: nowrap;
     }
@@ -107,18 +119,27 @@
       cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
     }
     .btn-yellow { background: #facc15; color: #1e293b; }
+    .btn-red { background: #ef4444; color: #fff; }
     .btn-glass { background: rgba(255,255,255,0.18); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
     .btn-primary { background: var(--primary); color: #fff; width: 100%; }
     .btn-orange { background: linear-gradient(90deg, #f97316, #ea580c); color: #fff; width: 100%; font-size: 16px; padding: 14px; }
     .step-item {
       border: 1px solid var(--border); border-radius: 12px; padding: 12px;
-      margin-bottom: 10px; display: flex; gap: 10px; align-items: flex-start;
+      margin-bottom: 12px; display: flex; gap: 10px; align-items: flex-start;
     }
     .step-item.done { background: #f0fdf4; border-color: #86efac; }
     .step-chk { width: 22px; height: 22px; margin-top: 2px; accent-color: var(--primary); cursor: pointer; }
     .step-body { flex: 1; }
     .step-tag { font-size: 12px; font-weight: 700; color: var(--primary); }
     .step-text { font-size: 14px; margin: 4px 0 8px; }
+    .sub-activity-box {
+      background: #f8fafc;
+      border-left: 3px solid #f59e0b;
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin-top: 8px;
+      font-size: 13px;
+    }
     .quiz-opts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
     .quiz-btn {
       padding: 7px 14px; border-radius: 8px; border: 1px solid #cbd5e1;
@@ -195,6 +216,7 @@
       padding: 10px 12px;
       border-radius: 10px;
     }
+    .rhyme-actions { display: flex; gap: 6px; flex-wrap: wrap; }
 
     /* Yoga Visual Illustration Box */
     .yoga-visual {
@@ -216,19 +238,6 @@
       font-weight: 700;
       color: #15803d;
       margin-top: 4px;
-    }
-
-    /* Music Equalizer Indicator */
-    .music-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      background: #fef08a;
-      color: #854d0e;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 99px;
     }
 
     /* Worksheet 8-Block */
@@ -274,7 +283,7 @@
     }
     .modal-backdrop.open { display: flex; }
     .modal-box {
-      background: #fff; border-radius: 18px; max-width: 420px; width: 100%;
+      background: #fff; border-radius: 18px; max-width: 440px; width: 100%;
       padding: 20px; text-align: center; box-shadow: 0 20px 35px rgba(0,0,0,0.25);
     }
     .progress-bar { width: 100%; height: 10px; background: #e2e8f0; border-radius: 99px; overflow: hidden; margin: 12px 0; }
@@ -317,13 +326,16 @@
 </head>
 <body>
 
-  <!-- Top Install Banner -->
+  <!-- Top Install & Share Banner -->
   <div class="install-banner" id="installBanner">
     <div>
-      <strong>📲 হাতেখড়ি অ্যাপ ফোনে ইনস্টল করুন (₹০ ফ্রি)</strong><br/>
-      <span style="font-size:11px;opacity:0.9;">Play Store ছাড়াই হোম স্ক্রিনে ১ ক্লিকে সেভ করুন</span>
+      <strong>📲 হাতেখড়ি অ্যাপ (₹০ ফ্রি)</strong><br/>
+      <span style="font-size:10px;opacity:0.9;">হোম স্ক্রিনে সেভ করুন বা শেয়ার করুন</span>
     </div>
-    <button class="install-btn" id="btnInstallApp">Install App</button>
+    <div class="banner-btns">
+      <button class="share-btn" id="btnShareApp">📤 Share</button>
+      <button class="install-btn" id="btnInstallApp">Install</button>
+    </div>
   </div>
 
   <!-- App Header -->
@@ -343,7 +355,7 @@
 
   <main class="container">
 
-    <!-- TAB 1: DAILY PLAN -->
+    <!-- TAB 1: DAILY PLAN WITH EXPANDED ACTIVITIES IN EVERY STEP -->
     <section class="tab-pane active" id="tab-daily">
       <div class="card">
         <label class="section-title" for="daySelect">দিনের পাঠ নির্বাচন করুন (Day 1 – 30)</label>
@@ -365,36 +377,48 @@
       </div>
 
       <div class="card">
-        <h3 class="section-title">আজকের ৩টি সহজ ধাপ (সম্পন্ন হলে টিক দিন):</h3>
+        <h3 class="section-title">আজকের ৩টি সহজ ধাপ ও অ্যাক্টিভিটি (সম্পন্ন হলে টিক দিন):</h3>
 
+        <!-- STEP 1 -->
         <div class="step-item" id="stepBox1">
           <input type="checkbox" class="step-chk" id="chk1" />
           <div class="step-body">
-            <div class="step-tag">ধাপ ১ (৫ মিনিট) • ছড়া ও উচ্চারণ (অ–ঔ ও A–Z)</div>
+            <div class="step-tag">ধাপ ১ (৫ মিনিট) • ছড়া, ধ্বনি ও হাতের ব্যায়াম</div>
             <div class="step-text" id="rhymeText">"অ-তে অজগর আসছে তেড়ে। • A for Apple (অ্যা-পল)"</div>
             <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;">
-              <button class="btn btn-yellow" style="padding:6px 12px;font-size:12px;" id="btnPlayAudio">🎵 সুর ও ছড়া শুনুন</button>
+              <button class="btn btn-yellow" style="padding:6px 12px;font-size:12px;" id="btnPlayAudio">🔊 আজকের ছড়া শুনুন</button>
               <button class="btn" style="background:#ccfbf1;color:#0f766e;padding:6px 10px;font-size:12px;" id="btnPlayAllBn">🇧🇩 পুরো অ–ঔ শুনুন</button>
               <button class="btn" style="background:#dbeafe;color:#1e40af;padding:6px 10px;font-size:12px;" id="btnPlayAllEn">🇬🇧 পুরো A–Z শুনুন</button>
+            </div>
+            <div class="sub-activity-box" id="step1Activity">
+              🖐️ <strong>অতিরিক্ত অ্যাক্টিভিটি (Finger Gym):</strong> পেন্সিল ধরার আগে দুই হাতের আঙুল ১০ বার মুঠো করুন ও খুলুন, তারপর বাতাসে আঙুল ঘুরিয়ে আজকের অক্ষরটি আঁকুন।
             </div>
             <div id="fullAlphabetBox" style="display:none;margin-top:10px;padding:10px;background:#f8fafc;border:1px solid #cbd5e1;border-radius:10px;font-size:13px;line-height:1.65;"></div>
           </div>
         </div>
 
+        <!-- STEP 2 -->
         <div class="step-item" id="stepBox2">
           <input type="checkbox" class="step-chk" id="chk2" />
           <div class="step-body">
-            <div class="step-tag">ধাপ ২ (৫ মিনিট) • খেলার ছলে কুইজ</div>
+            <div class="step-tag">ধাপ ২ (৫ মিনিট) • খেলার ছলে কুইজ ও গণনা</div>
             <div class="step-text" id="quizQuestion">নিচের কোনটি আজকের শেখা অক্ষর? ট্যাপ করে খুঁজে বের করো:</div>
             <div class="quiz-opts" id="quizOptions"></div>
+            <div class="sub-activity-box" id="step2Activity">
+              👏 <strong>অতিরিক্ত অ্যাক্টিভিটি (Clap & Count):</strong> আজকের সংখ্যাটি যত, ঠিক ততবার হাতে তালি দিন এবং জোরে জোরে গুনুন!
+            </div>
           </div>
         </div>
 
+        <!-- STEP 3 -->
         <div class="step-item" id="stepBox3">
           <input type="checkbox" class="step-chk" id="chk3" />
           <div class="step-body">
-            <div class="step-tag">ধাপ ৩ (৫ মিনিট) • মা-বাবার বাস্তব প্রশ্ন</div>
+            <div class="step-tag">ধাপ ৩ (৫ মিনিট) • বাস্তব খোঁজা ও শারীরিক অ্যাক্টিভিটি</div>
             <div class="step-text" id="parentPrompt">🔍 বাড়িতে লাল রঙের কোনো ফল বা খেলনা দেখিয়ে শিশুকে জিজ্ঞেস করুন—এর রঙ কী?</div>
+            <div class="sub-activity-box" id="step3Activity">
+              🎨 <strong>অতিরিক্ত অ্যাক্টিভিটি (Real-World Hunt):</strong> ঘরের ভেতর থেকে আজকের শেখা বর্ণ বা আকৃতির (যেমন গোল বা লম্বা) মতো দেখতে ১টি জিনিস খুঁজে এনে দেখাতে বলুন।
+            </div>
           </div>
         </div>
 
@@ -402,7 +426,7 @@
       </div>
     </section>
 
-    <!-- TAB 2: TRACING, RHYMES WITH MUSIC, YOGA WITH PICS, DANCE & RECITATION -->
+    <!-- TAB 2: TRACING, REAL SONG PLAYER, YOGA WITH PICS, DANCE & RECITATION -->
     <section class="tab-pane" id="tab-tracing">
       <div class="card">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
@@ -448,15 +472,15 @@
       <div class="card">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
           <div>
-            <h3 class="section-title" style="margin:0;">🎭 সুরসহ ছড়া, ছবিসহ যোগব্যায়াম, নাচ ও আবৃত্তি</h3>
-            <p class="section-sub" style="margin:2px 0 4px;">মিউজিক ও সুরসহ শুনতে <strong>'🎵 সুরসহ শুনুন'</strong> বাটনে চাপুন</p>
+            <h3 class="section-title" style="margin:0;">🎭 আসল গানের সুরে ছড়া, যোগব্যায়াম, নাচ ও আবৃত্তি</h3>
+            <p class="section-sub" style="margin:2px 0 4px;">আসল গানের সুর শুনতে <strong>'▶️ গানের সুরে শুনুন (YouTube)'</strong> বাটনে চাপুন</p>
           </div>
           <button class="btn" style="background:#fee2e2;color:#b91c1c;padding:6px 10px;font-size:12px;white-space:nowrap;" onclick="stopAllAudio()">⏹️ থামুন</button>
         </div>
 
         <div class="cat-pills" id="activityCatPills">
           <button class="cat-btn active" data-cat="all">সবগুলো</button>
-          <button class="cat-btn" data-cat="bn_rhyme">🇧🇩 বাংলা ছড়া</button>
+          <button class="cat-btn" data-cat="bn_rhyme">🇧🇩 বাংলা ছড়া ও গান</button>
           <button class="cat-btn" data-cat="en_rhyme">🇬🇧 English Rhymes</button>
           <button class="cat-btn" data-cat="yoga">🧘 ছবিসহ যোগব্যায়াম</button>
           <button class="cat-btn" data-cat="dance">💃 নাচ ও ছন্দ</button>
@@ -494,12 +518,9 @@
       </div>
 
       <div class="card">
-        <h3 class="section-title">অভিভাবকদের জন্য ৩টি গোল্ডেন রুল</h3>
-        <ul style="padding-left:18px;font-size:14px;line-height:1.6;margin:0;">
-          <li><strong>জোর করবেন না:</strong> দিনে ১৫ মিনিটের বেশি বসিয়ে রাখবেন না; খেলার ছলে শেখান।</li>
-          <li><strong>আগে মোটা ক্রেয়ন (Crayon):</strong> সরু পেন্সিলের বদলে শুরুতে মোটা রঙ পেন্সিল দিন, এতে আঙুলের গ্রিপ শক্ত হয়।</li>
-          <li><strong>প্রশংসা করুন:</strong> দাগ বাঁকা হলেও উৎসাহ দিন এবং অ্যাপে স্টার সংগ্রহ করতে দিন।</li>
-        </ul>
+        <h3 class="section-title">📤 অভিভাবকদের সাথে অ্যাপটি শেয়ার করুন</h3>
+        <p class="section-sub">নিচের বাটনে চাপলেই WhatsApp-এ অ্যাপের লিংক ও তথ্য চলে যাবে—কোনো APK পাঠানোর দরকার নেই।</p>
+        <button class="btn" style="background:#16a34a;color:#fff;width:100%;" id="btnShareAppGuide">📲 WhatsApp-এ শেয়ার করুন</button>
       </div>
 
       <div class="card">
@@ -512,7 +533,7 @@
 
       <div class="card" style="background:#f1f5f9;">
         <h3 class="section-title">⚙️ Admin / Creator Studio (শিক্ষক প্যানেল)</h3>
-        <p class="section-sub">নতুন ওয়ার্কশিট, ছড়া/যোগব্যায়াম/নাচ/আবৃত্তি, নিজস্ব ব্যানার, Monetag লিংক ও পিন পরিবর্তন করুন।</p>
+        <p class="section-sub">নতুন ওয়ার্কশিট, ছড়া ও আসল গানের YouTube/MP3 লিংক, নিজস্ব ব্যানার, Monetag লিংক ও পিন পরিবর্তন করুন।</p>
         <button class="btn" style="background:#1e293b;color:#fff;width:100%;" id="btnOpenAdmin">🔐 Admin Studio খুলুন</button>
 
         <div id="adminPanel" style="display:none;margin-top:14px;border-top:1px solid #cbd5e1;padding-top:14px;">
@@ -540,17 +561,18 @@
             <button class="btn" style="background:#0f172a;color:#fff;width:auto;white-space:nowrap;" id="btnChangePin">Change PIN</button>
           </div>
 
-          <h4 style="margin:0 0 8px;">৪. নতুন ছড়া / যোগব্যায়াম / নাচ / আবৃত্তি যোগ করুন</h4>
+          <h4 style="margin:0 0 8px;">৪. নতুন ছড়া ও আসল গানের লিংক (YouTube / MP3) যোগ করুন</h4>
           <select id="newActivityCat" style="margin-bottom:8px;">
-            <option value="bn_rhyme">🇧🇩 বাংলা ছড়া (Bengali Rhyme)</option>
-            <option value="en_rhyme">🇬🇧 ইংরেজি ছড়া (English Rhyme)</option>
+            <option value="bn_rhyme">🇧🇩 বাংলা ছড়া ও গান (Bengali Rhyme)</option>
+            <option value="en_rhyme">🇬🇧 ইংরেজি ছড়া ও গান (English Rhyme)</option>
             <option value="yoga">🧘 যোগব্যায়াম (Kids Yoga)</option>
             <option value="dance">💃 নাচ ও ছন্দ (Dance & Action)</option>
             <option value="recite">🎙️ আবৃত্তি (Recitation)</option>
           </select>
           <input type="text" id="newRhymeTitle" placeholder="শিরোনাম লিখুন" style="margin-bottom:8px;" />
-          <textarea id="newRhymeBody" rows="3" placeholder="ছড়ার লাইন বা যোগব্যায়াম/নাচের নিয়ম লিখুন..." style="margin-bottom:8px;"></textarea>
-          <button class="btn btn-yellow" style="width:100%;margin-bottom:14px;" id="btnAddNewRhyme">+ নতুন আইটেম যুক্ত করুন</button>
+          <textarea id="newRhymeBody" rows="3" placeholder="ছড়ার লাইন বা নিয়ম লিখুন..." style="margin-bottom:8px;"></textarea>
+          <input type="text" id="newRhymeSongUrl" placeholder="আসল গানের YouTube বা MP3 লিংক (ঐচ্ছিক)" style="margin-bottom:8px;" />
+          <button class="btn btn-yellow" style="width:100%;margin-bottom:14px;" id="btnAddNewRhyme">+ নতুন ছড়া ও গান যুক্ত করুন</button>
 
           <h4 style="margin:0 0 8px;">৫. নতুন দিনের ওয়ার্কশিট যোগ করুন (Day 31+)</h4>
           <input type="text" id="newDayTitle" placeholder="পাঠের শিরোনাম" style="margin-bottom:8px;" />
@@ -630,7 +652,7 @@
 
   <script>
     // ==========================================
-    // 1. BUILT-IN PLAYFUL MUSIC ENGINE (WEB AUDIO API)
+    // 1. BUILT-IN MUSIC & AUDIO CONTROLLER
     // ==========================================
     let audioCtx = null;
     let musicInterval = null;
@@ -643,7 +665,6 @@
         if (!audioCtx) audioCtx = new AudioContext();
         if (audioCtx.state === "suspended") audioCtx.resume();
 
-        // Playful nursery rhyme note sequences (Hz)
         const melodies = {
           twinkle: [261.63, 261.63, 392.00, 392.00, 440.00, 440.00, 392.00, 349.23, 349.23, 329.63, 329.63, 293.66, 293.66, 261.63],
           bengali: [261.63, 293.66, 329.63, 392.00, 440.00, 392.00, 329.63, 293.66, 329.63, 392.00, 523.25, 440.00, 392.00, 329.63],
@@ -661,10 +682,8 @@
           const gain = audioCtx.createGain();
           osc.type = melodyType === "yoga" ? "sine" : "triangle";
           osc.frequency.setValueAtTime(notes[step % notes.length], audioCtx.currentTime);
-
-          gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
           gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + (tempo / 1000) * 0.9);
-
           osc.connect(gain);
           gain.connect(audioCtx.destination);
           osc.start();
@@ -692,7 +711,7 @@
     }
 
     // ==========================================
-    // 2. YOGA SVG ILLUSTRATIONS (NO EXTERNAL LINKS NEEDED)
+    // 2. YOGA SVG ILLUSTRATIONS
     // ==========================================
     const YOGA_SVGS = {
       tree: `<div class="yoga-visual">
@@ -700,51 +719,36 @@
           <rect width="200" height="200" rx="16" fill="#ecfdf5"/>
           <circle cx="100" cy="48" r="14" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
           <path d="M92 46 Q95 43 98 46 M102 46 Q105 43 108 46 M96 53 Q100 57 104 53" stroke="#7c2d12" stroke-width="2" fill="none"/>
-          <!-- Namaste Hands Up -->
           <path d="M88 70 L75 35 L100 16 L125 35 L112 70" stroke="#f97316" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <!-- Torso -->
           <rect x="86" y="64" width="28" height="44" rx="10" fill="#10b981"/>
-          <!-- Standing Leg -->
           <line x1="95" y1="108" x2="95" y2="168" stroke="#2563eb" stroke-width="9" stroke-linecap="round"/>
-          <!-- Bent Tree Leg -->
           <path d="M105 108 L128 125 L98 136" stroke="#2563eb" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
           <ellipse cx="100" cy="174" rx="45" ry="6" fill="#a7f3d0"/>
         </svg>
         <div class="yoga-caption">🌲 বৃক্ষাসন (Tree Pose) — এক পায়ে সোজা হয়ে হাত ওপরে তোলো</div>
       </div>`,
-
       butterfly: `<div class="yoga-visual">
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
           <rect width="200" height="200" rx="16" fill="#fefce8"/>
-          <!-- Butterfly Wings behind -->
           <ellipse cx="62" cy="95" rx="32" ry="22" fill="#fde047" stroke="#eab308" stroke-width="2"/>
           <ellipse cx="138" cy="95" rx="32" ry="22" fill="#fde047" stroke="#eab308" stroke-width="2"/>
-          <!-- Head -->
           <circle cx="100" cy="58" r="15" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
           <path d="M95 62 Q100 67 105 62" stroke="#7c2d12" stroke-width="2" fill="none"/>
-          <!-- Torso -->
           <rect x="85" y="75" width="30" height="45" rx="12" fill="#ec4899"/>
-          <!-- Bent Butterfly Legs -->
           <path d="M88 118 L55 135 L95 148" stroke="#3b82f6" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
           <path d="M112 118 L145 135 L105 148" stroke="#3b82f6" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <!-- Hands holding feet -->
           <path d="M86 85 L96 142 M114 85 L104 142" stroke="#fed7aa" stroke-width="6" stroke-linecap="round"/>
           <ellipse cx="100" cy="158" rx="55" ry="6" fill="#fef08a"/>
         </svg>
         <div class="yoga-caption">🦋 প্রজাপতি আসন (Butterfly Pose) — দুই পা জোড়া করে হাঁটু নাড়াও</div>
       </div>`,
-
       lion: `<div class="yoga-visual">
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
           <rect width="200" height="200" rx="16" fill="#fff7ed"/>
-          <!-- Lion Mane Aura -->
           <circle cx="100" cy="68" r="28" fill="#fdba74" stroke="#ea580c" stroke-width="2" stroke-dasharray="6,4"/>
-          <!-- Head -->
           <circle cx="100" cy="68" r="16" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
-          <!-- Roaring Mouth & Tongue -->
           <circle cx="100" cy="74" r="6" fill="#991b1b"/>
           <path d="M97 76 L97 84 Q100 88 103 84 L103 76" fill="#f43f5e"/>
-          <!-- Kneeling Body & Hands on knees -->
           <rect x="83" y="88" width="34" height="44" rx="12" fill="#f59e0b"/>
           <path d="M84 95 L72 135 M116 95 L128 135" stroke="#fed7aa" stroke-width="7" stroke-linecap="round"/>
           <ellipse cx="100" cy="144" rx="48" ry="12" fill="#78350f"/>
@@ -755,16 +759,46 @@
     };
 
     // ==========================================
-    // 3. CURRICULUM & ACTIVITIES DATA
+    // 3. CURRICULUM (30 DAYS WITH ACTIVITIES IN EVERY STEP)
     // ==========================================
     const FULL_BN_SWARABORNO = "অ-তে অজগর আসছে তেড়ে। আ-তে আমটি আমি খাব পেড়ে। ই-তে ইঁদুর ছানা ভয়ে মরে। ঈ-তে ঈগল পাখি পাছে ধরে। উ-তে উট চলেছে মুখটি তুলে। ঊ-তে ঊষা হাসে পুব আকাশে। ঋ-তে ঋষি মশাই বসেন পূজায়। এ-তে এক্কাগাড়ি খুব ছুটেছে। ঐ-তে ঐরাবতটি আসছে তেড়ে। ও-তে ওল খেও না ধরবে গলা। ঔ-তে ঔষধ খেতে মিছে বলা।";
 
     const FULL_EN_ALPHABET = "A for Apple, B for Ball, C for Cat, D for Dog, E for Elephant, F for Fish, G for Grapes, H for Hen, I for Ice-cream, J for Jug, K for Kite, L for Lion, M for Mango, N for Nest, O for Orange, P for Parrot, Q for Queen, R for Rabbit, S for Sun, T for Tiger, U for Umbrella, V for Van, W for Watch, X for Xylophone, Y for Yak, Z for Zebra.";
 
     const defaultLessons = [
-      { day: 1, title: "Standing Line, ইংরেজি 'A' ও বাংলা 'অ', সংখ্যা 1", bn: "অ", en: "A", num: "1", stroke: "|", rhyme: "অ-তে অজগর আসছে তেড়ে। • A for Apple (অ্যা-পল)", q: "নিচের কোনটি আজকের শেখা বাংলা বর্ণ?", opts: ["অ", "ক", "ম"], ans: "অ", prompt: "🔍 বাড়িতে লাল রঙের কোনো ফল বা খেলনা দেখিয়ে শিশুকে জিজ্ঞেস করুন—এর রঙ কী?" },
-      { day: 2, title: "Sleeping Line, ইংরেজি 'B' ও বাংলা 'আ', সংখ্যা 2", bn: "আ", en: "B", num: "2", stroke: "—", rhyme: "আ-তে আমটি আমি খাব পেড়ে। • B for Ball (ব-ল)", q: "B দিয়ে কোন শব্দটি শুরু হয়?", opts: ["Ball", "Apple", "Cat"], ans: "Ball", prompt: "🔍 দুটি হাতের আঙুল গুনে শিশুকে '১, ২' বলতে শেখান।" },
-      { day: 3, title: "Slanting Line, ইংরেজি 'C' ও বাংলা 'ই', সংখ্যা 3", bn: "ই", en: "C", num: "3", stroke: "O", rhyme: "ই-তে ইঁদুর ছানা ভয়ে মরে। • C for Cat (ক্যা-ট)", q: "নিচের কোনটি 'C' অক্ষর?", opts: ["C", "O", "A"], ans: "C", prompt: "🔍 বিড়াল কেমন করে ডাকে তা শিশুকে নকল করে দেখাতে বলুন।" }
+      {
+        day: 1,
+        title: "Standing Line, ইংরেজি 'A' ও বাংলা 'অ', সংখ্যা 1",
+        bn: "অ", en: "A", num: "1", stroke: "|",
+        rhyme: "অ-তে অজগর আসছে তেড়ে। • A for Apple (অ্যা-পল)",
+        act1: "🖐️ হাতের ব্যায়াম: পেন্সিল ধরার আগে দুই হাতের আঙুল ১০ বার মুঠো করুন ও খুলুন, তারপর বাতাসে বড় করে 'A' এবং 'অ' আঁকুন।",
+        q: "নিচের কোনটি আজকের শেখা বাংলা বর্ণ?", opts: ["অ", "ক", "ম"], ans: "অ",
+        act2: "👏 তালি ও গণনা: ১ বার জোরে হাতে তালি দিন এবং নাক ও মুখ কয়টি আছে আঙুল দিয়ে ছুঁয়ে গুনুন।",
+        prompt: "🔍 বাড়িতে লাল রঙের কোনো ফল বা খেলনা দেখিয়ে শিশুকে জিজ্ঞেস করুন—এর রঙ কী?",
+        act3: "🍎 মজার কাজ: একটি আপেল বা গোল বল হাত দিয়ে গড়িয়ে খেলুন এবং 'A for Apple' বলুন।"
+      },
+      {
+        day: 2,
+        title: "Sleeping Line, ইংরেজি 'B' ও বাংলা 'আ', সংখ্যা 2",
+        bn: "আ", en: "B", num: "2", stroke: "—",
+        rhyme: "আ-তে আমটি আমি খাব পেড়ে। • B for Ball (ব-ল)",
+        act1: "🖐️ রেখা খেলা: টেবিলের ওপর আঙুল দিয়ে বাঁ দিক থেকে ডান দিকে সোজা Sleeping Line (—) টানার অভিনয় করুন।",
+        q: "B দিয়ে কোন শব্দটি শুরু হয়?", opts: ["Ball", "Apple", "Cat"], ans: "Ball",
+        act2: "👏 তালি ও গণনা: ২ বার হাতে তালি দিন এবং নিজের দুটি চোখ ও দুটি কান গুনে দেখান।",
+        prompt: "🔍 দুটি হাতের আঙুল গুনে শিশুকে '১, ২' বলতে শেখান।",
+        act3: "⚽ মজার কাজ: একটি বল মাটিতে ড্রপ দিয়ে ধরুন আর প্রতিবার 'B for Ball' বলুন।"
+      },
+      {
+        day: 3,
+        title: "Circle (গোল), ইংরেজি 'C' ও বাংলা 'ই', সংখ্যা 3",
+        bn: "ই", en: "C", num: "3", stroke: "O",
+        rhyme: "ই-তে ইঁদুর ছানা ভয়ে মরে। • C for Cat (ক্যা-ট)",
+        act1: "🖐️ হাতের ব্যায়াম: দুই হাত মাথার ওপর তুলে গোল চাঁদ (O) বানান এবং 'C' অক্ষরের মতো অর্ধেক চাঁদ তৈরি করুন।",
+        q: "নিচের কোনটি 'C' অক্ষর?", opts: ["C", "O", "A"], ans: "C",
+        act2: "👏 তালি ও গণনা: ৩ বার হাতে তালি দিয়ে ৩টি ছোট খেলনা বা চামচ একসাথে সাজিয়ে রাখুন।",
+        prompt: "🔍 বিড়াল কেমন করে ডাকে তা শিশুকে নকল করে দেখাতে বলুন।",
+        act3: "🐱 মজার কাজ: বিড়ালের মতো চার হাত-পায়ে হেঁটে 'মিউ মিউ' ডাকুন ও মজা করুন।"
+      }
     ];
 
     const extraTopics = [
@@ -804,66 +838,80 @@
         title: `রেখা অনুশীলন, ইংরেজি '${item[0]}' ও বাংলা '${item[1]}', সংখ্যা ${item[2]}`,
         bn: item[1], en: item[0], num: item[2], stroke: item[1].charAt(0),
         rhyme: `${item[3]} • ${item[4]}`,
+        act1: `🖐️ আঙুলের ব্যায়াম: বাতাসে আঙুল ঘুরিয়ে '${item[1]}' এবং '${item[0]}' অক্ষর দুটি ৩ বার আঁকুন।`,
         q: `আজকের পাঠের বাংলা বর্ণ কোনটি?`,
         opts: [item[1], "ক", "ম"], ans: item[1],
-        prompt: `🔍 শিশুকে '${item[1]}' দিয়ে শুরু হয় এমন একটি পরিচিত জিনিসের নাম বলুন।`
+        act2: `👏 তালি ও গণনা: ঠিক ${item[2]} বার হাতে তালি দিন এবং ঘর থেকে ${item[2]}টি জিনিস গুনে আনুন।`,
+        prompt: `🔍 শিশুকে '${item[1]}' দিয়ে শুরু হয় এমন একটি পরিচিত জিনিসের নাম বলুন।`,
+        act3: `🎨 রঙ ও খোঁজা: ঘরের ভেতর থেকে '${item[0]}' বা '${item[1]}' ছবির মতো দেখতে কিছু খুঁজে বের করুন।`
       });
     });
 
+    // ==========================================
+    // 4. RHYMES (WITH REAL YOUTUBE SONG LINKS), YOGA, DANCE & RECITATION
+    // ==========================================
     const defaultActivities = [
       {
         cat: "bn_rhyme",
-        catLabel: "🇧🇩 বাংলা ছড়া • 🎵 মিউজিকসহ",
+        catLabel: "🇧🇩 বাংলা ছড়া ও গান",
         melody: "bengali",
+        songUrl: "https://www.youtube.com/results?search_query=Ata+Gache+Tota+Pakhi+Bengali+Rhyme+Song",
         title: "আতা গাছে তোতা পাখি",
         body: "আতা গাছে তোতা পাখি,\nডালিম গাছে মৌ।\nএত ডাকি তবু কথা,\nকও না কেন বউ?"
       },
       {
         cat: "bn_rhyme",
-        catLabel: "🇧🇩 বাংলা ছড়া • 🎵 মিউজিকসহ",
+        catLabel: "🇧🇩 বাংলা ছড়া ও গান",
         melody: "bengali",
+        songUrl: "https://www.youtube.com/results?search_query=Aay+Aay+Chand+Mama+Bengali+Rhyme+Song",
         title: "আয় আয় চাঁদ মামা",
         body: "আয় আয় চাঁদ মামা টিপ দিয়ে যা,\nচাঁদের কপালে চাঁদ টিপ দিয়ে যা।\nমাছ কাটলে মুড়ো দেব,\nধান ভানলে কুঁড়ো দেব,\nকালো গরুর দুধ দেব,\nচাঁদের কপালে চাঁদ টিপ দিয়ে যা।"
       },
       {
         cat: "bn_rhyme",
-        catLabel: "🇧🇩 বাংলা ছড়া • 🎵 মিউজিকসহ",
+        catLabel: "🇧🇩 বাংলা ছড়া ও গান",
         melody: "bengali",
+        songUrl: "https://www.youtube.com/results?search_query=Hattimatim+Tim+Bengali+Rhyme+Song",
         title: "হাট্টিমাটিম টিম",
         body: "হাট্টিমাটিম টিম,\nতারা মাঠে পাড়ে ডিম,\nতাদের খাড়া দুটো শিং,\nতারা হাট্টিমাটিম টিম।"
       },
       {
         cat: "bn_rhyme",
-        catLabel: "🇧🇩 বাংলা ছড়া • 🎵 মিউজিকসহ",
+        catLabel: "🇧🇩 বাংলা ছড়া ও গান",
         melody: "bengali",
+        songUrl: "https://www.youtube.com/results?search_query=Noton+Noton+Payra+Guli+Bengali+Rhyme+Song",
         title: "নোটন নোটন পায়রাগুলি",
         body: "নোটন নোটন পায়রাগুলি ঝোঁটন বেঁধেছে,\nওপারেতে ছেলেমেয়ে নাইতে নেমেছে।\nদুই ধারে দুই রুই কাতলা ভেসে উঠেছে,\nকে দেখেছে কে দেখেছে দাদা দেখেছে।"
       },
       {
         cat: "en_rhyme",
-        catLabel: "🇬🇧 English Rhyme • 🎵 With Music",
+        catLabel: "🇬🇧 English Rhyme Song",
         melody: "twinkle",
+        songUrl: "https://www.youtube.com/results?search_query=Twinkle+Twinkle+Little+Star+Nursery+Rhyme",
         title: "Twinkle, Twinkle, Little Star",
         body: "Twinkle, twinkle, little star,\nHow I wonder what you are!\nUp above the world so high,\nLike a diamond in the sky."
       },
       {
         cat: "en_rhyme",
-        catLabel: "🇬🇧 English Rhyme • 🎵 With Music",
+        catLabel: "🇬🇧 English Rhyme Song",
         melody: "dance",
+        songUrl: "https://www.youtube.com/results?search_query=Johny+Johny+Yes+Papa+Nursery+Rhyme",
         title: "Johny Johny Yes Papa",
         body: "Johny, Johny, Yes, Papa?\nEating sugar? No, Papa!\nTelling lies? No, Papa!\nOpen your mouth, Ha! Ha! Ha!"
       },
       {
         cat: "en_rhyme",
-        catLabel: "🇬🇧 English Rhyme • 🎵 With Music",
+        catLabel: "🇬🇧 English Rhyme Song",
         melody: "twinkle",
+        songUrl: "https://www.youtube.com/results?search_query=Baa+Baa+Black+Sheep+Nursery+Rhyme",
         title: "Baa, Baa, Black Sheep",
         body: "Baa, baa, black sheep, have you any wool?\nYes sir, yes sir, three bags full.\nOne for the master, one for the dame,\nAnd one for the little boy who lives down the lane."
       },
       {
         cat: "en_rhyme",
-        catLabel: "🇬🇧 English Rhyme • 🎵 With Music",
+        catLabel: "🇬🇧 English Rhyme Song",
         melody: "dance",
+        songUrl: "https://www.youtube.com/results?search_query=Humpty+Dumpty+Sat+On+A+Wall+Nursery+Rhyme",
         title: "Humpty Dumpty",
         body: "Humpty Dumpty sat on a wall,\nHumpty Dumpty had a great fall.\nAll the king's horses and all the king's men,\nCouldn't put Humpty together again."
       },
@@ -893,22 +941,25 @@
       },
       {
         cat: "dance",
-        catLabel: "💃 নাচ ও ছন্দ • 🎵 মিউজিকসহ",
+        catLabel: "💃 নাচ ও ছন্দ (Dance & Action)",
         melody: "dance",
+        songUrl: "https://www.youtube.com/results?search_query=Projapoti+Projapoti+Bengali+Kids+Song",
         title: "১. প্রজাপতি নাচ (হাত নেড়ে ও পায়ের তালে)",
         body: "গানের তালে তালে নাচো:\nপ্রজাপতি, প্রজাপতি,\nকোথায় পেলে ভাই এমন রঙিন পাখা!\n(দুই হাত ডানার মতো মেলে ঘরের চারপাশে ঘুরে ঘুরে নাচো ও তালি দাও!)"
       },
       {
         cat: "dance",
-        catLabel: "💃 নাচ ও ছন্দ • 🎵 মিউজিকসহ",
+        catLabel: "💃 নাচ ও ছন্দ (Dance & Action)",
         melody: "dance",
+        songUrl: "https://www.youtube.com/results?search_query=If+Youre+Happy+And+You+Know+It+Kids+Song",
         title: "২. If You're Happy and You Know It (Action Dance)",
         body: "If you're happy and you know it, clap your hands! (দুই হাতে তালি দাও)\nIf you're happy and you know it, stomp your feet! (মাটিতে পা ঠোকো)\nIf you're happy and you know it, turn around! (এক পাক ঘুরে নাচো)"
       },
       {
         cat: "dance",
-        catLabel: "💃 নাচ ও ছন্দ • 🎵 মিউজিকসহ",
+        catLabel: "💃 নাচ ও ছন্দ (Dance & Action)",
         melody: "dance",
+        songUrl: "https://www.youtube.com/results?search_query=Agdum+Bagdum+Ghoradum+Saje+Bengali+Rhyme",
         title: "৩. আগডুম বাগডুম ঘোড়াডুম সাজে",
         body: "আগডুম বাগডুম ঘোড়াডুম সাজে,\nঢাক মৃদং ঝাঁঝর বাজে।\nবাজতে বাজতে চলল ঢুলি,\nঢুলি গেল সেই কমলাফুলি।\n(ঘোড়ার মতো লাফিয়ে লাফিয়ে তালে তালে পা ফেলে নাচো!)"
       },
@@ -916,6 +967,7 @@
         cat: "recite",
         catLabel: "🎙️ আবৃত্তি (Recitation)",
         melody: "yoga",
+        songUrl: "https://www.youtube.com/results?search_query=Amader+Choto+Nodi+Rabindranath+Tagore+Recitation",
         title: "১. আমাদের ছোট নদী — রবীন্দ্রনাথ ঠাকুর",
         body: "আমাদের ছোট নদী চলে বাঁকে বাঁকে,\nবৈশাখ মাসে তার হাঁটু জল থাকে।\nপার হয়ে যায় গরু, পার হয় গাড়ি,\nদুই ধার উঁচু তার, ঢালু তার পাড়ি।"
       },
@@ -923,6 +975,7 @@
         cat: "recite",
         catLabel: "🎙️ আবৃত্তি (Recitation)",
         melody: "yoga",
+        songUrl: "https://www.youtube.com/results?search_query=Kajla+Didi+Bengali+Poem+Recitation",
         title: "২. কাজলা দিদি — যতীন্দ্রমোহন বাগচী",
         body: "বাঁশ বাগানের মাথার ওপর চাঁদ উঠেছে ওই,\nমাগো আমার শোলক বলা কাজলা দিদি কই?\nপুকুর ধারে নেবুর তলে থোকায় থোকায় জোনাই জ্বলে,\nফুলের গন্ধে ঘুম আসে না একলা জেগে রই।"
       },
@@ -930,6 +983,7 @@
         cat: "recite",
         catLabel: "🎙️ আবৃত্তি (Recitation)",
         melody: "yoga",
+        songUrl: "https://www.youtube.com/results?search_query=Talgach+Ek+Paye+Dariye+Rabindranath+Tagore",
         title: "৩. তালগাছ — রবীন্দ্রনাথ ঠাকুর",
         body: "তালগাছ এক পায়ে দাঁড়িয়ে,\nসব গাছ ছাড়িয়ে,\nউঁকি মারে আকাশে।\nমনে সাধ কালো মেঘ ফুঁড়ে যায়,\nএকবারে উড়ে যায়,\nকোথা পাবে পাখা সে!"
       }
@@ -938,6 +992,7 @@
     const DEFAULT_PAY_LINK = "upi://pay?pa=8250912381@ikwik&pn=HateKhori&am=99&cu=INR";
     const DEFAULT_AD_LINK = "https://uplcm.com/4/12355529";
     const DEFAULT_ADMIN_PIN = "1234";
+    const APP_LIVE_URL = "https://kumareshdeybeng-create.github.io/HATEKHORI-/";
 
     let state = {};
     try {
@@ -980,6 +1035,23 @@
     let pendingUnlockDay = null;
     let activeActivityCat = "all";
 
+    // Share App via WhatsApp / Native Share
+    function shareHateKhoriApp() {
+      const shareText = `✏️ ২.৫ থেকে ৫ বছরের বাচ্চাদের ঘরে বসে খেলার ছলে বাংলা ও ইংরেজি শেখার সেরা ফ্রি অ্যাপ — *হাতেখড়ি (HateKhori)*!\n\n✅ ৩০ দিনের সহজ পাঠ ও আঙুলে ট্রেসিং\n✅ সুরসহ বাংলা ও ইংরেজি ছড়া, যোগব্যায়াম ও নাচ\n✅ A4 প্রিন্টেবল ওয়ার্কশিট\n\nনিচের লিংকে ক্লিক করে ফ্রি ব্যবহার করুন:\n${APP_LIVE_URL}`;
+      if (navigator.share) {
+        navigator.share({
+          title: "হাতেখড়ি (HateKhori) - Early Learning App",
+          text: shareText,
+          url: APP_LIVE_URL
+        }).catch(() => {});
+      } else {
+        window.open("https://wa.me/?text=" + encodeURIComponent(shareText), "_blank");
+      }
+    }
+
+    document.getElementById("btnShareApp").addEventListener("click", shareHateKhoriApp);
+    document.getElementById("btnShareAppGuide").addEventListener("click", shareHateKhoriApp);
+
     function updateHeaderUI() {
       document.getElementById("starCount").textContent = state.stars;
       document.getElementById("childNameLabel").textContent = state.childName;
@@ -1014,21 +1086,34 @@
         const realIndex = allItems.indexOf(item);
         const cardCls = getCardClassByCat(item.cat);
         const yogaPicHtml = (item.yogaKey && YOGA_SVGS[item.yogaKey]) ? YOGA_SVGS[item.yogaKey] : "";
+        const songBtnHtml = item.songUrl
+          ? `<button class="btn btn-red" style="padding:6px 11px;font-size:12px;" onclick="playRealSong(${realIndex})">▶️ গানের সুরে শুনুন (YouTube)</button>`
+          : "";
         return `
           <div class="rhyme-card ${cardCls}">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <span class="rhyme-badge">${item.catLabel}</span>
-              <span class="music-pill">🎶 সুর ও মিউজিক</span>
-            </div>
+            <span class="rhyme-badge">${item.catLabel}</span>
             <div class="rhyme-header">
               <h4 class="rhyme-title">${item.title}</h4>
-              <button class="btn btn-yellow" style="padding:6px 12px;font-size:12px;white-space:nowrap;" onclick="playActivityByIndex(${realIndex})">🎵 সুরসহ শুনুন</button>
             </div>
             ${yogaPicHtml}
             <div class="rhyme-lines">${item.body}</div>
+            <div class="rhyme-actions">
+              ${songBtnHtml}
+              <button class="btn btn-yellow" style="padding:6px 11px;font-size:12px;" onclick="playActivityByIndex(${realIndex})">🔊 অ্যাপে পড়ে শুনুন</button>
+            </div>
           </div>
         `;
       }).join("");
+    }
+
+    function playRealSong(idx) {
+      const item = getAllActivities()[idx];
+      if (item && item.songUrl) {
+        window.open(item.songUrl, "_blank");
+        setTimeout(() => {
+          triggerPostRhymeAd();
+        }, 1200);
+      }
     }
 
     function triggerPostRhymeAd() {
@@ -1084,6 +1169,11 @@
       document.getElementById("rhymeText").textContent = lesson.rhyme;
       document.getElementById("quizQuestion").textContent = lesson.q;
       document.getElementById("parentPrompt").textContent = lesson.prompt;
+
+      // Update Step 1, 2, 3 extra activities dynamically
+      document.getElementById("step1Activity").innerHTML = lesson.act1 || `🖐️ <strong>অতিরিক্ত অ্যাক্টিভিটি:</strong> বাতাসে আঙুল ঘুরিয়ে '${lesson.bn}' এবং '${lesson.en}' অক্ষর দুটি আঁকুন।`;
+      document.getElementById("step2Activity").innerHTML = lesson.act2 || `👏 <strong>অতিরিক্ত অ্যাক্টিভিটি:</strong> ঠিক ${lesson.num} বার হাতে তালি দিয়ে গুনুন।`;
+      document.getElementById("step3Activity").innerHTML = lesson.act3 || `🎨 <strong>অতিরিক্ত অ্যাক্টিভিটি:</strong> ঘর থেকে আজকের শেখা বর্ণের মতো ১টি জিনিস খুঁজে দেখান।`;
 
       ["chk1", "chk2", "chk3"].forEach((id, i) => {
         const chk = document.getElementById(id);
@@ -1145,7 +1235,6 @@
       drawGuide();
     }
 
-    // Playful sing-song pitch & rate for rhymes
     function speakText(txt, onEndCallback, isSingSong) {
       if (!("speechSynthesis" in window)) {
         if (onEndCallback) setTimeout(onEndCallback, 3000);
@@ -1452,13 +1541,19 @@
       const catLabel = catSel.options[catSel.selectedIndex].text;
       const title = document.getElementById("newRhymeTitle").value.trim();
       const body = document.getElementById("newRhymeBody").value.trim();
+      const songUrl = document.getElementById("newRhymeSongUrl").value.trim();
       if (!title || !body) return alert("শিরোনাম ও বিবরণ/লাইনগুলো লিখুন!");
-      state.customActivities.push({ cat, catLabel, title, body, melody: cat === "en_rhyme" ? "twinkle" : "bengali" });
+      state.customActivities.push({
+        cat, catLabel, title, body,
+        songUrl: songUrl || ("https://www.youtube.com/results?search_query=" + encodeURIComponent(title + " nursery rhyme song")),
+        melody: cat === "en_rhyme" ? "twinkle" : "bengali"
+      });
       saveState();
       renderActivitiesList();
       document.getElementById("newRhymeTitle").value = "";
       document.getElementById("newRhymeBody").value = "";
-      alert("✅ নতুন আইটেম সফলভাবে যুক্ত হয়েছে!");
+      document.getElementById("newRhymeSongUrl").value = "";
+      alert("✅ নতুন ছড়া ও গান সফলভাবে যুক্ত হয়েছে!");
     });
 
     document.getElementById("btnAddNewDay").addEventListener("click", () => {
@@ -1471,9 +1566,12 @@
       state.customLessons.push({
         day: nextDay, title, bn, en, num: String(nextDay), stroke: bn,
         rhyme: `${bn} এবং ${en} উচ্চারণ অনুশীলন করো।`,
+        act1: `🖐️ আঙুলের ব্যায়াম: বাতাসে আঙুল ঘুরিয়ে '${bn}' এবং '${en}' অক্ষর দুটি আঁকুন।`,
         q: `আজকের শেখা বাংলা বর্ণ কোনটি?`,
         opts: [bn, "অ", "ক"], ans: bn,
+        act2: `👏 তালি ও গণনা: ঠিক ${nextDay} বার হাতে তালি দিয়ে গুনুন।`,
         prompt: `🔍 '${bn}' দিয়ে একটি শব্দ বলো।`,
+        act3: `🎨 রঙ ও খোঁজা: ঘর থেকে '${bn}' বা '${en}' দিয়ে শুরু হওয়া জিনিস খুঁজে বের করুন।`,
         imgUrl
       });
       state.unlockedDays.push(nextDay);
