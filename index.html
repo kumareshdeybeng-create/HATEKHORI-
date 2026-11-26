@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -150,6 +149,53 @@
     .sound-char { font-size: 22px; font-weight: 700; color: var(--primary); }
     .sound-word { font-size: 11px; color: var(--muted); }
 
+    /* Category Pills for Kids Corner */
+    .cat-pills { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
+    .cat-btn {
+      padding: 7px 12px; border-radius: 99px; border: 1px solid #cbd5e1;
+      background: #f8fafc; font-family: inherit; font-size: 12px; font-weight: 700;
+      color: #475569; cursor: pointer;
+    }
+    .cat-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+    /* Activity & Rhymes Cards */
+    .rhyme-list { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 10px; }
+    .rhyme-card {
+      background: linear-gradient(135deg, #fffbeb, #fef3c7);
+      border: 1px solid #fcd34d;
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .rhyme-card.en-card { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-color: #93c5fd; }
+    .rhyme-card.yoga-card { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-color: #86efac; }
+    .rhyme-card.dance-card { background: linear-gradient(135deg, #fdf2f8, #fce7f3); border-color: #f9a8d4; }
+    .rhyme-card.recite-card { background: linear-gradient(135deg, #f5f3ff, #ede9fe); border-color: #c4b5fd; }
+
+    .rhyme-header { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .rhyme-title { font-size: 16px; font-weight: 700; color: #92400e; margin: 0; }
+    .en-card .rhyme-title { color: #1e40af; }
+    .yoga-card .rhyme-title { color: #166534; }
+    .dance-card .rhyme-title { color: #9d174d; }
+    .recite-card .rhyme-title { color: #5b21b6; }
+
+    .rhyme-badge {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      padding: 2px 8px; border-radius: 99px; background: rgba(255,255,255,0.85); color: #334155;
+      width: fit-content;
+    }
+    .rhyme-lines {
+      font-size: 14px;
+      line-height: 1.65;
+      color: #1e293b;
+      white-space: pre-line;
+      background: rgba(255,255,255,0.8);
+      padding: 10px 12px;
+      border-radius: 10px;
+    }
+
     /* Worksheet 8-Block */
     .sheet-a4 {
       background: #fff; border: 2px solid #1e293b; border-radius: 8px; padding: 14px;
@@ -187,7 +233,7 @@
 
     /* Modals */
     .modal-backdrop {
-      position: fixed; inset: 0; background: rgba(15,23,42,0.72);
+      position: fixed; inset: 0; background: rgba(15,23,42,0.75);
       display: none; align-items: center; justify-content: center;
       padding: 16px; z-index: 200;
     }
@@ -198,6 +244,33 @@
     }
     .progress-bar { width: 100%; height: 10px; background: #e2e8f0; border-radius: 99px; overflow: hidden; margin: 12px 0; }
     .progress-fill { height: 100%; background: #0f766e; width: 0%; transition: width 0.3s; }
+
+    /* Custom Sponsor Banner inside Post-Rhyme Modal */
+    .sponsor-box {
+      background: linear-gradient(135deg, #f0fdfa, #ccfbf1);
+      border: 2px solid #0f766e;
+      border-radius: 14px;
+      padding: 14px;
+      margin: 12px 0;
+      text-align: center;
+    }
+    .sponsor-tag {
+      display: inline-block;
+      background: #0f766e;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 99px;
+      margin-bottom: 6px;
+    }
+    .sponsor-img {
+      max-width: 100%;
+      max-height: 170px;
+      border-radius: 10px;
+      margin: 6px 0;
+      object-fit: cover;
+    }
 
     @media print {
       body { background: #fff; padding: 0; }
@@ -263,9 +336,14 @@
         <div class="step-item" id="stepBox1">
           <input type="checkbox" class="step-chk" id="chk1" />
           <div class="step-body">
-            <div class="step-tag">ধাপ ১ (৫ মিনিট) • ছড়া ও উচ্চারণ</div>
+            <div class="step-tag">ধাপ ১ (৫ মিনিট) • ছড়া ও উচ্চারণ (অ–ঔ ও A–Z)</div>
             <div class="step-text" id="rhymeText">"অ-তে অজগর আসছে তেড়ে • A for Apple (অ্যা-পল)"</div>
-            <button class="btn btn-yellow" style="padding:6px 12px;font-size:12px;" id="btnPlayAudio">🔊 ছড়া শুনুন</button>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;">
+              <button class="btn btn-yellow" style="padding:6px 12px;font-size:12px;" id="btnPlayAudio">🔊 আজকের ছড়া শুনুন</button>
+              <button class="btn" style="background:#ccfbf1;color:#0f766e;padding:6px 10px;font-size:12px;" id="btnPlayAllBn">🇧🇩 পুরো অ–ঔ শুনুন</button>
+              <button class="btn" style="background:#dbeafe;color:#1e40af;padding:6px 10px;font-size:12px;" id="btnPlayAllEn">🇬🇧 পুরো A–Z শুনুন</button>
+            </div>
+            <div id="fullAlphabetBox" style="display:none;margin-top:10px;padding:10px;background:#f8fafc;border:1px solid #cbd5e1;border-radius:10px;font-size:13px;line-height:1.65;"></div>
           </div>
         </div>
 
@@ -290,7 +368,7 @@
       </div>
     </section>
 
-    <!-- TAB 2: TRACING & PHONICS -->
+    <!-- TAB 2: TRACING, RHYMES, YOGA, DANCE & RECITATION -->
     <section class="tab-pane" id="tab-tracing">
       <div class="card">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
@@ -330,6 +408,28 @@
       <div class="card">
         <h3 class="section-title">ফনিক্স ও বর্ণমালা সাউন্ডবোর্ড (ট্যাপ করে শুনুন)</h3>
         <div class="sound-grid" id="soundGrid"></div>
+      </div>
+
+      <!-- MULTI-CATEGORY KIDS CORNER: BN RHYMES, EN RHYMES, YOGA, DANCE, RECITATION -->
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <h3 class="section-title" style="margin:0;">🎭 ছড়া, যোগব্যায়াম, নাচ ও আবৃত্তি</h3>
+            <p class="section-sub" style="margin:2px 0 4px;">পছন্দের বিভাগ বেছে নিয়ে '🔊 শুনুন ও করুন' বাটনে চাপুন</p>
+          </div>
+          <button class="btn" style="background:#fee2e2;color:#b91c1c;padding:6px 10px;font-size:12px;" onclick="stopSpeech()">⏹️ থামুন</button>
+        </div>
+
+        <div class="cat-pills" id="activityCatPills">
+          <button class="cat-btn active" data-cat="all">সবগুলো</button>
+          <button class="cat-btn" data-cat="bn_rhyme">🇧🇩 বাংলা ছড়া</button>
+          <button class="cat-btn" data-cat="en_rhyme">🇬🇧 English Rhymes</button>
+          <button class="cat-btn" data-cat="yoga">🧘 যোগব্যায়াম</button>
+          <button class="cat-btn" data-cat="dance">💃 নাচ ও ছন্দ</button>
+          <button class="cat-btn" data-cat="recite">🎙️ আবৃত্তি</button>
+        </div>
+
+        <div class="rhyme-list" id="rhymeListContainer"></div>
       </div>
     </section>
 
@@ -378,24 +478,47 @@
 
       <div class="card" style="background:#f1f5f9;">
         <h3 class="section-title">⚙️ Admin / Creator Studio (শিক্ষক প্যানেল)</h3>
-        <p class="section-sub">নতুন ওয়ার্কশিট আপলোড, UPI পেমেন্ট লিংক, বিজ্ঞাপন ও পিন পরিবর্তন করতে লগইন করুন।</p>
+        <p class="section-sub">নতুন ওয়ার্কশিট, ছড়া/যোগব্যায়াম/নাচ/আবৃত্তি, নিজস্ব ব্যানার, Monetag লিংক ও পিন পরিবর্তন করুন।</p>
         <button class="btn" style="background:#1e293b;color:#fff;width:100%;" id="btnOpenAdmin">🔐 Admin Studio খুলুন</button>
 
         <div id="adminPanel" style="display:none;margin-top:14px;border-top:1px solid #cbd5e1;padding-top:14px;">
-          <h4 style="margin:0 0 8px;">১. পেমেন্ট ও বিজ্ঞাপন লিংক সেটিংস</h4>
+          <h4 style="margin:0 0 8px;">১. পেমেন্ট ও Monetag বিজ্ঞাপন লিংক</h4>
           <label style="font-size:12px;font-weight:700;">₹৯৯ পেমেন্ট / UPI লিংক:</label>
           <input type="text" id="adminPayLink" placeholder="upi://pay?pa=..." style="margin-bottom:8px;" />
-          <label style="font-size:12px;font-weight:700;">Rewarded Ad লিংক (Monetag / Adsterra):</label>
+          <label style="font-size:12px;font-weight:700;">Monetag / Adsterra Direct Link:</label>
           <input type="text" id="adminAdLink" placeholder="https://..." style="margin-bottom:8px;" />
-          <button class="btn btn-primary" id="btnSaveMonetization" style="margin-bottom:14px;">Save Payment & Ad Links</button>
+          <button class="btn btn-primary" id="btnSaveMonetization" style="margin-bottom:14px;">Save Payment & Monetag Links</button>
 
-          <h4 style="margin:0 0 8px;">২. Admin PIN পরিবর্তন করুন</h4>
+          <h4 style="margin:0 0 8px;">২. ছড়া ও অ্যাক্টিভিটির পর নিজস্ব বিজ্ঞাপন ব্যানার</h4>
+          <label style="font-size:12px;font-weight:700;">নিজস্ব বিজ্ঞাপনের শিরোনাম:</label>
+          <input type="text" id="adminCustomAdTitle" placeholder="যেমন: হাতেখড়ি প্রিন্টেড ওয়ার্কশিট বই" style="margin-bottom:8px;" />
+          <label style="font-size:12px;font-weight:700;">বিজ্ঞাপনের বিবরণ / অফার মেসেজ:</label>
+          <textarea id="adminCustomAdDesc" rows="2" placeholder="যেমন: ঘরে বসে কুরিয়ারে পান ১০০ পাতার রঙিন ওয়ার্কশিট বুক!" style="margin-bottom:8px;"></textarea>
+          <label style="font-size:12px;font-weight:700;">ব্যানার ছবির লিংক (ঐচ্ছিক - Google Drive / ImgBB):</label>
+          <input type="text" id="adminCustomAdImg" placeholder="https://..." style="margin-bottom:8px;" />
+          <label style="font-size:12px;font-weight:700;">বিজ্ঞাপনের বাটন লিংক (WhatsApp / Website / Monetag):</label>
+          <input type="text" id="adminCustomAdUrl" placeholder="https://wa.me/918250912381 বা আপনার লিংক" style="margin-bottom:8px;" />
+          <button class="btn btn-yellow" style="width:100%;margin-bottom:14px;" id="btnSaveCustomAd">Save Custom Sponsor Ad</button>
+
+          <h4 style="margin:0 0 8px;">৩. Admin PIN পরিবর্তন করুন</h4>
           <div style="display:flex;gap:8px;margin-bottom:14px;">
             <input type="text" id="adminNewPin" placeholder="নতুন ৪-সংখ্যার PIN লিখুন" maxlength="8" />
             <button class="btn" style="background:#0f172a;color:#fff;width:auto;white-space:nowrap;" id="btnChangePin">Change PIN</button>
           </div>
 
-          <h4 style="margin:0 0 8px;">৩. নতুন দিনের ওয়ার্কশিট যোগ করুন (Day 31+)</h4>
+          <h4 style="margin:0 0 8px;">৪. নতুন ছড়া / যোগব্যায়াম / নাচ / আবৃত্তি যোগ করুন</h4>
+          <select id="newActivityCat" style="margin-bottom:8px;">
+            <option value="bn_rhyme">🇧🇩 বাংলা ছড়া (Bengali Rhyme)</option>
+            <option value="en_rhyme">🇬🇧 ইংরেজি ছড়া (English Rhyme)</option>
+            <option value="yoga">🧘 যোগব্যায়াম (Kids Yoga)</option>
+            <option value="dance">💃 নাচ ও ছন্দ (Dance & Action)</option>
+            <option value="recite">🎙️ আবৃত্তি (Recitation)</option>
+          </select>
+          <input type="text" id="newRhymeTitle" placeholder="শিরোনাম লিখুন (যেমন: প্রজাপতি প্রজাপতি বা বৃক্ষাসন)" style="margin-bottom:8px;" />
+          <textarea id="newRhymeBody" rows="3" placeholder="ছড়ার লাইন বা যোগব্যায়াম/নাচের নিয়ম এখানে লিখুন..." style="margin-bottom:8px;"></textarea>
+          <button class="btn btn-yellow" style="width:100%;margin-bottom:14px;" id="btnAddNewRhyme">+ নতুন আইটেম যুক্ত করুন</button>
+
+          <h4 style="margin:0 0 8px;">৫. নতুন দিনের ওয়ার্কশিট যোগ করুন (Day 31+)</h4>
           <input type="text" id="newDayTitle" placeholder="পাঠের শিরোনাম (যেমন: 'খ' ও 'C' শেখা)" style="margin-bottom:8px;" />
           <input type="text" id="newDayBn" placeholder="বাংলা বর্ণ (যেমন: খ)" style="margin-bottom:8px;" />
           <input type="text" id="newDayEn" placeholder="ইংরেজি অক্ষর (যেমন: C)" style="margin-bottom:8px;" />
@@ -410,10 +533,30 @@
   <!-- Bottom Navigation -->
   <nav class="bottom-nav">
     <button class="nav-btn active" data-target="tab-daily"><span class="nav-icon">📅</span>আজকের পাঠ</button>
-    <button class="nav-btn" data-target="tab-tracing"><span class="nav-icon">✏️</span>ট্রেসিং ও ধ্বনি</button>
+    <button class="nav-btn" data-target="tab-tracing"><span class="nav-icon">🎭</span>ছড়া ও ব্যায়াম</button>
     <button class="nav-btn" data-target="tab-print"><span class="nav-icon">🖨️</span>প্রিন্ট জোন</button>
     <button class="nav-btn" data-target="tab-guide"><span class="nav-icon">👑</span>গাইড ও প্রো</button>
   </nav>
+
+  <!-- Post-Rhyme Dual Ad Modal (Custom Sponsor Banner + Monetag Action) -->
+  <div class="modal-backdrop" id="postRhymeAdModal">
+    <div class="modal-box">
+      <div style="font-size:30px;">🎉</div>
+      <h3 style="margin:4px 0;">দারুণ! অনুশীলন সম্পন্ন হয়েছে</h3>
+      <p style="font-size:12px;color:#64748b;margin:0 0 8px;">অভিভাবকদের জন্য বিশেষ তথ্য ও স্পন্সর বার্তা:</p>
+
+      <div class="sponsor-box" id="customSponsorCard">
+        <span class="sponsor-tag">SPONSORED / বিশেষ অফার</span>
+        <h4 style="margin:4px 0;color:#0f766e;font-size:16px;" id="displayCustomAdTitle">👑 হাতেখড়ি Pro — সব ৩০ দিন আনলক করুন!</h4>
+        <img id="displayCustomAdImg" class="sponsor-img" style="display:none;" alt="Sponsor Banner" />
+        <p style="font-size:13px;color:#1e293b;margin:6px 0 10px;" id="displayCustomAdDesc">কোনো বিজ্ঞাপন ছাড়াই Day 1 থেকে Day 30 পর্যন্ত সব ওয়ার্কশিট ও A4 প্রিন্ট আনলক করুন মাত্র ₹৯৯ টাকায়।</p>
+        <a id="displayCustomAdBtn" href="#" target="_blank" class="btn btn-primary" style="text-decoration:none;font-size:13px;">👉 বিস্তারিত দেখুন</a>
+      </div>
+
+      <button class="btn btn-yellow" style="width:100%;margin-bottom:8px;" id="btnRhymeMonetagContinue">🎬 পরবর্তী পাঠ আনলক করুন (Continue)</button>
+      <button class="btn" style="background:#e2e8f0;width:100%;font-size:12px;padding:8px;" id="btnCloseRhymeAd">বন্ধ করুন</button>
+    </div>
+  </div>
 
   <!-- Unlock / Ad Modal -->
   <div class="modal-backdrop" id="unlockModal">
@@ -452,20 +595,46 @@
   </div>
 
   <script>
-    // 1. CURRICULUM DATA (30 DAYS)
+    // FULL BENGALI SWARABORNO (অ - ঔ) & ENGLISH ALPHABET (A - Z) CHANTS
+    const FULL_BN_SWARABORNO = "অ-তে অজগর আসছে তেড়ে। আ-তে আমটি আমি খাব পেড়ে। ই-তে ইঁদুর ছানা ভয়ে মরে। ঈ-তে ঈগল পাখি পাছে ধরে। উ-তে উট চলেছে মুখটি তুলে। ঊ-তে ঊষা হাসে পুব আকাশে। ঋ-তে ঋষি মশাই বসেন পূজায়। এ-তে এক্কাগাড়ি খুব ছুটেছে। ঐ-তে ঐরাবতটি আসছে তেড়ে। ও-তে ওল খেও না ধরবে গলা। ঔ-তে ঔষধ খেতে মিছে বলা।";
+
+    const FULL_EN_ALPHABET = "A for Apple, B for Ball, C for Cat, D for Dog, E for Elephant, F for Fish, G for Grapes, H for Hen, I for Ice-cream, J for Jug, K for Kite, L for Lion, M for Mango, N for Nest, O for Orange, P for Parrot, Q for Queen, R for Rabbit, S for Sun, T for Tiger, U for Umbrella, V for Van, W for Watch, X for Xylophone, Y for Yak, Z for Zebra.";
+
+    // 1. CURRICULUM DATA (30 DAYS WITH BENGALI (অ-ঔ) & ENGLISH (A-Z) RHYMES)
     const defaultLessons = [
-      { day: 1, title: "Standing Line, ইংরেজি 'A' ও বাংলা 'অ', সংখ্যা 1", bn: "অ", en: "A", num: "1", stroke: "|", rhyme: "অ-তে অজগর আসছে তেড়ে • A for Apple (অ্যা-পল)", q: "নিচের কোনটি আজকের শেখা বাংলা বর্ণ?", opts: ["অ", "ক", "ম"], ans: "অ", prompt: "🔍 বাড়িতে লাল রঙের কোনো ফল বা খেলনা দেখিয়ে শিশুকে জিজ্ঞেস করুন—এর রঙ কী?" },
-      { day: 2, title: "Sleeping Line, ইংরেজি 'B' ও বাংলা 'আ', সংখ্যা 2", bn: "আ", en: "B", num: "2", stroke: "—", rhyme: "আ-তে আমটি আমি খাব পেড়ে • B for Ball (ব-ল)", q: "B দিয়ে কোন শব্দটি শুরু হয়?", opts: ["Ball", "Apple", "Cat"], ans: "Ball", prompt: "🔍 দুটি হাতের আঙুল গুনে শিশুকে '১, ২' বলতে শেখান।" },
-      { day: 3, title: "Slanting Line, ইংরেজি 'C' ও বাংলা 'ই', সংখ্যা 3", bn: "ই", en: "C", num: "3", stroke: "O", rhyme: "ই-তে ইঁদুর ছানা ভয়ে মরে • C for Cat (ক্যা-ট)", q: "নিচের কোনটি 'C' অক্ষর?", opts: ["C", "O", "A"], ans: "C", prompt: "🔍 বিড়াল কেমন করে ডাকে তা শিশুকে নকল করে দেখাতে বলুন।" }
+      { day: 1, title: "Standing Line, ইংরেজি 'A' ও বাংলা 'অ', সংখ্যা 1", bn: "অ", en: "A", num: "1", stroke: "|", rhyme: "অ-তে অজগর আসছে তেড়ে। • A for Apple (অ্যা-পল)", q: "নিচের কোনটি আজকের শেখা বাংলা বর্ণ?", opts: ["অ", "ক", "ম"], ans: "অ", prompt: "🔍 বাড়িতে লাল রঙের কোনো ফল বা খেলনা দেখিয়ে শিশুকে জিজ্ঞেস করুন—এর রঙ কী?" },
+      { day: 2, title: "Sleeping Line, ইংরেজি 'B' ও বাংলা 'আ', সংখ্যা 2", bn: "আ", en: "B", num: "2", stroke: "—", rhyme: "আ-তে আমটি আমি খাব পেড়ে। • B for Ball (ব-ল)", q: "B দিয়ে কোন শব্দটি শুরু হয়?", opts: ["Ball", "Apple", "Cat"], ans: "Ball", prompt: "🔍 দুটি হাতের আঙুল গুনে শিশুকে '১, ২' বলতে শেখান।" },
+      { day: 3, title: "Slanting Line, ইংরেজি 'C' ও বাংলা 'ই', সংখ্যা 3", bn: "ই", en: "C", num: "3", stroke: "O", rhyme: "ই-তে ইঁদুর ছানা ভয়ে মরে। • C for Cat (ক্যা-ট)", q: "নিচের কোনটি 'C' অক্ষর?", opts: ["C", "O", "A"], ans: "C", prompt: "🔍 বিড়াল কেমন করে ডাকে তা শিশুকে নকল করে দেখাতে বলুন।" }
     ];
 
     const extraTopics = [
-      ["D", "ঈ", "4"], ["E", "উ", "5"], ["F", "ঊ", "6"], ["G", "ঋ", "7"], ["H", "এ", "8"],
-      ["I", "ঐ", "9"], ["J", "ও", "10"], ["K", "ঔ", "1"], ["L", "ক", "2"], ["M", "খ", "3"],
-      ["N", "গ", "4"], ["O", "ঘ", "5"], ["P", "চ", "6"], ["Q", "ছ", "7"], ["R", "জ", "8"],
-      ["S", "ঝ", "9"], ["T", "ট", "10"], ["U", "ঠ", "1"], ["V", "ড", "2"], ["W", "ঢ", "3"],
-      ["X", "ত", "4"], ["Y", "থ", "5"], ["Z", "দ", "6"], ["A-E রিভিশন", "ধ", "7"],
-      ["F-J রিভিশন", "ন", "8"], ["K-O রিভিশন", "প", "9"], ["P-T রিভিশন", "ফ", "10"]
+      ["D", "ঈ", "4", "ঈ-তে ঈগল পাখি পাছে ধরে।", "D for Dog (ড-গ)"],
+      ["E", "উ", "5", "উ-তে উট চলেছে মুখটি তুলে।", "E for Elephant (এলিফ্যান্ট)"],
+      ["F", "ঊ", "6", "ঊ-তে ঊষা হাসে পুব আকাশে।", "F for Fish (ফি-শ)"],
+      ["G", "ঋ", "7", "ঋ-তে ঋষি মশাই বসেন পূজায়।", "G for Grapes (গ্রেপস)"],
+      ["H", "এ", "8", "এ-তে এক্কাগাড়ি খুব ছুটেছে।", "H for Hen (হে-ন)"],
+      ["I", "ঐ", "9", "ঐ-তে ঐরাবতটি আসছে তেড়ে।", "I for Ice-cream (আইসক্রিম)"],
+      ["J", "ও", "10", "ও-তে ওল খেও না ধরবে গলা।", "J for Jug (জা-গ)"],
+      ["K", "ঔ", "1", "ঔ-তে ঔষধ খেতে মিছে বলা।", "K for Kite (কাইট)"],
+      ["L", "অ-আ", "2", "অ-তে অজগর, আ-তে আমটি আমি খাব পেড়ে।", "L for Lion (লায়ন)"],
+      ["M", "ই-ঈ", "3", "ই-তে ইঁদুর ছানা, ঈ-তে ঈগল পাখি পাছে ধরে।", "M for Mango (ম্যাঙ্গো)"],
+      ["N", "উ-ঊ", "4", "উ-তে উট চলেছে, ঊ-তে ঊষা হাসে পুব আকাশে।", "N for Nest (নেস্ট)"],
+      ["O", "ঋ-এ", "5", "ঋ-তে ঋষি মশাই, এ-তে এক্কাগাড়ি খুব ছুটেছে।", "O for Orange (অরেঞ্জ)"],
+      ["P", "ঐ-ও-ঔ", "6", "ঐ-তে ঐরাবত, ও-তে ওল, ঔ-তে ঔষধ খেতে মিছে বলা।", "P for Parrot (প্যারট)"],
+      ["Q", "অ", "7", "অ-তে অজগর আসছে তেড়ে।", "Q for Queen (কুইন)"],
+      ["R", "আ", "8", "আ-তে আমটি আমি খাব পেড়ে।", "R for Rabbit (র‍্যাবিট)"],
+      ["S", "ই", "9", "ই-তে ইঁদুর ছানা ভয়ে মরে।", "S for Sun (সা-ন)"],
+      ["T", "ঈ", "10", "ঈ-তে ঈগল পাখি পাছে ধরে।", "T for Tiger (টাইগার)"],
+      ["U", "উ", "1", "উ-তে উট চলেছে মুখটি তুলে।", "U for Umbrella (আমব্রেলা)"],
+      ["V", "ঊ", "2", "ঊ-তে ঊষা হাসে পুব আকাশে।", "V for Van (ভ্যা-ন)"],
+      ["W", "ঋ", "3", "ঋ-তে ঋষি মশাই বসেন পূজায়।", "W for Watch (ওয়াচ)"],
+      ["X", "এ", "4", "এ-তে এক্কাগাড়ি খুব ছুটেছে।", "X for Xylophone (জাইলোফোন)"],
+      ["Y", "ঐ", "5", "ঐ-তে ঐরাবতটি আসছে তেড়ে।", "Y for Yak (ইয়াক)"],
+      ["Z", "ও-ঔ", "6", "ও-তে ওল খেও না, ঔ-তে ঔষধ খেতে মিছে বলা।", "Z for Zebra (জেব্রা)"],
+      ["A–G রিভিশন", "অ–ঈ", "7", "অ-তে অজগর, আ-তে আম, ই-তে ইঁদুর, ঈ-তে ঈগল।", "A for Apple থেকে G for Grapes পর্যন্ত বলো"],
+      ["H–N রিভিশন", "উ–এ", "8", "উ-তে উট, ঊ-তে ঊষা, ঋ-তে ঋষি, এ-তে এক্কাগাড়ি।", "H for Hen থেকে N for Nest পর্যন্ত বলো"],
+      ["O–U রিভিশন", "ঐ–ঔ", "9", "ঐ-তে ঐরাবত, ও-তে ওল, ঔ-তে ঔষধ।", "O for Orange থেকে U for Umbrella পর্যন্ত বলো"],
+      ["V–Z রিভিশন", "অ–ঔ", "10", "অ থেকে ঔ পর্যন্ত সব স্বরবর্ণ একসাথে বলো।", "V for Van থেকে Z for Zebra পর্যন্ত বলো"]
     ];
 
     extraTopics.forEach((item, idx) => {
@@ -473,15 +642,176 @@
       defaultLessons.push({
         day: d,
         title: `রেখা অনুশীলন, ইংরেজি '${item[0]}' ও বাংলা '${item[1]}', সংখ্যা ${item[2]}`,
-        bn: item[1], en: item[0], num: item[2], stroke: item[1],
-        rhyme: `বাংলা বর্ণ '${item[1]}' এবং ইংরেজি অক্ষর '${item[0]}' জোরে উচ্চারণ করো।`,
+        bn: item[1], en: item[0], num: item[2], stroke: item[1].charAt(0),
+        rhyme: `${item[3]} • ${item[4]}`,
         q: `আজকের পাঠের বাংলা বর্ণ কোনটি?`,
-        opts: [item[1], "অ", "ম"], ans: item[1],
+        opts: [item[1], "ক", "ম"], ans: item[1],
         prompt: `🔍 শিশুকে '${item[1]}' দিয়ে শুরু হয় এমন একটি পরিচিত জিনিসের নাম বলুন।`
       });
     });
 
-    // 2. HARDCODED DEFAULT MONETIZATION & ADMIN PIN
+    // MULTI-CATEGORY CONTENT: BENGALI RHYMES, ENGLISH RHYMES, YOGA, DANCE, RECITATION
+    const defaultActivities = [
+      // BENGALI RHYMES
+      {
+        cat: "bn_rhyme",
+        catLabel: "🇧🇩 বাংলা ছড়া",
+        title: "আতা গাছে তোতা পাখি",
+        body: "আতা গাছে তোতা পাখি,
+ডালিম গাছে মৌ।
+এত ডাকি তবু কথা,
+কও না কেন বউ?"
+      },
+      {
+        cat: "bn_rhyme",
+        catLabel: "🇧🇩 বাংলা ছড়া",
+        title: "আয় আয় চাঁদ মামা",
+        body: "আয় আয় চাঁদ মামা টিপ দিয়ে যা,
+চাঁদের কপালে চাঁদ টিপ দিয়ে যা।
+মাছ কাটলে মুড়ো দেব,
+ধান ভানলে কুঁড়ো দেব,
+কালো গরুর দুধ দেব,
+চাঁদের কপালে চাঁদ টিপ দিয়ে যা।"
+      },
+      {
+        cat: "bn_rhyme",
+        catLabel: "🇧🇩 বাংলা ছড়া",
+        title: "হাট্টিমাটিম টিম",
+        body: "হাট্টিমাটিম টিম,
+তারা মাঠে পাড়ে ডিম,
+তাদের খাড়া দুটো শিং,
+তারা হাট্টিমাটিম টিম।"
+      },
+      {
+        cat: "bn_rhyme",
+        catLabel: "🇧🇩 বাংলা ছড়া",
+        title: "নোটন নোটন পায়রাগুলি",
+        body: "নোটন নোটন পায়রাগুলি ঝোঁটন বেঁধেছে,
+ওপারেতে ছেলেমেয়ে নাইতে নেমেছে।
+দুই ধারে দুই রুই কাতলা ভেসে উঠেছে,
+কে দেখেছে কে দেখেছে দাদা দেখেছে।"
+      },
+
+      // ENGLISH RHYMES
+      {
+        cat: "en_rhyme",
+        catLabel: "🇬🇧 English Rhyme",
+        title: "Twinkle, Twinkle, Little Star",
+        body: "Twinkle, twinkle, little star,
+How I wonder what you are!
+Up above the world so high,
+Like a diamond in the sky."
+      },
+      {
+        cat: "en_rhyme",
+        catLabel: "🇬🇧 English Rhyme",
+        title: "Johny Johny Yes Papa",
+        body: "Johny, Johny, Yes, Papa?
+Eating sugar? No, Papa!
+Telling lies? No, Papa!
+Open your mouth, Ha! Ha! Ha!"
+      },
+      {
+        cat: "en_rhyme",
+        catLabel: "🇬🇧 English Rhyme",
+        title: "Baa, Baa, Black Sheep",
+        body: "Baa, baa, black sheep, have you any wool?
+Yes sir, yes sir, three bags full.
+One for the master, one for the dame,
+And one for the little boy who lives down the lane."
+      },
+      {
+        cat: "en_rhyme",
+        catLabel: "🇬🇧 English Rhyme",
+        title: "Humpty Dumpty",
+        body: "Humpty Dumpty sat on a wall,
+Humpty Dumpty had a great fall.
+All the king's horses and all the king's men,
+Couldn't put Humpty together again."
+      },
+
+      // KIDS YOGA (যোগব্যায়াম)
+      {
+        cat: "yoga",
+        catLabel: "🧘 যোগব্যায়াম (Kids Yoga)",
+        title: "১. বৃক্ষাসন (Tree Pose — গাছের মতো দাঁড়ানো)",
+        body: "নিয়ম: সোজা হয়ে দাঁড়িয়ে ডান পা ভাঁজ করে বাম উরুর ওপর রাখো। দুটি হাত নমস্কারের ভঙ্গিতে মাথার ওপর তোলো। গাছের মতো স্থির হয়ে ১০ পর্যন্ত গোনো। এতে মনোযোগ ও ভারসাম্য বাড়ে।"
+      },
+      {
+        cat: "yoga",
+        catLabel: "🧘 যোগব্যায়াম (Kids Yoga)",
+        title: "২. প্রজাপতি আসন (Butterfly Pose)",
+        body: "নিয়ম: মেঝেতে বসে দুই পায়ের পাতা একসাথে জোড়া লাগাও। দুই হাত দিয়ে পায়ের আঙুল ধরে প্রজাপতির ডানার মতো হাঁটু দুটো ওপর-নিচ করো। ১৫ বার ডানা ঝাপটাও!"
+      },
+      {
+        cat: "yoga",
+        catLabel: "🧘 যোগব্যায়াম (Kids Yoga)",
+        title: "৩. সিংহাসন ও বেলুন শ্বাস (Lion & Balloon Breath)",
+        body: "নিয়ম: নাক দিয়ে লম্বা শ্বাস নিয়ে পেটটাকে বড় বেলুনের মতো ফোলাও। এবার মুখ হাঁ করে জিভ বের করে সিংহের মতো 'হাঁ...' শব্দ করে শ্বাস ছাড়ো। ৩ বার করো।"
+      },
+
+      // DANCE & ACTION SONGS (নাচ ও ছন্দ)
+      {
+        cat: "dance",
+        catLabel: "💃 নাচ ও ছন্দ (Dance & Action)",
+        title: "১. প্রজাপতি নাচ (হাত নেড়ে ও পায়ের তালে)",
+        body: "গানের তালে তালে নাচো:
+প্রজাপতি, প্রজাপতি,
+কোথায় পেলে ভাই এমন রঙিন পাখা!
+(দুই হাত ডানার মতো মেলে ঘরের চারপাশে ঘুরে ঘুরে নাচো ও তালি দাও!)"
+      },
+      {
+        cat: "dance",
+        catLabel: "💃 নাচ ও ছন্দ (Dance & Action)",
+        title: "২. If You're Happy and You Know It (Action Dance)",
+        body: "If you're happy and you know it, clap your hands! (দুই হাতে তালি দাও)
+If you're happy and you know it, stomp your feet! (মাটিতে পা ঠোকো)
+If you're happy and you know it, turn around! (এক পাক ঘুরে নাচো)"
+      },
+      {
+        cat: "dance",
+        catLabel: "💃 নাচ ও ছন্দ (Dance & Action)",
+        title: "৩. আগডুম বাগডুম ঘোড়াডুম সাজে",
+        body: "আগডুম বাগডুম ঘোড়াডুম সাজে,
+ঢাক মৃদং ঝাঁঝর বাজে।
+বাজতে বাজতে চলল ঢুলি,
+ঢুলি গেল সেই কমলাফুলি।
+(ঘোড়ার মতো লাফিয়ে লাফিয়ে তালে তালে পা ফেলে নাচো!)"
+      },
+
+      // RECITATION (আবৃত্তি)
+      {
+        cat: "recite",
+        catLabel: "🎙️ আবৃত্তি (Recitation)",
+        title: "১. আমাদের ছোট নদী — রবীন্দ্রনাথ ঠাকুর",
+        body: "আমাদের ছোট নদী চলে বাঁকে বাঁকে,
+বৈশাখ মাসে তার হাঁটু জল থাকে।
+পার হয়ে যায় গরু, পার হয় গাড়ি,
+দুই ধার উঁচু তার, ঢালু তার পাড়ি।"
+      },
+      {
+        cat: "recite",
+        catLabel: "🎙️ আবৃত্তি (Recitation)",
+        title: "২. কাজলা দিদি — যতীন্দ্রমোহন বাগচী",
+        body: "বাঁশ বাগানের মাথার ওপর চাঁদ উঠেছে ওই,
+মাগো আমার শোলক বলা কাজলা দিদি কই?
+পুকুর ধারে নেবুর তলে থোকায় থোকায় জোনাই জ্বলে,
+ফুলের গন্ধে ঘুম আসে না একলা জেগে রই।"
+      },
+      {
+        cat: "recite",
+        catLabel: "🎙️ আবৃত্তি (Recitation)",
+        title: "৩. তালগাছ — রবীন্দ্রনাথ ঠাকুর",
+        body: "তালগাছ এক পায়ে দাঁড়িয়ে,
+সব গাছ ছাড়িয়ে,
+উঁকি মারে আকাশে।
+মনে সাধ কালো মেঘ ফুঁড়ে যায়,
+একবারে উড়ে যায়,
+কোথা পাবে পাখা সে!"
+      }
+    ];
+
+    // 2. HARDCODED DEFAULT MONETIZATION, CUSTOM SPONSOR AD & ADMIN PIN
     const DEFAULT_PAY_LINK = "upi://pay?pa=8250912381@ikwik&pn=HateKhori&am=99&cu=INR";
     const DEFAULT_AD_LINK = "https://uplcm.com/4/12355529";
     const DEFAULT_ADMIN_PIN = "1234";
@@ -493,9 +823,15 @@
     state.completedDays = state.completedDays || [];
     state.childName = state.childName || "সোনামণি";
     state.customLessons = state.customLessons || [];
+    state.customActivities = state.customActivities || [];
     state.payLink = state.payLink || DEFAULT_PAY_LINK;
     state.adLink = state.adLink || DEFAULT_AD_LINK;
     state.adminPin = state.adminPin || DEFAULT_ADMIN_PIN;
+
+    state.customAdTitle = state.customAdTitle || "👑 হাতেখড়ি Pro — সব ৩০ দিন আনলক করুন!";
+    state.customAdDesc = state.customAdDesc || "কোনো বিজ্ঞাপন ছাড়াই Day 1 থেকে Day 30 পর্যন্ত সব ওয়ার্কশিট ও A4 প্রিন্ট শিট আনলক করুন মাত্র ₹৯৯ টাকায়।";
+    state.customAdImg = state.customAdImg || "";
+    state.customAdUrl = state.customAdUrl || DEFAULT_PAY_LINK;
 
     function saveState() {
       localStorage.setItem("hatekhori_state", JSON.stringify(state));
@@ -506,8 +842,13 @@
       return [...defaultLessons, ...state.customLessons];
     }
 
+    function getAllActivities() {
+      return [...defaultActivities, ...state.customActivities];
+    }
+
     let currentDay = 1;
     let pendingUnlockDay = null;
+    let activeActivityCat = "all";
 
     // 3. UI RENDERING
     function updateHeaderUI() {
@@ -523,6 +864,70 @@
         badge.classList.remove("pro");
       }
       document.getElementById("payExternalLink").href = state.payLink;
+    }
+
+    function getCardClassByCat(cat) {
+      if (cat === "en_rhyme") return "en-card";
+      if (cat === "yoga") return "yoga-card";
+      if (cat === "dance") return "dance-card";
+      if (cat === "recite") return "recite-card";
+      return "";
+    }
+
+    function renderActivitiesList() {
+      const container = document.getElementById("rhymeListContainer");
+      const allItems = getAllActivities();
+      const filtered = activeActivityCat === "all"
+        ? allItems
+        : allItems.filter(item => item.cat === activeActivityCat);
+
+      container.innerHTML = filtered.map((item) => {
+        const realIndex = allItems.indexOf(item);
+        const cardCls = getCardClassByCat(item.cat);
+        return `
+          <div class="rhyme-card ${cardCls}">
+            <span class="rhyme-badge">${item.catLabel}</span>
+            <div class="rhyme-header">
+              <h4 class="rhyme-title">${item.title}</h4>
+              <button class="btn btn-yellow" style="padding:6px 12px;font-size:12px;white-space:nowrap;" onclick="playActivityByIndex(${realIndex})">🔊 শুনুন</button>
+            </div>
+            <div class="rhyme-lines">${item.body}</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function triggerPostRhymeAd() {
+      if (state.isPro) return;
+      document.getElementById("displayCustomAdTitle").textContent = state.customAdTitle;
+      document.getElementById("displayCustomAdDesc").textContent = state.customAdDesc;
+      const imgEl = document.getElementById("displayCustomAdImg");
+      if (state.customAdImg) {
+        imgEl.src = state.customAdImg;
+        imgEl.style.display = "inline-block";
+      } else {
+        imgEl.style.display = "none";
+      }
+      const btnEl = document.getElementById("displayCustomAdBtn");
+      btnEl.href = state.customAdUrl || state.payLink;
+
+      document.getElementById("postRhymeAdModal").classList.add("open");
+    }
+
+    function playActivityByIndex(idx) {
+      const item = getAllActivities()[idx];
+      if (item) {
+        speakText(item.body.replace(/
+/g, " "), () => {
+          triggerPostRhymeAd();
+        });
+      }
+    }
+
+    function stopSpeech() {
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
     }
 
     function populateDayDropdown() {
@@ -610,13 +1015,21 @@
       drawGuide();
     }
 
-    // 4. SPEECH / AUDIO
-    function speakText(txt) {
-      if (!("speechSynthesis" in window)) return;
+    // 4. SPEECH / AUDIO WITH AUTO LANGUAGE DETECTION & ON-END CALLBACK
+    function speakText(txt, onEndCallback) {
+      if (!("speechSynthesis" in window)) {
+        if (onEndCallback) setTimeout(onEndCallback, 2500);
+        return;
+      }
       window.speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(txt);
       u.lang = /[ঀ-৿]/.test(txt) ? "bn-IN" : "en-US";
-      u.rate = 0.9;
+      u.rate = 0.88;
+      if (onEndCallback) {
+        u.onend = () => {
+          onEndCallback();
+        };
+      }
       window.speechSynthesis.speak(u);
     }
 
@@ -709,11 +1122,50 @@
       btn.addEventListener("click", () => switchTab(btn.dataset.target));
     });
 
+    // Category filter pills
+    document.querySelectorAll("#activityCatPills .cat-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#activityCatPills .cat-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeActivityCat = btn.dataset.cat;
+        renderActivitiesList();
+      });
+    });
+
     document.getElementById("btnGoTracing").addEventListener("click", () => switchTab("tab-tracing"));
     document.getElementById("btnGoPrint").addEventListener("click", () => switchTab("tab-print"));
     document.getElementById("btnPrintSheet").addEventListener("click", () => window.print());
     document.getElementById("btnPlayAudio").addEventListener("click", () => {
-      speakText(document.getElementById("rhymeText").textContent);
+      speakText(document.getElementById("rhymeText").textContent, () => {
+        triggerPostRhymeAd();
+      });
+    });
+
+    document.getElementById("btnPlayAllBn").addEventListener("click", () => {
+      const box = document.getElementById("fullAlphabetBox");
+      box.style.display = "block";
+      box.innerHTML = `<strong>🇧🇩 স্বরবর্ণ ছড়া (অ – ঔ):</strong><br/>${FULL_BN_SWARABORNO}`;
+      speakText(FULL_BN_SWARABORNO, () => {
+        triggerPostRhymeAd();
+      });
+    });
+
+    document.getElementById("btnPlayAllEn").addEventListener("click", () => {
+      const box = document.getElementById("fullAlphabetBox");
+      box.style.display = "block";
+      box.innerHTML = `<strong>🇬🇧 English Alphabet (A – Z):</strong><br/>${FULL_EN_ALPHABET}`;
+      speakText(FULL_EN_ALPHABET, () => {
+        triggerPostRhymeAd();
+      });
+    });
+
+    // Post-Rhyme Dual Ad Modal Buttons
+    document.getElementById("btnRhymeMonetagContinue").addEventListener("click", () => {
+      if (state.adLink) window.open(state.adLink, "_blank");
+      document.getElementById("postRhymeAdModal").classList.remove("open");
+    });
+    document.getElementById("btnCloseRhymeAd").addEventListener("click", () => {
+      document.getElementById("postRhymeAdModal").classList.remove("open");
     });
 
     ["chk1", "chk2", "chk3"].forEach((id, i) => {
@@ -827,6 +1279,10 @@
         document.getElementById("adminPanel").style.display = "block";
         document.getElementById("adminPayLink").value = state.payLink;
         document.getElementById("adminAdLink").value = state.adLink;
+        document.getElementById("adminCustomAdTitle").value = state.customAdTitle;
+        document.getElementById("adminCustomAdDesc").value = state.customAdDesc;
+        document.getElementById("adminCustomAdImg").value = state.customAdImg;
+        document.getElementById("adminCustomAdUrl").value = state.customAdUrl;
       } else if (pin !== null) {
         alert("❌ ভুল পিন!");
       }
@@ -836,7 +1292,16 @@
       state.payLink = document.getElementById("adminPayLink").value.trim() || DEFAULT_PAY_LINK;
       state.adLink = document.getElementById("adminAdLink").value.trim() || DEFAULT_AD_LINK;
       saveState();
-      alert("✅ পেমেন্ট ও অ্যাড লিংক সেভ হয়েছে!");
+      alert("✅ পেমেন্ট ও Monetag অ্যাড লিংক সেভ হয়েছে!");
+    });
+
+    document.getElementById("btnSaveCustomAd").addEventListener("click", () => {
+      state.customAdTitle = document.getElementById("adminCustomAdTitle").value.trim() || "👑 হাতেখড়ি Pro — সব ৩০ দিন আনলক করুন!";
+      state.customAdDesc = document.getElementById("adminCustomAdDesc").value.trim() || "কোনো বিজ্ঞাপন ছাড়াই সব ৩০ দিনের ওয়ার্কশিট আনলক করুন।";
+      state.customAdImg = document.getElementById("adminCustomAdImg").value.trim();
+      state.customAdUrl = document.getElementById("adminCustomAdUrl").value.trim() || state.payLink;
+      saveState();
+      alert("✅ নিজস্ব স্পন্সর বিজ্ঞাপন ব্যানার সেভ হয়েছে!");
     });
 
     document.getElementById("btnChangePin").addEventListener("click", () => {
@@ -849,6 +1314,21 @@
       } else {
         alert("❌ কমপক্ষে ৪ সংখ্যার নতুন PIN দিন!");
       }
+    });
+
+    document.getElementById("btnAddNewRhyme").addEventListener("click", () => {
+      const catSel = document.getElementById("newActivityCat");
+      const cat = catSel.value;
+      const catLabel = catSel.options[catSel.selectedIndex].text;
+      const title = document.getElementById("newRhymeTitle").value.trim();
+      const body = document.getElementById("newRhymeBody").value.trim();
+      if (!title || !body) return alert("শিরোনাম ও বিবরণ/লাইনগুলো লিখুন!");
+      state.customActivities.push({ cat, catLabel, title, body });
+      saveState();
+      renderActivitiesList();
+      document.getElementById("newRhymeTitle").value = "";
+      document.getElementById("newRhymeBody").value = "";
+      alert("✅ নতুন আইটেম সফলভাবে যুক্ত হয়েছে!");
     });
 
     document.getElementById("btnAddNewDay").addEventListener("click", () => {
@@ -910,6 +1390,7 @@
 
     // Initialize
     loadDay(1);
+    renderActivitiesList();
   </script>
 </body>
 </html>
