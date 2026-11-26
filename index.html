@@ -1,0 +1,1568 @@
+```html
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>হাতেখড়ি (HateKhori) - Prothom Step Early Learning App</title>
+    <!-- PWA & Play Store / Home Screen Install Meta Tags -->
+    <meta name="theme-color" content="#0D9488">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="application-name" content="HateKhori">
+    <meta name="description" content="২.৫–৫ বছরের শিশুদের পড়ালেখার প্রথম হাতেখড়ি — ৮-ব্লক প্রিন্টেবল ওয়ার্কশিট, ফনিক্স ও ফ্রি ট্রেসিং অ্যাপ।">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%230D9488'/%3E%3Ccircle cx='256' cy='256' r='175' fill='%23FEF3C7'/%3E%3Ctext x='256' y='320' font-size='220' text-anchor='middle'%3E%E2%9C%8F%EF%B8%8F%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%230D9488'/%3E%3Ccircle cx='256' cy='256' r='175' fill='%23FEF3C7'/%3E%3Ctext x='256' y='320' font-size='220' text-anchor='middle'%3E%E2%9C%8F%EF%B8%8F%3C/text%3E%3C/svg%3E">
+
+    <!-- Google Fonts: Noto Sans Bengali & Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans Bengali"', '"Poppins"', 'sans-serif'],
+                        display: ['"Poppins"', '"Noto Sans Bengali"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FFFDF7;
+            color: #1E293B;
+            -webkit-tap-highlight-color: transparent;
+            overscroll-behavior-y: none;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        canvas { touch-action: none; }
+
+        @keyframes popIn {
+            0% { transform: scale(0.92); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-pop { animation: popIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+        /* Dedicated A4 Print Styling */
+        @media print {
+            @page { size: A4 portrait; margin: 8mm; }
+            body { background: #ffffff !important; padding: 0 !important; margin: 0 !important; }
+            .no-print { display: none !important; }
+            #tab-print { display: block !important; padding: 0 !important; margin: 0 !important; }
+            #a4-sheet-wrapper {
+                box-shadow: none !important;
+                border: none !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .ws-grid-print {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 6px !important;
+            }
+            .ws-block-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                border: 1.5px solid #64748b !important;
+                padding: 6px 8px !important;
+            }
+        }
+    </style>
+</head>
+<body class="pb-24 md:pb-10">
+
+    <!-- ========================================================= -->
+    <!-- TOP PWA 1-CLICK HOME SCREEN INSTALL BANNER                -->
+    <!-- ========================================================= -->
+    <div id="pwa-install-banner" class="no-print bg-gradient-to-r from-teal-700 via-teal-600 to-emerald-600 text-white px-3 py-2.5 shadow-sm">
+        <div class="max-w-4xl mx-auto flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-9 h-9 rounded-xl bg-amber-300 text-slate-900 flex items-center justify-center text-lg font-bold shrink-0 shadow-xs">
+                    ✏️
+                </div>
+                <div class="truncate">
+                    <div class="text-xs sm:text-sm font-bold truncate">হাতেখড়ি অ্যাপ ফোনে ইনস্টল করুন (₹০ ফ্রি)</div>
+                    <div class="text-[10px] sm:text-xs text-teal-100 truncate">Play Store ছাড়াই হোম স্ক্রিনে ১ ক্লিকে সেভ করুন</div>
+                </div>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+                <button id="pwa-install-btn" onclick="triggerPWAInstall()" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs px-3 py-2 rounded-xl shadow-xs transition active:scale-95">
+                    📲 Install App
+                </button>
+                <button onclick="dismissInstallBanner()" aria-label="Close banner" class="text-teal-100 hover:text-white p-1.5 text-xs font-bold">
+                    ✕
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- STICKY TOP HEADER & PROGRESS TRACKER                      -->
+    <!-- ========================================================= -->
+    <header class="no-print sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-amber-200/80 shadow-xs">
+        <div class="max-w-4xl mx-auto px-3 sm:px-5 py-2.5 flex items-center justify-between gap-2">
+            <!-- Brand & Child Name -->
+            <div class="flex items-center gap-2.5">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 text-white flex items-center justify-center text-xl shadow-xs shrink-0">
+                    🎒
+                </div>
+                <div>
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                        <h1 class="text-base sm:text-lg font-extrabold text-slate-900 leading-tight">হাতেখড়ি</h1>
+                        <span id="plan-badge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300">
+                            FREE (Days 1–7)
+                        </span>
+                    </div>
+                    <button onclick="openChildModal()" class="text-xs text-slate-500 hover:text-teal-700 font-medium flex items-center gap-1 mt-0.5">
+                        <span>শিক্ষার্থী: <strong id="header-child-name" class="text-slate-700">সোনামণি</strong></span>
+                        <span class="text-[10px] underline text-teal-600">(বদলান)</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stars & Current Day Pill -->
+            <div class="flex items-center gap-2">
+                <div class="bg-amber-50 border border-amber-200 px-2.5 py-1.5 rounded-xl flex items-center gap-1 shadow-2xs" title="অর্জিত স্টার">
+                    <span class="text-amber-500 text-sm">★</span>
+                    <span id="star-count" class="font-display font-extrabold text-sm text-amber-900">0</span>
+                </div>
+                <div class="bg-teal-50 border border-teal-200 text-teal-800 px-2.5 py-1.5 rounded-xl text-xs font-bold">
+                    <span id="header-day-badge">Day 1 / 30</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desktop Top Tab Navigation -->
+        <nav class="hidden md:flex max-w-4xl mx-auto px-5 pb-2.5 gap-2">
+            <button onclick="switchTab('daily')" data-tab="daily" class="nav-btn flex-1 py-2.5 px-4 rounded-xl text-sm font-bold bg-teal-600 text-white shadow-xs transition">
+                📅 আজকের পাঠ (15-Min)
+            </button>
+            <button onclick="switchTab('play')" data-tab="play" class="nav-btn flex-1 py-2.5 px-4 rounded-xl text-sm font-bold bg-slate-100 text-slate-600 hover:bg-amber-50 transition">
+                🎨 খেলার ছলে শেখা (Tracing)
+            </button>
+            <button onclick="switchTab('print')" data-tab="print" class="nav-btn flex-1 py-2.5 px-4 rounded-xl text-sm font-bold bg-slate-100 text-slate-600 hover:bg-amber-50 transition">
+                🖨️ প্রিন্ট জোন (8-Block A4)
+            </button>
+            <button onclick="switchTab('guide')" data-tab="guide" class="nav-btn flex-1 py-2.5 px-4 rounded-xl text-sm font-bold bg-slate-100 text-slate-600 hover:bg-amber-50 transition">
+                👨‍👩‍👧 গাইড ও প্রো (₹৯৯)
+            </button>
+        </nav>
+    </header>
+
+    <!-- ========================================================= -->
+    <!-- MAIN CONTENT CONTAINER                                    -->
+    <!-- ========================================================= -->
+    <main class="max-w-4xl mx-auto px-3 sm:px-5 pt-4">
+
+        <!-- ========================================================= -->
+        <!-- TAB 1: আজকের পাঠ (DAILY 15-MIN PLAN)                     -->
+        <!-- ========================================================= -->
+        <section id="tab-daily" class="tab-content no-print space-y-4">
+
+            <!-- Day Selector Card -->
+            <div class="bg-white rounded-2xl p-4 border border-amber-200 shadow-xs">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    <div>
+                        <h2 id="day-selector-heading" class="text-base sm:text-lg font-bold text-slate-800">দিনের পাঠ নির্বাচন করুন (Day 1 – 30)</h2>
+                        <p class="text-xs text-slate-500">দিন ১–৭ সম্পূর্ণ ফ্রি • পরের দিনগুলো ছোট বিজ্ঞাপন দেখে ফ্রি আনলক করুন</p>
+                    </div>
+                    <select id="day-select-dropdown" onchange="selectDay(parseInt(this.value))" class="bg-amber-50 border border-amber-300 text-slate-800 text-xs sm:text-sm font-bold rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                    </select>
+                </div>
+
+                <!-- Scrollable Day Pills -->
+                <div id="day-pills-container" class="flex gap-2 overflow-x-auto no-scrollbar py-1">
+                </div>
+            </div>
+
+            <!-- Active Lesson Hero Banner -->
+            <div class="bg-gradient-to-br from-teal-600 to-emerald-700 text-white rounded-3xl p-5 shadow-md relative overflow-hidden">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <span id="daily-banner-day" class="bg-white/20 backdrop-blur-xs text-white text-xs font-extrabold px-3 py-1 rounded-full">
+                        দিন ১ (Day 1)
+                    </span>
+                    <span class="text-xs text-teal-100 font-semibold">⏱️ দৈনিক সময়: মাত্র ১৫ মিনিট</span>
+                </div>
+                <h2 id="daily-banner-title" class="text-xl sm:text-2xl font-extrabold leading-snug">
+                    Standing Line, ইংরেজি 'A' ও বাংলা 'অ', সংখ্যা 1
+                </h2>
+                <p id="daily-banner-desc" class="text-xs sm:text-sm text-teal-100 mt-1">
+                    কোনো জোর না করে খেলার ছলে পেন্সিল গ্রিপ, ধ্বনি ও রঙের মাধ্যমে আজকের পাঠ শুরু করুন।
+                </p>
+
+                <div class="mt-4 flex flex-wrap gap-2">
+                    <button onclick="switchTab('play')" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl shadow-xs transition">
+                        ✏️ স্ক্রিনে ট্রেসিং করুন
+                    </button>
+                    <button onclick="switchTab('print')" class="bg-white/15 hover:bg-white/25 text-white border border-white/30 font-bold text-xs px-4 py-2.5 rounded-xl transition">
+                        🖨️ আজকের ৮-ব্লক শিট প্রিন্ট করুন
+                    </button>
+                </div>
+            </div>
+
+            <!-- 3-Step Daily Micro-Routine Checklist -->
+            <div class="space-y-3">
+                <h3 class="text-sm font-bold text-slate-700 px-1">আজকের ৩টি সহজ ধাপ (সম্পন্ন হলে টিক দিন):</h3>
+
+                <!-- Step 1: Rhyme & Phonics Audio -->
+                <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-2xs flex items-start gap-3">
+                    <input type="checkbox" id="chk-step-1" onchange="toggleStepCheck(1)" class="mt-1 w-5 h-5 accent-teal-600 rounded cursor-pointer shrink-0">
+                    <div class="flex-1">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <span class="text-xs font-bold text-teal-700 bg-teal-50 px-2.5 py-0.5 rounded-full">ধাপ ১ (৩ মিনিট) • ছড়া ও উচ্চারণ</span>
+                            <button onclick="playDailyRhyme()" class="bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold text-xs px-3 py-1.5 rounded-xl flex items-center gap-1 transition">
+                                <span>🔊</span> ছড়া শুনুন
+                            </button>
+                        </div>
+                        <p id="daily-rhyme-text" class="text-sm font-semibold text-slate-800 mt-2">
+                            "অ-তে অজগর আসছে তেড়ে • A for Apple (অ্যা-পল)"
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 2: Interactive Mini-Quiz -->
+                <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-2xs flex items-start gap-3">
+                    <input type="checkbox" id="chk-step-2" onchange="toggleStepCheck(2)" class="mt-1 w-5 h-5 accent-teal-600 rounded cursor-pointer shrink-0">
+                    <div class="flex-1">
+                        <span class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded-full">ধাপ ২ (৫ মিনিট) • খেলার ছলে কুইজ</span>
+                        <p id="daily-quiz-question" class="text-sm font-bold text-slate-800 mt-2">
+                            নিচের কোনটি আজকের শেখা অক্ষর? ট্যাপ করে খুঁজে বের করো:
+                        </p>
+                        <div id="daily-quiz-options" class="grid grid-cols-4 gap-2 mt-2.5">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Real-Life Parent Prompt -->
+                <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-2xs flex items-start gap-3">
+                    <input type="checkbox" id="chk-step-3" onchange="toggleStepCheck(3)" class="mt-1 w-5 h-5 accent-teal-600 rounded cursor-pointer shrink-0">
+                    <div class="flex-1">
+                        <span class="text-xs font-bold text-orange-700 bg-orange-50 px-2.5 py-0.5 rounded-full">ধাপ ৩ (৭ মিনিট) • মা-বাবার বাস্তব প্রশ্ন</span>
+                        <p id="daily-reallife-text" class="text-sm text-slate-700 font-medium mt-2 leading-relaxed">
+                            🔍 বাড়িতে লাল রঙের কোনো ফল বা খেলনা দেখিয়ে শিশুকে জিজ্ঞেস করুন—এর রঙ কী?
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Complete Lesson & Earn Star Button -->
+            <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 text-center">
+                <button id="complete-day-btn" onclick="completeCurrentDay()" class="w-full sm:w-auto bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-extrabold text-sm sm:text-base px-8 py-3.5 rounded-2xl shadow-md transition active:scale-95">
+                    ★ আজকের পাঠ সম্পূর্ণ করুন ও স্টার জিতুন!
+                </button>
+                <p class="text-[11px] text-amber-800 mt-2 font-medium">প্রতিদিন পাঠ শেষ করলে প্রোফাইলে একটি করে সোনার স্টার যুক্ত হবে</p>
+            </div>
+        </section>
+
+        <!-- ========================================================= -->
+        <!-- TAB 2: খেলার ছলে শেখা (INTERACTIVE TRACING & PHONICS)      -->
+        <!-- ========================================================= -->
+        <section id="tab-play" class="tab-content no-print hidden space-y-5">
+
+            <!-- Finger Tracing Canvas Pad -->
+            <div class="bg-white rounded-3xl p-4 sm:p-5 border border-amber-200 shadow-xs">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    <div>
+                        <h2 class="text-base sm:text-lg font-extrabold text-slate-900">✏️ আঙুল ঘুরিয়ে লেখা শিখি (Finger Tracing)</h2>
+                        <p class="text-xs text-slate-500">ডটেড লাইনের ওপর দিয়ে আঙুল বা স্টাইলাস চালিয়ে দাগ টানুন</p>
+                    </div>
+                    <select id="trace-template-select" onchange="setTraceTemplate(this.value)" class="bg-teal-50 border border-teal-300 text-teal-900 text-xs sm:text-sm font-bold rounded-xl px-3 py-2 focus:outline-none">
+                        <option value="v_line">Standing Line (সোজা দাগ |)</option>
+                        <option value="h_line">Sleeping Line (আড়াআড়ি দাগ —)</option>
+                        <option value="slant">Slanting Line (তির্যক দাগ /)</option>
+                        <option value="zigzag">Zig-Zag Line (পাহাড়ের ঢেউ)</option>
+                        <option value="curve">Curve Line (বাঁকানো রেখা C)</option>
+                        <option value="A">English Letter: A</option>
+                        <option value="B">English Letter: B</option>
+                        <option value="S">English Letter: S</option>
+                        <option value="অ">বাংলা বর্ণ: অ</option>
+                        <option value="আ">বাংলা বর্ণ: আ</option>
+                        <option value="ক">বাংলা বর্ণ: ক</option>
+                        <option value="1">Number: 1 (১)</option>
+                        <option value="2">Number: 2 (২)</option>
+                        <option value="3">Number: 3 (৩)</option>
+                    </select>
+                </div>
+
+                <!-- Responsive Canvas Wrapper -->
+                <div id="canvas-container" class="w-full h-64 sm:h-72 bg-amber-50/60 border-2 border-dashed border-amber-300 rounded-2xl relative overflow-hidden">
+                    <canvas id="tracing-canvas" class="w-full h-full block cursor-crosshair"></canvas>
+                </div>
+
+                <!-- Crayon Color Palette & Clear Controls -->
+                <div class="mt-3 flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-slate-600">মোমরঙ:</span>
+                        <button onclick="setCrayonColor('#DC2626', this)" class="crayon-btn w-8 h-8 rounded-full bg-red-600 ring-2 ring-offset-2 ring-slate-800 transition" title="লাল"></button>
+                        <button onclick="setCrayonColor('#2563EB', this)" class="crayon-btn w-8 h-8 rounded-full bg-blue-600 transition" title="নীল"></button>
+                        <button onclick="setCrayonColor('#16A34A', this)" class="crayon-btn w-8 h-8 rounded-full bg-green-600 transition" title="সবুজ"></button>
+                        <button onclick="setCrayonColor('#D97706', this)" class="crayon-btn w-8 h-8 rounded-full bg-amber-500 transition" title="হলুদ/কমলা"></button>
+                        <button onclick="setCrayonColor('#7C3AED', this)" class="crayon-btn w-8 h-8 rounded-full bg-purple-600 transition" title="বেগুনি"></button>
+                    </div>
+                    <button onclick="clearCanvas()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs px-4 py-2 rounded-xl transition">
+                        🧹 মুছে ফেলুন (Clear)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Interactive Phonics & Bornomala Soundboard -->
+            <div class="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200 shadow-xs space-y-4">
+                <div>
+                    <h3 class="text-base font-extrabold text-slate-900">🔊 ট্যাপ করে ধ্বনি ও শব্দ শিখি (Phonics & Bornomala)</h3>
+                    <p class="text-xs text-slate-500">যেকোনো কার্ডে ট্যাপ করলে সঠিক উচ্চারণ ও উদাহরণ শোনা যাবে</p>
+                </div>
+
+                <div>
+                    <div class="text-xs font-bold text-indigo-700 mb-2">English Phonics (অক্ষর ও ধ্বনি):</div>
+                    <div id="eng-soundboard" class="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                    </div>
+                </div>
+
+                <div>
+                    <div class="text-xs font-bold text-rose-700 mb-2">বাংলা বর্ণমালা (স্বরবর্ণ ও ব্যঞ্জনবর্ণ):</div>
+                    <div id="bn-soundboard" class="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================= -->
+        <!-- TAB 3: প্রিন্ট জোন (8-BLOCK A4 PRINTABLE WORKSHEET)        -->
+        <!-- ========================================================= -->
+        <section id="tab-print" class="tab-content hidden space-y-4">
+
+            <!-- Print Toolbar (Hidden on Actual Print) -->
+            <div class="no-print bg-white rounded-2xl p-4 border border-teal-200 shadow-xs flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-2">
+                    <label for="print-day-select" class="text-xs font-bold text-slate-700">পৃষ্ঠা বাছুন:</label>
+                    <select id="print-day-select" onchange="selectDay(parseInt(this.value))" class="bg-teal-50 border border-teal-300 text-teal-950 text-xs sm:text-sm font-bold rounded-xl px-3 py-2 focus:outline-none">
+                    </select>
+                </div>
+                <button onclick="window.print()" class="bg-teal-600 hover:bg-teal-700 text-white font-extrabold text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-md flex items-center gap-2 transition active:scale-95">
+                    <span>🖨️</span> Print / Save as A4 PDF
+                </button>
+            </div>
+
+            <!-- A4 Printable Worksheet Container -->
+            <div id="a4-sheet-wrapper" class="bg-white border-2 border-slate-300 rounded-2xl p-4 sm:p-6 shadow-sm">
+                <!-- Worksheet Header -->
+                <div class="flex flex-wrap items-center justify-between gap-2 bg-slate-900 text-white px-4 py-2.5 rounded-xl mb-3">
+                    <span id="ws-day-title" class="font-extrabold text-sm sm:text-base">দিন ১ (DAY 1) — হাতেখড়ি প্র্যাকটিস শিট</span>
+                    <span id="ws-topic-badge" class="bg-teal-600 text-white text-xs font-bold px-2.5 py-0.5 rounded-md">Standing Line • A • অ • 1</span>
+                    <span class="text-xs text-slate-300">তারিখ: ____/____/____</span>
+                </div>
+
+                <!-- 8-Block 2x4 Grid -->
+                <div id="worksheet-8-grid" class="ws-grid-print grid grid-cols-1 sm:grid-cols-2 gap-3">
+                </div>
+
+                <!-- Worksheet Footer -->
+                <div class="mt-3 pt-2 border-t border-slate-300 flex items-center justify-between text-[11px] text-slate-500 font-semibold">
+                    <span>হাতেখড়ি (HateKhori) — Zero-Stress Home Learning App</span>
+                    <span id="ws-footer-page">পৃষ্ঠা ১ / ৩০</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================= -->
+        <!-- TAB 4: অভিভাবক গাইড ও প্রো কোর্স (PARENT GUIDE & HYBRID)   -->
+        <!-- ========================================================= -->
+        <section id="tab-guide" class="tab-content no-print hidden space-y-5">
+
+            <!-- 3 Golden Rules for Parents -->
+            <div class="bg-white rounded-3xl p-5 border border-amber-200 shadow-xs space-y-3">
+                <h2 class="text-lg font-extrabold text-slate-900">👨‍👩‍👧 মা-বাবাদের জন্য ৩টি গোল্ডেন রুল</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div class="bg-amber-50/80 border border-amber-200 rounded-2xl p-3.5">
+                        <div class="text-xl mb-1">🖍️</div>
+                        <h3 class="text-sm font-bold text-amber-950">১. মোটা মোমরঙ দিন</h3>
+                        <p class="text-xs text-slate-600 mt-1">শুরুতে সরু পেন্সিল না দিয়ে মোটা মোমরঙ (Jumbo Crayon) দিন, যাতে আঙুলে ব্যথা না লাগে।</p>
+                    </div>
+                    <div class="bg-teal-50/80 border border-teal-200 rounded-2xl p-3.5">
+                        <div class="text-xl mb-1">⏱️</div>
+                        <h3 class="text-sm font-bold text-teal-950">২. মাত্র ১৫ মিনিট সময়</h3>
+                        <p class="text-xs text-slate-600 mt-1">শিশু উঠে যেতে চাইলে জোর করবেন না। খেলার ছলে প্রতিদিন ১০–১৫ মিনিটই যথেষ্ট।</p>
+                    </div>
+                    <div class="bg-indigo-50/80 border border-indigo-200 rounded-2xl p-3.5">
+                        <div class="text-xl mb-1">⭐</div>
+                        <h3 class="text-sm font-bold text-indigo-950">৩. স্টার দিয়ে উৎসাহ দিন</h3>
+                        <p class="text-xs text-slate-600 mt-1">প্রতিদিনের ওয়ার্কশিট শেষ হলে স্টার দিয়ে হাততালি দিন—এতে শিশুর আগ্রহ বাড়বে।</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hybrid Monetization Comparison (Free + Ads vs ₹99 Direct UPI Pro) -->
+            <div class="bg-gradient-to-br from-amber-50 via-white to-teal-50 rounded-3xl p-5 border-2 border-amber-300 shadow-sm space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div>
+                        <span class="bg-orange-100 text-orange-800 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">HYBRID ACCESS PLAN</span>
+                        <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 mt-1">ফ্রি (বিজ্ঞাপনসহ) অথবা ₹৯৯ প্রো আনলক</h2>
+                    </div>
+                    <!-- Quick Mode Switcher for Testing -->
+                    <div class="bg-slate-200/80 p-1 rounded-xl flex items-center gap-1">
+                        <button id="btn-mode-free" onclick="setProMode(false)" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white text-slate-800 shadow-xs">Free Mode</button>
+                        <button id="btn-mode-pro" onclick="setProMode(true)" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600">Pro Mode</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Plan 1: Free + Rewarded Ads -->
+                    <div class="bg-white rounded-2xl p-4 border border-slate-200 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-bold text-slate-800 text-base">ফ্রি প্ল্যান (Ad-Supported)</span>
+                                <span class="font-display font-extrabold text-teal-700 text-lg">₹০</span>
+                            </div>
+                            <ul class="text-xs text-slate-600 space-y-2 mt-3">
+                                <li class="flex items-center gap-2"><span class="text-teal-600 font-bold">✓</span> দিন ১ থেকে দিন ৭ পর্যন্ত সম্পূর্ণ ফ্রি</li>
+                                <li class="flex items-center gap-2"><span class="text-teal-600 font-bold">✓</span> ফ্রি ট্রেসিং ক্যানভাস ও ফনিক্স সাউন্ডবোর্ড</li>
+                                <li class="flex items-center gap-2"><span class="text-amber-600 font-bold">🎬</span> দিন ৮–৩০: মাত্র ১৫ সেকেন্ডের একটি বিজ্ঞাপন দেখলেই ১টি ওয়ার্কশিট ফ্রি আনলক!</li>
+                            </ul>
+                        </div>
+                        <button onclick="switchTab('daily')" class="mt-4 w-full bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 font-bold py-2.5 rounded-xl text-xs transition">
+                            পাঠ শুরু করুন
+                        </button>
+                    </div>
+
+                    <!-- Plan 2: ₹99 Direct UPI Pro Upgrade -->
+                    <div class="bg-white rounded-2xl p-4 border-2 border-orange-400 shadow-sm flex flex-col justify-between relative">
+                        <span class="absolute -top-2.5 right-4 bg-orange-500 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">সবচেয়ে জনপ্রিয়</span>
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-bold text-slate-900 text-base">হাতেখড়ি Pro (Ad-Free)</span>
+                                <span class="font-display font-extrabold text-orange-600 text-xl">₹৯৯ <span class="text-[10px] text-slate-400 font-normal">(এককালীন)</span></span>
+                            </div>
+                            <ul class="text-xs text-slate-700 space-y-2 mt-3">
+                                <li class="flex items-center gap-2"><span class="text-orange-500 font-bold">★</span> কোনো বিজ্ঞাপন ছাড়াই ৩০+ দিনের সব ওয়ার্কশিট আনলক</li>
+                                <li class="flex items-center gap-2"><span class="text-orange-500 font-bold">★</span> সব ৮-ব্লক A4 PDF শিট আনলিমিটেড প্রিন্ট</li>
+                                <li class="flex items-center gap-2"><span class="text-orange-500 font-bold">★</span> সরাসরি UPI / Cosmofeed পেমেন্ট ও ইনস্ট্যান্ট কোড</li>
+                            </ul>
+                        </div>
+                        <button onclick="openProModal()" class="mt-4 w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-extrabold py-3 rounded-xl text-xs shadow-md transition">
+                            👑 ₹৯৯ দিয়ে সব আনলক করুন (UPI / Code)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Creator / Admin Studio Trigger (Zero-Cost Netlify + Monetag/Adsterra + UPI Config) -->
+            <div class="bg-slate-900 text-slate-200 rounded-3xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
+                <div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold px-2.5 py-0.5 rounded-full">₹0 LAUNCH READY</span>
+                        <span class="text-[11px] text-slate-400">Watched Ads on Device: <strong id="admin-ad-counter-preview" class="text-amber-300 font-display">0</strong></span>
+                    </div>
+                    <h3 class="text-base font-bold text-white mt-1.5">ক্রিয়েটর ও অ্যাডমিন স্টুডিও (Creator Studio)</h3>
+                    <p class="text-xs text-slate-400 mt-0.5">নতুন ওয়ার্কশিট আপলোড করুন, আপনার নিজস্ব ₹৯৯ UPI লিংক ও Monetag/Adsterra অ্যাড লিংক সেট করুন।</p>
+                </div>
+                <button onclick="openAdminPinModal()" class="shrink-0 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-600 font-bold text-xs px-4 py-3 rounded-xl flex items-center justify-center gap-2 transition">
+                    <span>🔐</span> Admin Studio (PIN: 1234)
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================================= -->
+    <!-- MOBILE BOTTOM NAVIGATION BAR                              -->
+    <!-- ========================================================= -->
+    <nav class="no-print md:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-amber-200 px-2 py-1.5 flex justify-around items-center shadow-lg">
+        <button onclick="switchTab('daily')" data-tab="daily" class="nav-btn flex-1 py-1.5 rounded-xl flex flex-col items-center text-teal-600 font-bold text-[11px]">
+            <span class="text-lg leading-none mb-0.5">📅</span>
+            <span>আজকের পাঠ</span>
+        </button>
+        <button onclick="switchTab('play')" data-tab="play" class="nav-btn flex-1 py-1.5 rounded-xl flex flex-col items-center text-slate-500 font-semibold text-[11px]">
+            <span class="text-lg leading-none mb-0.5">🎨</span>
+            <span>ট্রেসিং</span>
+        </button>
+        <button onclick="switchTab('print')" data-tab="print" class="nav-btn flex-1 py-1.5 rounded-xl flex flex-col items-center text-slate-500 font-semibold text-[11px]">
+            <span class="text-lg leading-none mb-0.5">🖨️</span>
+            <span>প্রিন্ট PDF</span>
+        </button>
+        <button onclick="switchTab('guide')" data-tab="guide" class="nav-btn flex-1 py-1.5 rounded-xl flex flex-col items-center text-slate-500 font-semibold text-[11px]">
+            <span class="text-lg leading-none mb-0.5">👑</span>
+            <span>গাইড ও প্রো</span>
+        </button>
+    </nav>
+
+    <!-- ========================================================= -->
+    <!-- MODALS (NO alert() OR confirm() USED)                     -->
+    <!-- ========================================================= -->
+
+    <!-- 1. Hybrid Unlock Modal (Option A: Watch 15s Ad vs Option B: ₹99 Direct UPI/Code) -->
+    <div id="pro-modal" class="no-print fixed inset-0 z-50 bg-slate-900/65 backdrop-blur-xs hidden items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl border-2 border-amber-300 animate-pop my-auto">
+            <div class="text-center">
+                <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 text-2xl flex items-center justify-center mx-auto mb-2">🔒</div>
+                <h3 id="unlock-modal-title" class="text-lg font-extrabold text-slate-900">ওয়ার্কশিট আনলক করুন</h3>
+                <p class="text-xs text-slate-500 mt-0.5">বিজ্ঞাপন দেখে ফ্রিতে আনলক করুন অথবা ₹৯৯ দিয়ে সব পাতা আনলক করুন</p>
+            </div>
+
+            <div class="my-4 space-y-3">
+                <!-- Option A: Watch 15s Rewarded Ad -->
+                <button onclick="startRewardedAd()" class="w-full bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white font-bold p-3.5 rounded-2xl shadow-md transition text-left flex items-center justify-between gap-2">
+                    <div>
+                        <div class="text-xs sm:text-sm font-extrabold flex items-center gap-1.5">
+                            <span>🎬</span> Watch 15s Ad (Unlock 1 Worksheet Free)
+                        </div>
+                        <div class="text-[11px] text-teal-100 mt-0.5">১৫ সেকেন্ড বিজ্ঞাপন দেখলেই আজকের পাতাটি ফ্রি আনলক হবে</div>
+                    </div>
+                    <span class="bg-white/20 px-2.5 py-1 rounded-lg text-[11px] font-extrabold shrink-0">FREE</span>
+                </button>
+
+                <div class="relative flex py-0.5 items-center">
+                    <div class="flex-grow border-t border-slate-200"></div>
+                    <span class="flex-shrink mx-3 text-[10px] font-bold text-slate-400">অথবা (AD-FREE PRO)</span>
+                    <div class="flex-grow border-t border-slate-200"></div>
+                </div>
+
+                <!-- Option B: ₹99 Direct UPI / Payment Link + Activation Code -->
+                <div class="bg-amber-50 rounded-2xl p-4 border border-amber-200 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="font-extrabold text-sm text-slate-900">👑 Unlock All 30 Days Ad-Free</span>
+                        <span class="font-display font-extrabold text-orange-600 text-lg">₹99</span>
+                    </div>
+
+                    <!-- Dynamic UPI / Cosmofeed Payment Button -->
+                    <a id="upi-pay-link-btn" href="upi://pay?pa=hatekhori@upi&pn=HateKhori%20Learning&am=99&cu=INR" target="_blank" onclick="handlePayLinkClick(event)" class="block w-full text-center bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-extrabold py-2.5 rounded-xl text-xs shadow-sm transition">
+                        💳 ₹৯৯ পেমেন্ট করুন (UPI / Cosmofeed Link)
+                    </a>
+                    <div class="text-[10px] text-slate-500 text-center">
+                        UPI ID: <strong id="display-upi-id" class="text-slate-800 select-all">hatekhori@upi</strong> • পেমেন্টের পর নিচের কোডটি দিন
+                    </div>
+
+                    <!-- Instant Activation Code Input -->
+                    <div class="pt-2 border-t border-amber-200/80">
+                        <label class="block text-[11px] font-bold text-slate-700 mb-1">আনলক কোড দিন (ডেমো কোড: <span class="text-teal-700 font-display">PRO99</span>):</label>
+                        <div class="flex gap-1.5">
+                            <input type="text" id="pro-code-input" placeholder="PRO99" class="flex-1 border border-amber-300 bg-white rounded-xl px-3 py-2 text-xs font-display font-bold uppercase focus:outline-none focus:ring-2 focus:ring-teal-500">
+                            <button onclick="verifyProCode()" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-4 py-2 rounded-xl transition">
+                                আনলক
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="closeProModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition">
+                বন্ধ করুন (Close)
+            </button>
+        </div>
+    </div>
+
+    <!-- 2. 15-Second Rewarded Video Ad Player Modal -->
+    <div id="ad-player-modal" class="no-print fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-slate-900 border-2 border-slate-700 rounded-3xl max-w-md w-full overflow-hidden shadow-2xl text-white">
+            <div class="bg-slate-800 px-4 py-2.5 flex items-center justify-between text-xs">
+                <span class="bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2 py-0.5 rounded font-bold">Rewarded Ad • Sponsor</span>
+                <span id="ad-timer-badge" class="font-display font-bold text-teal-400">Reward in 15s...</span>
+            </div>
+
+            <div class="p-6 text-center bg-gradient-to-b from-indigo-950 to-slate-900">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-400 to-pink-500 flex items-center justify-center text-3xl mx-auto mb-3 shadow-lg animate-bounce">
+                    🧸
+                </div>
+                <span class="text-[10px] uppercase tracking-widest text-indigo-300 font-bold">Sponsored Educational Partner</span>
+                <h4 class="text-lg font-bold text-white mt-1">শিশুদের মেধা বিকাশে কাঠের পাজল ও ফ্ল্যাশকার্ড!</h4>
+                <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+                    মোবাইল আসক্তি কমিয়ে ২–৬ বছরের শিশুদের খেলার ছলে রঙ, আকার ও বর্ণমালা শেখানোর সেরা উপহার।
+                </p>
+
+                <!-- Optional Sponsor Direct Link Button (Monetag / Adsterra SmartLink) -->
+                <a id="ad-sponsor-link" href="#" target="_blank" class="hidden mt-3 inline-block bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-4 py-2 rounded-xl transition">
+                    🔗 অফারটি দেখুন (Visit Sponsor)
+                </a>
+
+                <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden mt-5 border border-slate-700">
+                    <div id="ad-progress-bar" class="bg-gradient-to-r from-teal-400 to-emerald-400 h-full transition-all duration-1000" style="width: 0%;"></div>
+                </div>
+                <p id="ad-skip-warning" class="text-[11px] text-amber-300/90 mt-2 font-medium">
+                    পুরস্কার পেতে অনুগ্রহ করে সম্পূর্ণ বিজ্ঞাপনটি দেখুন
+                </p>
+            </div>
+
+            <div class="p-4 bg-slate-900 border-t border-slate-800 flex justify-between items-center gap-2">
+                <button onclick="cancelAdEarly()" class="text-xs text-slate-400 hover:text-slate-200 px-3 py-2 font-semibold">
+                    বন্ধ করুন
+                </button>
+                <button id="claim-ad-reward-btn" disabled onclick="claimAdReward()" class="bg-slate-700 text-slate-400 font-bold text-xs px-5 py-2.5 rounded-xl transition cursor-not-allowed">
+                    ⏳ অপেক্ষা করুন (15s)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Manual PWA Home Screen Install Guide Modal (iOS / Fallback) -->
+    <div id="install-guide-modal" class="no-print fixed inset-0 z-50 bg-slate-900/65 backdrop-blur-xs hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border-2 border-teal-400 animate-pop">
+            <h3 class="text-lg font-extrabold text-slate-900 mb-2">📲 ফোনের হোম স্ক্রিনে অ্যাপ সেভ করুন</h3>
+            <p class="text-xs text-slate-600 mb-3">Play Store ছাড়াই মাত্র ২ সেকেন্ডে আপনার ফোনে আসল অ্যাপের মতো ইনস্টল করতে নিচের ধাপ অনুসরণ করুন:</p>
+            <ol class="text-xs text-slate-700 space-y-2 bg-teal-50 p-3.5 rounded-2xl border border-teal-200 list-decimal pl-7 font-medium">
+                <li>ব্রাউজারের ওপরের ডানদিকে <strong>Three Dots (⋮)</strong> বা নিচের <strong>Share (⬆️)</strong> বাটনে ট্যাপ করুন।</li>
+                <li>মেনু থেকে <strong>"Add to Home Screen"</strong> বা <strong>"Install App"</strong> বেছে নিন।</li>
+                <li><strong>Add / Install</strong> চাপলেই ফোনের স্ক্রিনে <strong>হাতেখড়ি</strong> আইকন চলে আসবে!</li>
+            </ol>
+            <button onclick="closeInstallGuideModal()" class="mt-4 w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-2.5 rounded-xl text-xs">
+                বুঝেছি (Got It)
+            </button>
+        </div>
+    </div>
+
+    <!-- 4. Admin PIN Modal -->
+    <div id="admin-pin-modal" class="no-print fixed inset-0 z-50 bg-slate-900/65 backdrop-blur-xs hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-200">
+            <h3 class="text-lg font-extrabold text-slate-900 mb-1">🔐 Creator & Admin Studio</h3>
+            <p class="text-xs text-slate-500 mb-3">অ্যাডমিন পিন দিন (Default PIN: <strong>1234</strong>):</p>
+            <input type="password" id="admin-pin-input" maxlength="6" placeholder="1234" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-center font-display text-lg tracking-widest font-bold mb-2 focus:outline-none focus:ring-2 focus:ring-teal-500">
+            <p id="admin-pin-error" class="text-xs text-rose-600 font-bold mb-3 hidden">ভুল পিন! অনুগ্রহ করে 1234 দিন।</p>
+            <div class="flex gap-2">
+                <button onclick="verifyAdminPin()" class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-xl text-sm">প্রবেশ করুন</button>
+                <button onclick="closeAdminPinModal()" class="px-4 bg-slate-100 text-slate-700 font-bold py-2.5 rounded-xl text-sm">বাতিল</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Admin Creator Studio Modal (Upload Worksheets + Monetization Settings + Analytics) -->
+    <div id="admin-panel-modal" class="no-print fixed inset-0 z-50 bg-slate-900/75 backdrop-blur-xs hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-5 sm:p-6 shadow-2xl border-2 border-teal-500 my-auto max-h-[92vh] overflow-y-auto space-y-5">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+                <div>
+                    <span class="bg-teal-100 text-teal-800 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">CREATOR STUDIO</span>
+                    <h3 class="text-lg font-extrabold text-slate-900 mt-1">অ্যাডমিন ও মনিটাইজেশন সেটিংস</h3>
+                </div>
+                <button onclick="closeAdminPanel()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold flex items-center justify-center">✕</button>
+            </div>
+
+            <!-- Live Analytics Banner -->
+            <div class="grid grid-cols-3 gap-2.5 bg-slate-900 text-white p-3.5 rounded-2xl text-center">
+                <div>
+                    <div class="text-[10px] text-slate-400">মোট বিজ্ঞাপন দেখা হয়েছে</div>
+                    <div id="stat-ads-watched" class="font-display text-lg font-extrabold text-amber-400">0</div>
+                </div>
+                <div>
+                    <div class="text-[10px] text-slate-400">Ad-Unlocked ওয়ার্কশিট</div>
+                    <div id="stat-ad-days" class="font-display text-lg font-extrabold text-teal-400">0</div>
+                </div>
+                <div>
+                    <div class="text-[10px] text-slate-400">কাস্টম ওয়ার্কশিট</div>
+                    <div id="stat-custom-days" class="font-display text-lg font-extrabold text-indigo-400">0</div>
+                </div>
+            </div>
+
+            <!-- Section A: Monetization Settings (UPI, Payment Link, Ad Network SmartLink) -->
+            <form onsubmit="saveMonetizationSettings(event)" class="bg-amber-50/70 border border-amber-200 rounded-2xl p-4 space-y-3 text-xs">
+                <div class="font-extrabold text-amber-950 text-sm">💰 ১. পেমেন্ট ও বিজ্ঞাপন লিংক সেটআপ (₹০ খরচ)</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">আপনার UPI ID (₹৯৯ নেওয়ার জন্য)</label>
+                        <input type="text" id="cfg-upi-id" placeholder="yourname@okaxis" class="w-full border border-amber-300 rounded-xl px-3 py-2 bg-white font-display">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Pro Activation Code (গ্রাহকদের দেওয়ার কোড)</label>
+                        <input type="text" id="cfg-pro-code" placeholder="PRO99" class="w-full border border-amber-300 rounded-xl px-3 py-2 bg-white font-display uppercase font-bold">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Cosmofeed / Instamojo লিংক (ঐচ্ছিক)</label>
+                        <input type="url" id="cfg-pay-link" placeholder="https://cosmofeed.com/..." class="w-full border border-amber-300 rounded-xl px-3 py-2 bg-white">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Monetag / Adsterra SmartLink (ঐচ্ছিক)</label>
+                        <input type="url" id="cfg-ad-link" placeholder="https://..." class="w-full border border-amber-300 rounded-xl px-3 py-2 bg-white">
+                    </div>
+                </div>
+                <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2 rounded-xl transition">
+                    💾 পেমেন্ট ও অ্যাড সেটিংস সেভ করুন
+                </button>
+            </form>
+
+            <!-- Section B: Upload New Day / Custom Worksheet -->
+            <form id="custom-lesson-form" onsubmit="saveCustomLesson(event)" class="bg-teal-50/50 border border-teal-200 rounded-2xl p-4 space-y-3 text-xs">
+                <div class="font-extrabold text-teal-950 text-sm">➕ ২. নতুন দিনের পাঠ বা কাস্টম ওয়ার্কশিট আপলোড করুন</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">দিনের নম্বর (Day Number)</label>
+                        <input type="number" id="adm-day" required min="31" value="31" class="w-full border border-slate-300 rounded-xl px-3 py-2 font-bold bg-white">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">পাঠের শিরোনাম (Title)</label>
+                        <input type="text" id="adm-title" required placeholder="যেমন: যুক্তাক্ষর ও শব্দ গঠন (Day 31)" class="w-full border border-slate-300 rounded-xl px-3 py-2 bg-white">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">English</label>
+                        <input type="text" id="adm-eng" required placeholder="CAT" class="w-full border border-slate-300 rounded-xl px-3 py-2 font-display font-bold bg-white">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">বাংলা</label>
+                        <input type="text" id="adm-bn" required placeholder="কল" class="w-full border border-slate-300 rounded-xl px-3 py-2 font-bold bg-white">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">সংখ্যা</label>
+                        <input type="text" id="adm-num" required placeholder="11" class="w-full border border-slate-300 rounded-xl px-3 py-2 font-display font-bold bg-white">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">ছড়া বা ভয়েস নির্দেশনা</label>
+                        <input type="text" id="adm-rhyme" required placeholder="C-A-T Cat মানে বিড়াল..." class="w-full border border-slate-300 rounded-xl px-3 py-2 bg-white">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">মা-বাবার বাস্তব প্রশ্ন</label>
+                        <input type="text" id="adm-reallife" required placeholder="বিড়ালের ছবি দেখিয়ে নাম জিজ্ঞেস করুন!" class="w-full border border-slate-300 rounded-xl px-3 py-2 bg-white">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">মিনি কুইজ উত্তর</label>
+                        <input type="text" id="adm-quiz-target" required placeholder="CAT" class="w-full border border-slate-300 rounded-xl px-3 py-2 bg-white">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">৪টি অপশন (কমা দিয়ে)</label>
+                        <input type="text" id="adm-quiz-opts" required placeholder="CAT, DOG, BAT, SUN" class="w-full border border-slate-300 rounded-xl px-3 py-2 bg-white">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">কাস্টম ওয়ার্কশিট ছবি/PDF লিংক (ঐচ্ছিক - Canva/Drive Image URL)</label>
+                    <input type="url" id="adm-media-url" placeholder="https://... (খালি রাখলে অটোমেটিক ৮-ব্লক শিট তৈরি হবে)" class="w-full border border-slate-300 rounded-xl px-3 py-2 bg-white">
+                </div>
+
+                <div class="flex items-center justify-between pt-2">
+                    <button type="button" onclick="resetCustomLessons()" class="text-rose-600 hover:underline font-bold">কাস্টম পাঠ মুছুন</button>
+                    <button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white font-bold px-5 py-2.5 rounded-xl shadow-sm">
+                        ➕ ওয়ার্কশিট যুক্ত করুন
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 6. Child Name Edit Modal -->
+    <div id="child-modal" class="no-print fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-200">
+            <h3 class="text-lg font-extrabold text-slate-900 mb-2">শিক্ষার্থীর নাম লিখুন</h3>
+            <input type="text" id="child-name-input" placeholder="যেমন: আরিয়ান / তানিয়া" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-bold mb-4 focus:outline-none focus:ring-2 focus:ring-teal-500">
+            <div class="flex gap-2">
+                <button onclick="saveChildName()" class="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-bold py-2.5 rounded-xl text-sm">সেভ করুন</button>
+                <button onclick="closeChildModal()" class="px-4 bg-slate-100 text-slate-700 font-bold py-2.5 rounded-xl text-sm">বাতিল</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Toast Notification -->
+    <div id="toast-box" class="no-print fixed bottom-20 md:bottom-6 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white px-4 py-2.5 rounded-2xl shadow-xl text-xs font-bold flex items-center gap-2 opacity-0 pointer-events-none transition-opacity duration-300">
+        <span id="toast-icon">✨</span>
+        <span id="toast-msg">বার্তা</span>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- JAVASCRIPT APPLICATION LOGIC                              -->
+    <!-- ========================================================= -->
+    <script>
+        // --- 1. CURRICULUM DATA (DAYS 1 TO 30) ---
+        const baseLessons = [
+            {
+                day: 1, topic: "Standing Line • A • অ • 1 • Circle",
+                title: "Standing Line, ইংরেজি 'A' ও বাংলা 'অ', সংখ্যা 1",
+                desc: "প্রথম দিনে হাতের জড়তা কাটিয়ে সোজা দাগ টানা, 'A' ও 'অ' চেনা এবং ১ গণনা শিখুন।",
+                rhyme: "অ-তে অজগর আসছে তেড়ে • A for Apple (অ্যা-পল)",
+                rhymeSpeech: "A for Apple. অ-তে অজগর আসছে তেড়ে",
+                quizTarget: "A", quizOptions: ["B", "A", "C", "O"],
+                realLife: "🔍 বাড়িতে লাল রঙের কোনো ফল (যেমন আপেল) বা গোল বল দেখিয়ে তার রঙ ও আকার জিজ্ঞেস করুন!",
+                strokeName: "Standing Line (বৃষ্টি নামা)", strokeType: "v_line",
+                shapeName: "Circle (বৃত্ত)", shapeType: "circle",
+                engLetter: "A", engWord: "Apple (আপেল)", engPhonics: "অ্যা",
+                bnLetter: "অ", bnWord: "অজগর",
+                numVal: "1", numBn: "১", countEmoji: "☀️",
+                huntTarget: "A", huntGrid: ["B", "A", "C", "A", "A", "D", "E", "A"],
+                oddItems: ["🔴", "🔴", "🟦", "🔴"],
+                matchLeft: "A ──► অজগর", matchRight: "অ ──► Apple"
+            },
+            {
+                day: 2, topic: "Standing Line • B • আ • 1 • Square",
+                title: "বেলুনের সুতো (Standing Line), 'B' ও 'আ', Square",
+                desc: "ওপর থেকে নিচে সোজা দাগ টানা, 'B' ও 'আ' বর্ণ এবং চারকোনা বর্গক্ষেত্র চেনা।",
+                rhyme: "আ-তে আমটি আমি খাব পেড়ে • B for Ball (ব-ল)",
+                rhymeSpeech: "B for Ball. আ-তে আমটি আমি খাব পেড়ে",
+                quizTarget: "আ", quizOptions: ["অ", "আ", "ই", "উ"],
+                realLife: "🔍 ঘরের জানালা বা বই দেখিয়ে বলুন—এর চারটি সমান কোণা আছে, এটি Square (বর্গক্ষেত্র)!",
+                strokeName: "Standing Line (বেলুনের সুতো)", strokeType: "v_line",
+                shapeName: "Square (বর্গক্ষেত্র)", shapeType: "square",
+                engLetter: "B", engWord: "Ball (বল)", engPhonics: "ব",
+                bnLetter: "আ", bnWord: "আম",
+                numVal: "1", numBn: "১", countEmoji: "⭐",
+                huntTarget: "আ", huntGrid: ["অ", "আ", "ই", "আ", "আ", "উ", "আ", "এ"],
+                oddItems: ["⚽", "⚽", "⚽", "🍌"],
+                matchLeft: "B ──► আম", matchRight: "আ ──► Ball"
+            },
+            {
+                day: 3, topic: "Sleeping Line • C • ই • 2 • Triangle",
+                title: "Sleeping Line, 'C' ও 'ই', সংখ্যা 2 ও Triangle",
+                desc: "বাম থেকে ডানে আড়াআড়ি দাগ টানা, 'C' ও 'ই' এবং ২টি জিনিস গণনা।",
+                rhyme: "ই-তে ইঁদুর ছানা ভয়ে মরে • C for Cat (ক্যাট)",
+                rhymeSpeech: "C for Cat. ই-তে ইঁদুর ছানা ভয়ে মরে",
+                quizTarget: "C", quizOptions: ["O", "C", "G", "D"],
+                realLife: "🔍 সিঙাড়া বা পিজ্জার টুকরোর মতো তিন কোণা জিনিস দেখিয়ে Triangle (ত্রিভুজ) চেনান!",
+                strokeName: "Sleeping Line (আড়াআড়ি দাগ)", strokeType: "h_line",
+                shapeName: "Triangle (ত্রিভুজ)", shapeType: "triangle",
+                engLetter: "C", engWord: "Cat (বিড়াল)", engPhonics: "ক",
+                bnLetter: "ই", bnWord: "ইঁদুর",
+                numVal: "2", numBn: "২", countEmoji: "⚽ ⚽",
+                huntTarget: "C", huntGrid: ["O", "C", "G", "C", "C", "D", "C", "Q"],
+                oddItems: ["🐱", "🐱", "🐶", "🐱"],
+                matchLeft: "C ──► ইঁদুর", matchRight: "ই ──► Cat"
+            },
+            {
+                day: 4, topic: "Sleeping Line • D • ঈ • 2 • Rectangle",
+                title: "গাড়ি চালানোর রাস্তা, 'D' ও 'ঈ', সংখ্যা 2",
+                desc: "সোজা রাস্তায় গাড়ি চালানো, 'D' ও 'ঈ' বর্ণ এবং লম্বা চারকোনা আয়তক্ষেত্র।",
+                rhyme: "ঈ-তে ঈগল পাখি পাছে ধরে • D for Dog (ডগ)",
+                rhymeSpeech: "D for Dog. ঈ-তে ঈগল পাখি পাছে ধরে",
+                quizTarget: "ঈ", quizOptions: ["ই", "ঈ", "উ", "অ"],
+                realLife: "🔍 ঘরের দরজা বা মোবাইল ফোন দেখিয়ে বলুন—এটি লম্বা চারকোনা, অর্থাৎ Rectangle!",
+                strokeName: "Sleeping Line (গাড়ির রাস্তা)", strokeType: "h_line",
+                shapeName: "Rectangle (আয়তক্ষেত্র)", shapeType: "square",
+                engLetter: "D", engWord: "Dog (কুকুর)", engPhonics: "ড",
+                bnLetter: "ঈ", bnWord: "ঈগল",
+                numVal: "2", numBn: "২", countEmoji: "🍎 🍎",
+                huntTarget: "ঈ", huntGrid: ["ই", "ঈ", "উ", "ঈ", "ঈ", "অ", "ঈ", "আ"],
+                oddItems: ["🚗", "🚗", "🚗", "🎈"],
+                matchLeft: "D ──► ঈগল", matchRight: "ঈ ──► Dog"
+            },
+            {
+                day: 5, topic: "Slanting Line (/) • E • উ • 3 • Star",
+                title: "ঘুড়ির সুতো (Slanting Line), 'E' ও 'উ', সংখ্যা 3",
+                desc: "তির্যক দাগ টানা, 'E' ও 'উ' বর্ণ এবং ৩টি তারা গণনা ও রঙ করা।",
+                rhyme: "উ-তে উট চলেছে মুখটি তুলে • E for Egg (এগ)",
+                rhymeSpeech: "E for Egg. উ-তে উট চলেছে মুখটি তুলে",
+                quizTarget: "E", quizOptions: ["F", "E", "L", "H"],
+                realLife: "🔍 রাতের আকাশে তারা (Star) দেখিয়ে ৩ পর্যন্ত গুনতে বলুন: ১, ২, ৩!",
+                strokeName: "Slanting Line (ঘুড়ির সুতো)", strokeType: "slant",
+                shapeName: "Star (তারা)", shapeType: "star",
+                engLetter: "E", engWord: "Egg (ডিম)", engPhonics: "এ",
+                bnLetter: "উ", bnWord: "উট",
+                numVal: "3", numBn: "৩", countEmoji: "⭐ ⭐ ⭐",
+                huntTarget: "E", huntGrid: ["F", "E", "L", "E", "E", "H", "T", "E"],
+                oddItems: ["🍎", "🍎", "🍌", "🍎"],
+                matchLeft: "E ──► উট", matchRight: "উ ──► Egg"
+            },
+            {
+                day: 6, topic: "Slanting (\\) • F • ঊ • 3 • Oval",
+                title: "বিপরীত তির্যক রেখা, 'F' ও 'ঊ', ডিম্বাকার (Oval)",
+                desc: "বাম থেকে ডানে ঢালু দাগ, 'F' ও 'ঊ' বর্ণ এবং ডিমের মতো আকার চেনা।",
+                rhyme: "ঊ-তে ঊষা ওঠে পুব আকাশে • F for Fish (ফিশ)",
+                rhymeSpeech: "F for Fish. ঊ-তে ঊষা ওঠে পুব আকাশে",
+                quizTarget: "F", quizOptions: ["E", "F", "P", "T"],
+                realLife: "🔍 রান্নাঘর থেকে একটি ডিম বা গোল পাতা দেখিয়ে Oval আকারটি বোঝান!",
+                strokeName: "Slanting Line (\\)", strokeType: "slant",
+                shapeName: "Oval (ডিম্বাকার)", shapeType: "circle",
+                engLetter: "F", engWord: "Fish (মাছ)", engPhonics: "ফ্‌",
+                bnLetter: "ঊ", bnWord: "ঊষা",
+                numVal: "3", numBn: "৩", countEmoji: "🐟 🐟 🐟",
+                huntTarget: "ঊ", huntGrid: ["উ", "ঊ", "অ", "ঊ", "ঊ", "ই", "ঊ", "আ"],
+                oddItems: ["🐟", "🐟", "🌳", "🐟"],
+                matchLeft: "F ──► ঊষা", matchRight: "ঊ ──► Fish"
+            },
+            {
+                day: 7, topic: "Zig-Zag Line • G • ঋ • 4 • Diamond",
+                title: "পাহাড়ের ঢেউ (Zig-Zag), 'G' ও 'ঋ', সংখ্যা 4",
+                desc: "সপ্তাহ ১-এর শেষ দিনে জিগ-জ্যাগ রেখা, 'G' ও 'ঋ' এবং ৪টি বেলুন গণনা।",
+                rhyme: "ঋ-তে ঋষি মশাই বসেন পূজায় • G for Grapes (গ্রেপস)",
+                rhymeSpeech: "G for Grapes. ঋ-তে ঋষি মশাই বসেন পূজায়",
+                quizTarget: "G", quizOptions: ["C", "G", "O", "Q"],
+                realLife: "🔍 ঘুড়ির চার কোণা দেখিয়ে Diamond আকার এবং ৪টি কোণা গুনে দেখান!",
+                strokeName: "Zig-Zag (পাহাড়ের চূড়া)", strokeType: "zigzag",
+                shapeName: "Diamond (হীরক)", shapeType: "triangle",
+                engLetter: "G", engWord: "Grapes (আঙুর)", engPhonics: "গ",
+                bnLetter: "ঋ", bnWord: "ঋষি",
+                numVal: "4", numBn: "৪", countEmoji: "🎈 🎈 🎈 🎈",
+                huntTarget: "G", huntGrid: ["C", "G", "O", "G", "G", "Q", "G", "D"],
+                oddItems: ["⭐", "🌙", "⭐", "🎈"],
+                matchLeft: "G ──► ঋষি", matchRight: "ঋ ──► Grapes"
+            }
+        ];
+
+        // Generate Days 8 to 30 programmatically
+        const extraDaysMeta = [
+            { st: "Zig-Zag Line", stt: "zigzag", eng: "H", ew: "Hat (টুপি)", ep: "হ", bn: "এ", bw: "একতারা", num: "4", nbn: "৪", em: "🌼🌼🌼🌼", sh: "Heart", sht: "circle" },
+            { st: "Left Curve (C)", stt: "curve", eng: "I", ew: "Igloo (বরফ ঘর)", ep: "ই", bn: "ঐ", bw: "ঐরাবত", num: "5", nbn: "৫", em: "🖐️ (৫)", sh: "Circle", sht: "circle" },
+            { st: "Right Curve", stt: "curve", eng: "J", ew: "Jug (জগ)", ep: "জ", bn: "ও", bw: "ওল", num: "5", nbn: "৫", em: "⭐⭐⭐⭐⭐", sh: "Square", sht: "square" },
+            { st: "Up Curve (U)", stt: "curve", eng: "K", ew: "Kite (ঘুড়ি)", ep: "ক", bn: "ঔ", bw: "ঔষধ", num: "5", nbn: "৫", em: "🎈🎈🎈🎈🎈", sh: "Triangle", sht: "triangle" },
+            { st: "Down Curve", stt: "curve", eng: "L", ew: "Lion (সিংহ)", ep: "ল", bn: "ক", bw: "কাকাতুয়া", num: "6", nbn: "৬", em: "🍓🍓🍓🍓🍓🍓", sh: "Rectangle", sht: "square" },
+            { st: "Wave Curve", stt: "zigzag", eng: "M", ew: "Mango (আম)", ep: "ম", bn: "খ", bw: "খরগোশ", num: "7", nbn: "৭", em: "⚽⚽⚽⚽⚽⚽⚽", sh: "Star", sht: "star" },
+            { st: "Spiral Line", stt: "curve", eng: "N", ew: "Nest (বাসা)", ep: "ন", bn: "গ", bw: "গরু", num: "8", nbn: "৮", em: "🌼🌼🌼🌼🌼🌼🌼🌼", sh: "Circle", sht: "circle" },
+            { st: "Mixed Strokes", stt: "v_line", eng: "O", ew: "Orange (কমলা)", ep: "অ", bn: "ঘ", bw: "ঘুঘু", num: "9", nbn: "৯", em: "🍏🍏🍏🍏🍏🍏🍏🍏🍏", sh: "Oval", sht: "circle" },
+            { st: "Castle Line", stt: "h_line", eng: "P", ew: "Parrot (টিয়া)", ep: "প", bn: "ঙ", bw: "ব্যাঙ", num: "10", nbn: "১০", em: "🙌 (১০)", sh: "Pentagon", sht: "star" },
+            { st: "Loop Curve", stt: "curve", eng: "Q", ew: "Queen (রানী)", ep: "কুই", bn: "চ", bw: "চশমা", num: "6", nbn: "৬", em: "🔵🔵🔵🔵🔵🔵", sh: "Oval", sht: "circle" },
+            { st: "Step Line", stt: "zigzag", eng: "R", ew: "Rabbit (খরগোশ)", ep: "র", bn: "ছ", bw: "ছাগল", num: "7", nbn: "৭", em: "🌸🌸🌸🌸🌸🌸🌸", sh: "Heart", sht: "circle" },
+            { st: "Scallop Line", stt: "curve", eng: "S", ew: "Sun (সূর্য)", ep: "স্‌", bn: "জ", bw: "জাহাজ", num: "8", nbn: "৮", em: "⭐⭐⭐⭐⭐⭐⭐⭐", sh: "Diamond", sht: "triangle" },
+            { st: "Arch Bridge", stt: "curve", eng: "T", ew: "Tiger (বাঘ)", ep: "ট", bn: "ঝ", bw: "ঝাড়ু", num: "9", nbn: "৯", em: "🎈🎈🎈🎈🎈🎈🎈🎈🎈", sh: "Crescent", sht: "circle" },
+            { st: "U-Turn Line", stt: "curve", eng: "U", ew: "Umbrella (ছাতা)", ep: "আ", bn: "ঞ", bw: "মিঞা", num: "10", nbn: "১০", em: "🙌 (১০)", sh: "Circle", sht: "circle" },
+            { st: "V-Shape Wing", stt: "slant", eng: "V", ew: "Van (গাড়ি)", ep: "ভ", bn: "ট", bw: "টিয়াপাখি", num: "1-5", nbn: "১-৫", em: "১, ২, ৩, ৪, ৫", sh: "Square", sht: "square" },
+            { st: "W-Mountain", stt: "zigzag", eng: "W", ew: "Watch (ঘড়ি)", ep: "উয়", bn: "ঠ", bw: "ঠাকুরদা", num: "6-10", nbn: "৬-১০", em: "৬, ৭, ৮, ৯, ১০", sh: "Triangle", sht: "triangle" },
+            { st: "X-Crossing", stt: "slant", eng: "X", ew: "X-mas Tree", ep: "ক্স", bn: "ড", bw: "ডমরু", num: "1-10", nbn: "১-১০", em: "১ থেকে ১০", sh: "Star", sht: "star" },
+            { st: "Y-Fork Line", stt: "v_line", eng: "Y", ew: "Yak (চমরী গাই)", ep: "ইয়", bn: "ঢ", bw: "ঢাক", num: "5", nbn: "৫", em: "🍬🍬🍬🍬🍬", sh: "Circle", sht: "circle" },
+            { st: "Z-Lightning", stt: "zigzag", eng: "Z", ew: "Zebra (জেব্রা)", ep: "জ্‌", bn: "ণ", bw: "হরিণ", num: "10", nbn: "১০", em: "🍓×১০", sh: "Square", sht: "square" },
+            { st: "Mega Revision 1", stt: "v_line", eng: "A-M", ew: "Alphabet A–M", ep: "A-M", bn: "অ-ঔ", bw: "স্বরবর্ণ", num: "1-5", nbn: "১-৫", em: "১, ২, ৩, ৪, ৫", sh: "All Shapes", sht: "star" },
+            { st: "Mega Revision 2", stt: "h_line", eng: "N-Z", ew: "Alphabet N–Z", ep: "N-Z", bn: "ক-ণ", bw: "ব্যঞ্জনবর্ণ", num: "6-10", nbn: "৬-১০", em: "৬, ৭, ৮, ৯, ১০", sh: "All Shapes", sht: "triangle" },
+            { st: "First Words", stt: "curve", eng: "CAT", ew: "CAT & SUN", ep: "CVC", bn: "কল", bw: "কল ও ফল", num: "1-10", nbn: "১-১০", em: "১ থেকে ১০", sh: "Star", sht: "star" },
+            { st: "Grand Finale", stt: "zigzag", eng: "A-Z", ew: "Junior Champ!", ep: "All", bn: "অ-ণ", bw: "হাতেখড়ি", num: "1-10", nbn: "চ্যাম্পিয়ন", em: "🏆🏆🏆", sh: "Gold Badge", sht: "star" }
+        ];
+
+        const allLessons = [...baseLessons];
+        extraDaysMeta.forEach((item, idx) => {
+            const d = idx + 8;
+            allLessons.push({
+                day: d,
+                topic: `${item.st} • ${item.eng} • ${item.bn} • ${item.num}`,
+                title: `${item.st}, ইংরেজি '${item.eng}' ও বাংলা '${item.bn}', সংখ্যা ${item.num}`,
+                desc: `দিন ${d}-এর অনুশীলন: খেলার ছলে অক্ষর চেনা, রেখা টানা ও গণনা অনুশীলন করুন।`,
+                rhyme: `${item.bn}-তে ${item.bw} এবং ${item.eng} for ${item.ew} — ছন্দে ছন্দে বলুন!`,
+                rhymeSpeech: `${item.eng} for ${item.ew}. ${item.bn}-তে ${item.bw}`,
+                quizTarget: item.eng,
+                quizOptions: [item.eng, "O", "M", "B"].filter((v, i, a) => a.indexOf(v) === i).slice(0, 4),
+                realLife: `🔍 বাড়ির চারপাশে '${item.eng}' বা '${item.bn}' দিয়ে শুরু হওয়া কোনো জিনিস বা ছবি খুঁজে বের করতে বলুন!`,
+                strokeName: item.st,
+                strokeType: item.stt,
+                shapeName: item.sh,
+                shapeType: item.sht,
+                engLetter: item.eng, engWord: item.ew, engPhonics: item.ep,
+                bnLetter: item.bn, bnWord: item.bw,
+                numVal: item.num, numBn: item.nbn, countEmoji: item.em,
+                huntTarget: item.eng.charAt(0),
+                huntGrid: ["A", item.eng.charAt(0), "O", item.eng.charAt(0), "E", "M", item.eng.charAt(0), "S"],
+                oddItems: ["🍎", "🍎", "🚗", "🍎"],
+                matchLeft: `${item.eng} ──► ${item.bw}`,
+                matchRight: `${item.bn} ──► ${item.ew.split(' ')[0]}`
+            });
+        });
+
+        // --- 2. STATE MANAGEMENT & LOCALSTORAGE ---
+        let appState = {
+            currentDay: 1,
+            stars: 0,
+            completedDays: [],
+            adUnlockedDays: [],
+            totalAdsWatched: 0,
+            customLessons: [],
+            stepChecks: { 1: false, 2: false, 3: false },
+            isPro: false,
+            childName: "সোনামণি",
+            monetization: {
+                upiId: "hatekhori@upi",
+                proCode: "PRO99",
+                paymentLink: "",
+                adSmartLink: ""
+            }
+        };
+
+        let pendingUnlockDay = null;
+        let adCountdownInterval = null;
+        let deferredInstallPrompt = null;
+
+        function registerPWAManifest() {
+            const manifest = {
+                name: "হাতেখড়ি (HateKhori) - Kids Early Learning",
+                short_name: "HateKhori",
+                start_url: ".",
+                display: "standalone",
+                background_color: "#FFFDF7",
+                theme_color: "#0D9488",
+                orientation: "portrait",
+                icons: [
+                    {
+                        src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%230D9488'/%3E%3Ccircle cx='256' cy='256' r='175' fill='%23FEF3C7'/%3E%3Ctext x='256' y='320' font-size='220' text-anchor='middle'%3E%E2%9C%8F%EF%B8%8F%3C/text%3E%3C/svg%3E",
+                        sizes: "512x512",
+                        type: "image/svg+xml",
+                        purpose: "any maskable"
+                    }
+                ]
+            };
+            const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+            const link = document.createElement('link');
+            link.rel = 'manifest';
+            link.href = URL.createObjectURL(blob);
+            document.head.appendChild(link);
+        }
+
+        // Capture Android/Chrome beforeinstallprompt for 1-click Home Screen install
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredInstallPrompt = e;
+            const banner = document.getElementById('pwa-install-banner');
+            if (banner) banner.classList.remove('hidden');
+        });
+
+        async function triggerPWAInstall() {
+            if (deferredInstallPrompt) {
+                deferredInstallPrompt.prompt();
+                const { outcome } = await deferredInstallPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    showToast("অ্যাপটি আপনার ফোনের হোম স্ক্রিনে ইনস্টল হচ্ছে!", "📲");
+                    dismissInstallBanner();
+                }
+                deferredInstallPrompt = null;
+            } else {
+                // Fallback guide for iOS Safari / browsers where prompt isn't auto-triggered
+                const modal = document.getElementById('install-guide-modal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeInstallGuideModal() {
+            const modal = document.getElementById('install-guide-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function dismissInstallBanner() {
+            const banner = document.getElementById('pwa-install-banner');
+            if (banner) banner.classList.add('hidden');
+        }
+
+        function loadState() {
+            try {
+                const saved = localStorage.getItem('hatekhori_hybrid_state_v2');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    appState = {
+                        ...appState,
+                        ...parsed,
+                        monetization: { ...appState.monetization, ...(parsed.monetization || {}) }
+                    };
+                }
+            } catch (e) {
+                console.warn("Storage load failed", e);
+            }
+        }
+
+        function saveState() {
+            try {
+                localStorage.setItem('hatekhori_hybrid_state_v2', JSON.stringify(appState));
+            } catch (e) {
+                console.warn("Storage save failed", e);
+            }
+        }
+
+        function getFullCurriculum() {
+            return [...allLessons, ...(appState.customLessons || [])].sort((a, b) => a.day - b.day);
+        }
+
+        function getLessonByDay(dayNum) {
+            const full = getFullCurriculum();
+            return full.find(l => l.day === dayNum) || full[0];
+        }
+
+        function isDayUnlocked(dayNum) {
+            if (dayNum <= 7) return true;
+            if (appState.isPro) return true;
+            if ((appState.adUnlockedDays || []).includes(dayNum)) return true;
+            if (dayNum > 30) return true;
+            return false;
+        }
+
+        // --- 3. UI HEADER & NAVIGATION ---
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById(`tab-${tabName}`);
+            if (target) target.classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                const isSelected = btn.getAttribute('data-tab') === tabName;
+                if (btn.closest('nav').classList.contains('md:flex')) {
+                    btn.className = isSelected
+                        ? "nav-btn flex-1 py-2.5 px-4 rounded-xl text-sm font-bold bg-teal-600 text-white shadow-xs transition"
+                        : "nav-btn flex-1 py-2.5 px-4 rounded-xl text-sm font-bold bg-slate-100 text-slate-600 hover:bg-amber-50 transition";
+                } else {
+                    btn.className = isSelected
+                        ? "nav-btn flex-1 py-1.5 rounded-xl flex flex-col items-center text-teal-600 font-bold text-[11px]"
+                        : "nav-btn flex-1 py-1.5 rounded-xl flex flex-col items-center text-slate-500 font-semibold text-[11px]";
+                }
+            });
+
+            if (tabName === 'play') {
+                setTimeout(resizeCanvas, 50);
+            }
+        }
+
+        function updateHeaderUI() {
+            const totalDays = getFullCurriculum().length;
+            document.getElementById('star-count').textContent = appState.stars;
+            document.getElementById('header-day-badge').textContent = `Day ${appState.currentDay} / ${totalDays}`;
+            document.getElementById('header-child-name').textContent = appState.childName;
+            document.getElementById('day-selector-heading').textContent = `দিনের পাঠ নির্বাচন করুন (Day 1 – ${totalDays})`;
+
+            const adPreview = document.getElementById('admin-ad-counter-preview');
+            if (adPreview) adPreview.textContent = appState.totalAdsWatched || 0;
+
+            const badge = document.getElementById('plan-badge');
+            const btnFree = document.getElementById('btn-mode-free');
+            const btnPro = document.getElementById('btn-mode-pro');
+
+            if (appState.isPro) {
+                badge.textContent = "PRO UNLOCKED";
+                badge.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-teal-100 text-teal-800 border border-teal-300";
+                if (btnPro) {
+                    btnPro.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-teal-600 text-white shadow-xs";
+                    btnFree.className = "px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600";
+                }
+            } else {
+                const adCount = (appState.adUnlockedDays || []).length;
+                badge.textContent = adCount > 0 ? `FREE + ${adCount} AD UNLOCKED` : "FREE (Days 1–7)";
+                badge.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300";
+                if (btnFree) {
+                    btnFree.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-white text-slate-800 shadow-xs";
+                    btnPro.className = "px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600";
+                }
+            }
+
+            // Sync Monetization UI links
+            const upiId = appState.monetization.upiId || "hatekhori@upi";
+            const customPayUrl = appState.monetization.paymentLink;
+            document.getElementById('display-upi-id').textContent = upiId;
+            const payBtn = document.getElementById('upi-pay-link-btn');
+            if (customPayUrl) {
+                payBtn.href = customPayUrl;
+            } else {
+                payBtn.href = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=HateKhori%20Learning&am=99&cu=INR`;
+            }
+        }
+
+        function renderDaySelectors() {
+            const dropdown = document.getElementById('day-select-dropdown');
+            const printDropdown = document.getElementById('print-day-select');
+            const pillsContainer = document.getElementById('day-pills-container');
+
+            dropdown.innerHTML = '';
+            printDropdown.innerHTML = '';
+            pillsContainer.innerHTML = '';
+
+            getFullCurriculum().forEach(lesson => {
+                const unlocked = isDayUnlocked(lesson.day);
+                const locked = !unlocked;
+                const isAdUnlocked = !appState.isPro && lesson.day > 7 && (appState.adUnlockedDays || []).includes(lesson.day);
+                const isDone = appState.completedDays.includes(lesson.day);
+                const isCurrent = appState.currentDay === lesson.day;
+
+                const tag = locked ? '🔒 Watch Ad' : isDone ? '★' : isAdUnlocked ? '🎬 Unlocked' : '';
+                const optText = `দিন ${lesson.day} (Day ${lesson.day}) ${tag}`;
+                dropdown.add(new Option(optText, lesson.day, isCurrent, isCurrent));
+                printDropdown.add(new Option(optText, lesson.day, isCurrent, isCurrent));
+
+                const btn = document.createElement('button');
+                btn.onclick = () => selectDay(lesson.day);
+                let pillClass = "shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold border transition flex items-center gap-1 ";
+                if (isCurrent) {
+                    pillClass += "bg-teal-600 text-white border-teal-700 shadow-xs";
+                } else if (locked) {
+                    pillClass += "bg-slate-100 text-slate-500 border-slate-200 hover:bg-amber-50";
+                } else if (isDone) {
+                    pillClass += "bg-amber-50 text-amber-800 border-amber-300";
+                } else {
+                    pillClass += "bg-white text-slate-700 border-slate-200 hover:bg-amber-50";
+                }
+                btn.className = pillClass;
+                btn.innerHTML = `<span>Day ${lesson.day}</span> ${locked ? '<span>🔒</span>' : isDone ? '<span class="text-amber-500">★</span>' : isAdUnlocked ? '<span>🔓</span>' : ''}`;
+                pillsContainer.appendChild(btn);
+            });
+        }
+
+        function selectDay(dayNum) {
+            if (!isDayUnlocked(dayNum)) {
+                pendingUnlockDay = dayNum;
+                document.getElementById('unlock-modal-title').textContent = `দিন ${dayNum} (Day ${dayNum}) আনলক করুন`;
+                openProModal();
+                document.getElementById('day-select-dropdown').value = appState.currentDay;
+                document.getElementById('print-day-select').value = appState.currentDay;
+                return;
+            }
+            appState.currentDay = dayNum;
+            appState.stepChecks = { 1: false, 2: false, 3: false };
+            saveState();
+            updateHeaderUI();
+            renderDaySelectors();
+            renderDailyPlan();
+            renderPrintableWorksheet();
+        }
+
+        // --- 4. TAB 1: DAILY PLAN & QUIZ ---
+        function renderDailyPlan() {
+            const lesson = getLessonByDay(appState.currentDay);
+            document.getElementById('daily-banner-day').textContent = `দিন ${lesson.day} (Day ${lesson.day})`;
+            document.getElementById('daily-banner-title').textContent = lesson.title;
+            document.getElementById('daily-banner-desc').textContent = lesson.desc;
+            document.getElementById('daily-rhyme-text').textContent = `"${lesson.rhyme}"`;
+            document.getElementById('daily-reallife-text').textContent = lesson.realLife;
+
+            document.getElementById('chk-step-1').checked = !!appState.stepChecks[1];
+            document.getElementById('chk-step-2').checked = !!appState.stepChecks[2];
+            document.getElementById('chk-step-3').checked = !!appState.stepChecks[3];
+
+            const quizContainer = document.getElementById('daily-quiz-options');
+            quizContainer.innerHTML = '';
+            lesson.quizOptions.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.textContent = opt;
+                btn.className = "py-2.5 rounded-xl border-2 border-indigo-200 bg-indigo-50/50 hover:bg-indigo-100 font-extrabold text-base text-indigo-950 transition active:scale-95";
+                btn.onclick = () => {
+                    if (opt === lesson.quizTarget) {
+                        btn.className = "py-2.5 rounded-xl border-2 border-emerald-500 bg-emerald-100 font-extrabold text-base text-emerald-900";
+                        document.getElementById('chk-step-2').checked = true;
+                        appState.stepChecks[2] = true;
+                        saveState();
+                        speakText("Great job! সঠিক উত্তর!");
+                        showToast("দারুণ! একদম সঠিক উত্তর!", "🎉");
+                    } else {
+                        btn.className = "py-2.5 rounded-xl border-2 border-rose-300 bg-rose-50 font-extrabold text-base text-rose-700";
+                        showToast("আবার চেষ্টা করো সোনামণি!", "💪");
+                    }
+                };
+                quizContainer.appendChild(btn);
+            });
+
+            const compBtn = document.getElementById('complete-day-btn');
+            if (appState.completedDays.includes(lesson.day)) {
+                compBtn.textContent = "★ এই পাঠটি সম্পন্ন হয়েছে (Completed)";
+                compBtn.className = "w-full sm:w-auto bg-emerald-600 text-white font-extrabold text-sm px-8 py-3.5 rounded-2xl shadow-sm";
+            } else {
+                compBtn.textContent = "★ আজকের পাঠ সম্পূর্ণ করুন ও স্টার জিতুন!";
+                compBtn.className = "w-full sm:w-auto bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-extrabold text-sm sm:text-base px-8 py-3.5 rounded-2xl shadow-md transition active:scale-95";
+            }
+        }
+
+        function toggleStepCheck(stepNum) {
+            appState.stepChecks[stepNum] = document.getElementById(`chk-step-${stepNum}`).checked;
+            saveState();
+        }
+
+        function playDailyRhyme() {
+            const lesson = getLessonByDay(appState.currentDay);
+            speakText(lesson.rhymeSpeech);
+            showToast("ছড়া ও ধ্বনি বাজছে...", "🔊");
+        }
+
+        function completeCurrentDay() {
+            const d = appState.currentDay;
+            if (!appState.completedDays.includes(d)) {
+                appState.completedDays.push(d);
+                appState.stars += 1;
+                saveState();
+                updateHeaderUI();
+                renderDaySelectors();
+                renderDailyPlan();
+                speakText("Congratulations! You earned a star!");
+                showToast(`অভিনন্দন! দিন ${d} শেষ করে ১টি সোনার স্টার জিতেছ!`, "⭐");
+            } else {
+                showToast("এই পাঠের স্টার ইতিমধ্যেই জমা হয়েছে!", "★");
+            }
+        }
+
+        // --- 5. TAB 2: FINGER TRACING CANVAS & SOUNDBOARD ---
+        let canvas, ctx, isDrawing = false;
+        let currentCrayon = '#DC2626';
+        let currentTemplate = 'v_line';
+
+        function initCanvas() {
+            canvas = document.getElementById('tracing-canvas');
+            if (!canvas) return;
+            ctx = canvas.getContext('2d');
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            canvas.addEventListener('mousedown', startDraw);
+            canvas.addEventListener('mousemove', drawMove);
+            canvas.addEventListener('mouseup', stopDraw);
+            canvas.addEventListener('mouseleave', stopDraw);
+
+            canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDraw(e.touches[0]); }, { passive: false });
+            canvas.addEventListener('touchmove', (e) => { e.preventDefault(); drawMove(e.touches[0]); }, { passive: false });
+            canvas.addEventListener('touchend', stopDraw);
+        }
+
+        function resizeCanvas() {
+            const container = document.getElementById('canvas-container');
+            if (!container || !canvas) return;
+            const rect = container.getBoundingClientRect();
+            if (rect.width === 0 || rect.height === 0) return;
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            drawGuideTemplate();
+        }
+
+        function drawGuideTemplate() {
+            if (!ctx || !canvas) return;
+            const w = canvas.width;
+            const h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+
+            ctx.save();
+            ctx.strokeStyle = '#94A3B8';
+            ctx.fillStyle = '#CBD5E1';
+            ctx.lineWidth = 5;
+            ctx.setLineDash([12, 10]);
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            if (currentTemplate === 'v_line') {
+                [0.25, 0.5, 0.75].forEach(rx => {
+                    ctx.beginPath();
+                    ctx.moveTo(w * rx, h * 0.18);
+                    ctx.lineTo(w * rx, h * 0.82);
+                    ctx.stroke();
+                });
+            } else if (currentTemplate === 'h_line') {
+                [0.28, 0.5, 0.72].forEach(ry => {
+                    ctx.beginPath();
+                    ctx.moveTo(w * 0.15, h * ry);
+                    ctx.lineTo(w * 0.85, h * ry);
+                    ctx.stroke();
+                });
+            } else if (currentTemplate === 'slant') {
+                [0.3, 0.55, 0.8].forEach(rx => {
+                    ctx.beginPath();
+                    ctx.moveTo(w * rx, h * 0.18);
+                    ctx.lineTo(w * (rx - 0.16), h * 0.82);
+                    ctx.stroke();
+                });
+            } else if (currentTemplate === 'zigzag') {
+                ctx.beginPath();
+                ctx.moveTo(w * 0.1, h * 0.72);
+                ctx.lineTo(w * 0.3, h * 0.28);
+                ctx.lineTo(w * 0.5, h * 0.72);
+                ctx.lineTo(w * 0.7, h * 0.28);
+                ctx.lineTo(w * 0.9, h * 0.72);
+                ctx.stroke();
+            } else if (currentTemplate === 'curve') {
+                [0.32, 0.68].forEach(rx => {
+                    ctx.beginPath();
+                    ctx.arc(w * rx, h * 0.5, Math.min(w, h) * 0.26, Math.PI * 0.5, Math.PI * 1.5);
+                    ctx.stroke();
+                });
+            } else {
+                // Dotted Letter / Number Guide
+                ctx.setLineDash([6, 6]);
+                ctx.lineWidth = 3;
+                ctx.font = `900 ${Math.min(w * 0.42, h * 0.68)}px "Noto Sans Bengali", "Poppins", sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.strokeText(currentTemplate, w * 0.5, h * 0.52);
+            }
+            ctx.restore();
+        }
+
+        function getCoords(evt) {
+            const rect = canvas.getBoundingClientRect();
+            return { x: evt.clientX - rect.left, y: evt.clientY - rect.top };
+        }
+
+        function startDraw(evt) {
+            isDrawing = true;
+            const { x, y } = getCoords(evt);
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        function drawMove(evt) {
+            if (!isDrawing) return;
+            const { x, y } = getCoords(evt);
+            ctx.save();
+            ctx.setLineDash([]);
+            ctx.strokeStyle = currentCrayon;
+            ctx.lineWidth = 10;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        function stopDraw() { isDrawing = false; }
+
+        function setTraceTemplate(val) {
+            currentTemplate = val;
+            drawGuideTemplate();
+        }
+
+        function setCrayonColor(hex, btnEl) {
+            currentCrayon = hex;
+            document.querySelectorAll('.crayon-btn').forEach(b => b.classList.remove('ring-2', 'ring-offset-2', 'ring-slate-800'));
+            if (btnEl) btnEl.classList.add('ring-2', 'ring-offset-2', 'ring-slate-800');
+        }
+
+        function clearCanvas() { drawGuideTemplate(); }
+
+        function renderSoundboards() {
+            const engItems = [
+                { l: "A", w: "Apple", say: "A for Apple" },
+                { l: "B", w: "Ball", say: "B for Ball" },
+                { l: "C", w: "Cat", say: "C for Cat" },
+                { l: "D", w: "Dog", say: "D for Dog" },
+                { l: "E", w: "Egg", say: "E for Egg" },
+                { l: "S", w: "Sun", say: "S for Sun" }
+            ];
+            const bnItems = [
+                { l: "অ", w: "অজগর", say: "অ-তে অজগর" },
+                { l: "আ", w: "আম", say: "আ-তে আম" },
+                { l: "ই", w: "ইঁদুর", say: "ই-তে ইঁদুর" },
+                { l: "ক", w: "কাকাতুয়া", say: "ক-এ কাকাতুয়া" },
+                { l: "খ", w: "খরগোশ", say: "খ-এ খরগোশ" },
+                { l: "গ", w: "গরু", say: "গ-এ গরু" }
+            ];
+
+            const engBox = document.getElementById('eng-soundboard');
+            const bnBox = document.getElementById('bn-soundboard');
+            engBox.innerHTML = '';
+            bnBox.innerHTML = '';
+
+            engItems.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = "bg-indigo-50/70 hover:bg-indigo-100 border border-indigo-200 rounded-2xl p-2.5 text-center transition active:scale-95";
+                btn.innerHTML = `<div class="font-display font-extrabold text-xl text-indigo-800">${item.l}</div><div class="text-[11px] font-bold text-slate-600">${item.w}</div>`;
+                btn.onclick = () => { speakText(item.say); showToast(item.say, "🔊"); };
+                engBox.appendChild(btn);
+            });
+
+            bnItems.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = "bg-rose-50/70 hover:bg-rose-100 border border-rose-200 rounded-2xl p-2.5 text-center transition active:scale-95";
+                btn.innerHTML = `<div class="font-extrabold text-xl text-rose-800">${item.l}</div><div class="text-[11px] font-bold text-slate-600">${item.w}</div>`;
+                btn.onclick = () => { speakText(item.say); showToast(item.say, "🔊"); };
+                bnBox.appendChild(btn);
+            });
+        }
+
+        // --- 6. TAB 3: 8-BLOCK A4 PRINTABLE WORKSHEET GENERATOR ---
+        function getStrokeSVG(type) {
+            if (type === 'h_line') {
+                return `<svg width="180" height="52" viewBox="0 0 180 52"><line x1="15" y1="16" x2="165" y2="16" stroke="#0284c7" stroke-width="3.5" stroke-dasharray="6,5"/><line x1="15" y1="38" x2="165" y2="38" stroke="#0284c7" stroke-width="3.5" stroke-dasharray="6,5"/></svg>`;
+            } else if (type === 'slant') {
+                return `<svg width="180" height="52" viewBox="0 0 180 52"><line x1="55" y1="6" x2="25" y2="46" stroke="#0284c7" stroke-width="3.5" stroke-dasharray="5,5"/><line x1="105" y1="6" x2="75" y2="46" stroke="#0284c7" stroke-width="3.5" stroke-dasharray="5,5"/><line x1="155" y1="6" x2="125" y2="46" stroke="#0284c7" stroke-width="3.5" stroke-dasharray="5,5"/></svg>`;
+            } else if (type === 'zigzag') {
+                return `<svg width="180" height="52" viewBox="0 0 180 52"><polyline points="15,42 45,10 75,42 105,10 135,42 165,10" fill="none" stroke="#0284c7" stroke-width="3.5" stroke-dasharray="5,4"/></svg>`;
+            } else if (type === 'curve') {
+                return `<svg width="180" height="52" viewBox="0 0 180 52"><path d="M55,8 A20,20 0 1,0 55,44" fill="none" stroke="#0284c7" stroke-width="3.5" stroke-dasharray="5,4"/><path d="M125,8 A20,20 0 1,0 125,44" fill="none" stroke="#0284c7" stroke-width="3.5" stroke-dasharray="5,4"/></svg>`;
+            }
+            return `<svg width="180" height="52" viewBox="0 0 180 52"><line x1="35" y1="6" x2="35" y2="46" stroke="#0284c7" stroke-width="3.5" stroke-dasharray="5,5"/><line x1="90" y1="6" x2="90" y2="46" stroke="#0284c7" stroke-width="3.5" stroke-dasharray="5,5"/><line x1="145" y1="6" x2="145" y2="46" stroke="#0284c7" stroke-width="3.5" stroke-dasharray="5,5"/></svg>`;
+        }
+
+        function getShapeSVG(type) {
+            if (type === 'square') {
+                return `<svg width="150" height="52" viewBox="0 0 150 52"><rect x="20" y="8" width="36" height="36" fill="#fff" stroke="#d97706" stroke-width="2.5" stroke-dasharray="4,4"/><rect x="90" y="8" width="36" height="36" fill="#fff" stroke="#d97706" stroke-width="2.5"/></svg>`;
+            } else if (type === 'triangle') {
+                return `<svg width="150" height="52" viewBox="0 0 150 52"><polygon points="38,8 18,44 58,44" fill="#fff" stroke="#16a34a" stroke-width="2.5" stroke-dasharray="4,4"/><polygon points="108,8 88,44 128,44" fill="#fff" stroke="#16a34a" stroke-width="2.5"/></svg>`;
+            } else if (type === 'star') {
+                return `<svg width="150" height="52" viewBox="0 0 150 52"><polygon points="38,6 44,19 58,21 48,30 50,44 38,37 26,44 28,30 18,21 32,19" fill="#fff" stroke="#d97706" stroke-width="2" stroke-dasharray="4,3"/><polygon points="108,6 114,19 128,21 118,30 120,44 108,37 96,44 98,30 88,21 102,19" fill="#fff" stroke="#d97706" stroke-width="2"/></svg>`;
+            }
+            return `<svg width="150" height="52" viewBox="0 0 150 52"><circle cx="40" cy="26" r="19" fill="#fff" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="5,4"/><circle cx="110" cy="26" r="19" fill="#fff" stroke="#ea580c" stroke-width="2.5"/></svg>`;
+        }
+
+        function renderPrintableWorksheet() {
+            const lesson = getLessonByDay(appState.currentDay);
+            const totalDays = getFullCurriculum().length;
+            document.getElementById('ws-day-title').textContent = `দিন ${lesson.day} (DAY ${lesson.day}) — হাতেখড়ি প্র্যাকটিস শিট`;
+            document.getElementById('ws-topic-badge').textContent = lesson.topic;
+            document.getElementById('ws-footer-page').textContent = `পৃষ্ঠা ${lesson.day} / ${totalDays}`;
+
+            const grid = document.getElementById('worksheet-8-grid');
+
+            if (lesson.customMediaUrl) {
+                grid.className = "block";
+                grid.innerHTML = `
+                    <div class="border-2 border-slate-300 rounded-xl p-4 bg-white text-center">
+                        <div class="text-sm font-bold text-slate-700 mb-2">${lesson.title} — কাস্টম ওয়ার্কশিট</div>
+                        <img src="${lesson.customMediaUrl}" alt="${lesson.title}" class="max-h-[210mm] mx-auto rounded-lg object-contain border border-slate-200" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div style="display:none;" class="p-6 bg-amber-50 rounded-xl text-sm font-bold text-amber-900">
+                            সংযুক্ত ওয়ার্কশিট লিংক: <a href="${lesson.customMediaUrl}" target="_blank" class="underline text-blue-700">${lesson.customMediaUrl}</a>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.className = "ws-grid-print grid grid-cols-1 sm:grid-cols-2 gap-3";
+            grid.innerHTML = `
+                <!-- Block 1: Stroke -->
+                <div class="ws-block-card border border-slate-300 rounded-xl p-3 bg-white flex flex-col justify-between">
+                    <div class="bg-sky-50 text-sky-900 border-l-4 border-sky-600 px-2 py-1 rounded text-xs font-extrabold flex justify-between">
+                        <span>১. রেখা: ${lesson.strokeName}</span><span>Trace</span>
+                    </div>
+                    <div class="py-2 flex flex-col items-center justify-center">
+                        ${getStrokeSVG(lesson.strokeType)}
+                        <div class="text-[11px] text-slate-500 font-semibold mt-1">ডটেড লাইনের ওপর পেন্সিল চালাও</div>
+                    </div>
+                </div>
+
+                <!-- Block 2: Shape -->
+                <div class="ws-block-card border border-slate-300 rounded-xl p-3 bg-white flex flex-col justify-between">
+                    <div class="bg-amber-50 text-amber-900 border-l-4 border-amber-500 px-2 py-1 rounded text-xs font-extrabold flex justify-between">
+                        <span>২. আকার: ${lesson.shapeName}</span><span>Color</span>
+                    </div>
+                    <div class="py-2 flex flex-col items-center justify-center">
+                        ${getShapeSVG(lesson.shapeType)}
+                        <div class="text-[11px] text-slate-500 font-semibold mt-1">আকারটি ট্রেস করো ও রঙ ভরাও</div>
+                    </div>
+                </div>
+
+                <!-- Block 3: English -->
+                <div class="ws-block-card border border-slate-300 rounded-xl p-3 bg-white flex flex-col justify-between">
+                    <div class="bg-purple-50 text-purple-900 border-l-4 border-purple-600 px-2 py-1 rounded text-xs font-extrabold flex justify-between">
+                        <span>৩. English: '${lesson.engLetter}'</span><span>Phonics: ${lesson.engPhonics}</span>
+                    </div>
+                    <div class="py-2 text-center">
+                        <div class="font-display font-black text-4xl tracking-widest text-white" style="-webkit-text-stroke: 1.8px #334155;">
+                            ${lesson.engLetter} &nbsp; ${lesson.engLetter}
+                        </div>
+                        <div class="text-[11px] text-slate-600 font-bold mt-1">${lesson.engLetter} for ${lesson.engWord}</div>
+                    </div>
+                </div>
+
+                <!-- Block 4: Bengali -->
+                <div class="ws-block-card border border-slate-300 rounded-xl p-3 bg-white flex flex-col justify-between">
+                    <div class="bg-rose-50 text-rose-900 border-l-4 border-rose-600 px-2 py-1 rounded text-xs font-extrabold flex justify-between">
+                        <span>৪. বাংলা বর্ণ: '${lesson.bnLetter}'</span><span>বর্ণমালা</span>
+                    </div>
+                    <div class="py-2 text-center">
+                        <div class="font-black text-4xl tracking-widest text-white" style="-webkit-text-stroke: 1.8px #334155;">
+                            ${lesson.bnLetter} &nbsp; ${lesson.bnLetter}
+                        </div>
+                        <div class="text-[11px] text-slate-600 font-bold mt-1">${lesson.bnLetter}-তে ${lesson.bnWord}</div>
+                    </div>
+                </div>
+
+                <!-- Block 5: Counting & Number -->
+                <div class="ws-block-card border border-slate-300 rounded-xl p-3 bg-white flex flex-col justify-between">
+                    <div class="bg-emerald-50 text-emerald-900 border-l-4 border-emerald-600 px-2 py-1 rounded text-xs font-extrabold flex justify-between">
+                        <span>৫. গণিত: সংখ্যা ${lesson.numVal} (${lesson.numBn})</span><span>Count</span>
+                    </div>
+                    <div class="py-2 text-center">
+                        <div class="text-lg mb-1">${lesson.countEmoji}</div>
+                        <div class="font-display font-black text-2xl tracking-widest text-slate-800">${lesson.numVal} &nbsp;•&nbsp; ${lesson.numBn}</div>
+                        <div class="text-[11px] text-slate-500 font-semibold mt-0.5">ছবি গুনে সংখ্যাটি বলো ও লেখো</div>
+                    </div>
+                </div>
+
+                <!-- Block 6: Letter / Borno Hunt -->
+                <div class="ws-block-card border border-slate-300 rounded-xl p-3 bg-white flex flex-col justify-between">
+                    <div class="bg-orange-50 text-orange-900 border-l-4 border-orange-500 px-2 py-1 rounded text-xs font-extrabold flex justify-between">
+                        <span>৬. খুঁজে গোল করো: '${lesson.huntTarget}'</span><span>Focus</span>
+                    </div>
+                    <div class="py-2 text-center">
+                        <div class="font-display font-extrabold text-base tracking-[
