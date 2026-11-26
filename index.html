@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0f766e" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>হাতেখড়ি (HateKhori) - Prothom Step Early Learning</title>
+  <title>HATEKHORI (হাতেখড়ি) - Early Learning App</title>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -518,9 +518,9 @@
       </div>
 
       <div class="card">
-        <h3 class="section-title">📤 অভিভাবকদের সাথে অ্যাপটি শেয়ার করুন</h3>
-        <p class="section-sub">নিচের বাটনে চাপলেই WhatsApp-এ অ্যাপের লিংক ও তথ্য চলে যাবে—কোনো APK পাঠানোর দরকার নেই।</p>
-        <button class="btn" style="background:#16a34a;color:#fff;width:100%;" id="btnShareAppGuide">📲 WhatsApp-এ শেয়ার করুন</button>
+        <h3 class="section-title">📤 অভিভাবকদের সাথে HATEKHORI শেয়ার করুন</h3>
+        <p class="section-sub">নিচের বাটনে চাপলেই সুন্দর মেসেজ ও HATEKHORI লিংকসহ WhatsApp খুলে যাবে।</p>
+        <button class="btn" style="background:#16a34a;color:#fff;width:100%;" id="btnShareAppGuide">📲 HATEKHORI শেয়ার করুন</button>
       </div>
 
       <div class="card">
@@ -802,7 +802,6 @@
     ];
 
     const extraTopics = [
-      // Days 4 - 7
       {
         en: "D", bn: "ঈ", num: "4",
         bnRhyme: "ঈ-তে ঈগল পাখি পাছে ধরে।", enRhyme: "D for Dog (ড-গ)",
@@ -835,8 +834,6 @@
         prompt: "🔍 সবুজ রঙের কোনো সবজি বা পাতা দেখিয়ে এর রঙ জিজ্ঞেস করুন।",
         act3: "🍇 আঙুর আঁকা: একটি সাদা কাগজে আঙুলের ছাপ দিয়ে সবুজ রঙের আঙুরের থোকা বানান।"
       },
-
-      // Days 8 - 30 (Unique, Rich Montessori & Play-Based Activities)
       {
         en: "H", bn: "এ", num: "8",
         bnRhyme: "এ-তে এক্কাগাড়ি খুব ছুটেছে।", enRhyme: "H for Hen (হে-ন)",
@@ -1231,13 +1228,13 @@
     let pendingUnlockDay = null;
     let activeActivityCat = "all";
 
+    // Share App with clean "HATEKHORI" branding (no email ID shown in title/heading)
     function shareHateKhoriApp() {
-      const shareText = `✏️ ২.৫ থেকে ৫ বছরের বাচ্চাদের ঘরে বসে খেলার ছলে বাংলা ও ইংরেজি শেখার সেরা ফ্রি অ্যাপ — *হাতেখড়ি (HateKhori)*!\n\n✅ ৩০ দিনের সহজ পাঠ ও আঙুলে ট্রেসিং\n✅ সুরসহ বাংলা ও ইংরেজি ছড়া, যোগব্যায়াম ও নাচ\n✅ A4 প্রিন্টেবল ওয়ার্কশিট\n\nনিচের লিংকে ক্লিক করে ফ্রি ব্যবহার করুন:\n${APP_LIVE_URL}`;
+      const shareText = `✏️ ২.৫ থেকে ৫ বছরের বাচ্চাদের ঘরে বসে খেলার ছলে বাংলা ও ইংরেজি শেখার সেরা ফ্রি অ্যাপ — *HATEKHORI (হাতেখড়ি)*!\n\n✅ ৩০ দিনের সহজ পাঠ ও আঙুলে ট্রেসিং\n✅ সুরসহ বাংলা ও ইংরেজি ছড়া, যোগব্যায়াম ও নাচ\n✅ A4 প্রিন্টেবল ওয়ার্কশিট\n\n👉 *HATEKHORI* অ্যাপটি ওপেন করতে নিচের লিংকে চাপুন:\n${APP_LIVE_URL}`;
       if (navigator.share) {
         navigator.share({
-          title: "হাতেখড়ি (HateKhori) - Early Learning App",
-          text: shareText,
-          url: APP_LIVE_URL
+          title: "HATEKHORI",
+          text: shareText
         }).catch(() => {});
       } else {
         window.open("https://wa.me/?text=" + encodeURIComponent(shareText), "_blank");
@@ -1791,8 +1788,8 @@
     });
 
     const manifest = {
-      name: "হাতেখড়ি - Prothom Step Early Learning",
-      short_name: "হাতেখড়ি",
+      name: "HATEKHORI - Early Learning App",
+      short_name: "HATEKHORI",
       start_url: "./",
       display: "standalone",
       background_color: "#ffffff",
