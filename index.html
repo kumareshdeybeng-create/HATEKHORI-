@@ -149,7 +149,7 @@
     .sound-char { font-size: 22px; font-weight: 700; color: var(--primary); }
     .sound-word { font-size: 11px; color: var(--muted); }
 
-    /* Category Pills for Kids Corner */
+    /* Category Pills */
     .cat-pills { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
     .cat-btn {
       padding: 7px 12px; border-radius: 99px; border: 1px solid #cbd5e1;
@@ -159,7 +159,7 @@
     .cat-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
     /* Activity & Rhymes Cards */
-    .rhyme-list { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 10px; }
+    .rhyme-list { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 10px; }
     .rhyme-card {
       background: linear-gradient(135deg, #fffbeb, #fef3c7);
       border: 1px solid #fcd34d;
@@ -174,7 +174,7 @@
     .rhyme-card.dance-card { background: linear-gradient(135deg, #fdf2f8, #fce7f3); border-color: #f9a8d4; }
     .rhyme-card.recite-card { background: linear-gradient(135deg, #f5f3ff, #ede9fe); border-color: #c4b5fd; }
 
-    .rhyme-header { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .rhyme-header { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
     .rhyme-title { font-size: 16px; font-weight: 700; color: #92400e; margin: 0; }
     .en-card .rhyme-title { color: #1e40af; }
     .yoga-card .rhyme-title { color: #166534; }
@@ -191,9 +191,44 @@
       line-height: 1.65;
       color: #1e293b;
       white-space: pre-line;
-      background: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.85);
       padding: 10px 12px;
       border-radius: 10px;
+    }
+
+    /* Yoga Visual Illustration Box */
+    .yoga-visual {
+      background: #ffffff;
+      border: 1.5px solid #86efac;
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+      margin: 4px 0;
+    }
+    .yoga-visual svg {
+      width: 150px;
+      height: 150px;
+      display: block;
+      margin: 0 auto;
+    }
+    .yoga-caption {
+      font-size: 12px;
+      font-weight: 700;
+      color: #15803d;
+      margin-top: 4px;
+    }
+
+    /* Music Equalizer Indicator */
+    .music-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #fef08a;
+      color: #854d0e;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 99px;
     }
 
     /* Worksheet 8-Block */
@@ -245,7 +280,6 @@
     .progress-bar { width: 100%; height: 10px; background: #e2e8f0; border-radius: 99px; overflow: hidden; margin: 12px 0; }
     .progress-fill { height: 100%; background: #0f766e; width: 0%; transition: width 0.3s; }
 
-    /* Custom Sponsor Banner inside Post-Rhyme Modal */
     .sponsor-box {
       background: linear-gradient(135deg, #f0fdfa, #ccfbf1);
       border: 2px solid #0f766e;
@@ -337,9 +371,9 @@
           <input type="checkbox" class="step-chk" id="chk1" />
           <div class="step-body">
             <div class="step-tag">ধাপ ১ (৫ মিনিট) • ছড়া ও উচ্চারণ (অ–ঔ ও A–Z)</div>
-            <div class="step-text" id="rhymeText">"অ-তে অজগর আসছে তেড়ে • A for Apple (অ্যা-পল)"</div>
+            <div class="step-text" id="rhymeText">"অ-তে অজগর আসছে তেড়ে। • A for Apple (অ্যা-পল)"</div>
             <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;">
-              <button class="btn btn-yellow" style="padding:6px 12px;font-size:12px;" id="btnPlayAudio">🔊 আজকের ছড়া শুনুন</button>
+              <button class="btn btn-yellow" style="padding:6px 12px;font-size:12px;" id="btnPlayAudio">🎵 সুর ও ছড়া শুনুন</button>
               <button class="btn" style="background:#ccfbf1;color:#0f766e;padding:6px 10px;font-size:12px;" id="btnPlayAllBn">🇧🇩 পুরো অ–ঔ শুনুন</button>
               <button class="btn" style="background:#dbeafe;color:#1e40af;padding:6px 10px;font-size:12px;" id="btnPlayAllEn">🇬🇧 পুরো A–Z শুনুন</button>
             </div>
@@ -368,7 +402,7 @@
       </div>
     </section>
 
-    <!-- TAB 2: TRACING, RHYMES, YOGA, DANCE & RECITATION -->
+    <!-- TAB 2: TRACING, RHYMES WITH MUSIC, YOGA WITH PICS, DANCE & RECITATION -->
     <section class="tab-pane" id="tab-tracing">
       <div class="card">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
@@ -410,21 +444,21 @@
         <div class="sound-grid" id="soundGrid"></div>
       </div>
 
-      <!-- MULTI-CATEGORY KIDS CORNER: BN RHYMES, EN RHYMES, YOGA, DANCE, RECITATION -->
+      <!-- MULTI-CATEGORY KIDS CORNER -->
       <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
           <div>
-            <h3 class="section-title" style="margin:0;">🎭 ছড়া, যোগব্যায়াম, নাচ ও আবৃত্তি</h3>
-            <p class="section-sub" style="margin:2px 0 4px;">পছন্দের বিভাগ বেছে নিয়ে '🔊 শুনুন' বাটনে চাপুন</p>
+            <h3 class="section-title" style="margin:0;">🎭 সুরসহ ছড়া, ছবিসহ যোগব্যায়াম, নাচ ও আবৃত্তি</h3>
+            <p class="section-sub" style="margin:2px 0 4px;">মিউজিক ও সুরসহ শুনতে <strong>'🎵 সুরসহ শুনুন'</strong> বাটনে চাপুন</p>
           </div>
-          <button class="btn" style="background:#fee2e2;color:#b91c1c;padding:6px 10px;font-size:12px;" onclick="stopSpeech()">⏹️ থামুন</button>
+          <button class="btn" style="background:#fee2e2;color:#b91c1c;padding:6px 10px;font-size:12px;white-space:nowrap;" onclick="stopAllAudio()">⏹️ থামুন</button>
         </div>
 
         <div class="cat-pills" id="activityCatPills">
           <button class="cat-btn active" data-cat="all">সবগুলো</button>
           <button class="cat-btn" data-cat="bn_rhyme">🇧🇩 বাংলা ছড়া</button>
           <button class="cat-btn" data-cat="en_rhyme">🇬🇧 English Rhymes</button>
-          <button class="cat-btn" data-cat="yoga">🧘 যোগব্যায়াম</button>
+          <button class="cat-btn" data-cat="yoga">🧘 ছবিসহ যোগব্যায়াম</button>
           <button class="cat-btn" data-cat="dance">💃 নাচ ও ছন্দ</button>
           <button class="cat-btn" data-cat="recite">🎙️ আবৃত্তি</button>
         </div>
@@ -494,10 +528,10 @@
           <input type="text" id="adminCustomAdTitle" placeholder="যেমন: হাতেখড়ি প্রিন্টেড ওয়ার্কশিট বই" style="margin-bottom:8px;" />
           <label style="font-size:12px;font-weight:700;">বিজ্ঞাপনের বিবরণ / অফার মেসেজ:</label>
           <textarea id="adminCustomAdDesc" rows="2" placeholder="যেমন: ঘরে বসে কুরিয়ারে পান ১০০ পাতার রঙিন ওয়ার্কশিট বুক!" style="margin-bottom:8px;"></textarea>
-          <label style="font-size:12px;font-weight:700;">ব্যানার ছবির লিংক (ঐচ্ছিক - Google Drive / ImgBB):</label>
+          <label style="font-size:12px;font-weight:700;">ব্যানার ছবির লিংক (ঐচ্ছিক):</label>
           <input type="text" id="adminCustomAdImg" placeholder="https://..." style="margin-bottom:8px;" />
-          <label style="font-size:12px;font-weight:700;">বিজ্ঞাপনের বাটন লিংক (WhatsApp / Website / Monetag):</label>
-          <input type="text" id="adminCustomAdUrl" placeholder="https://wa.me/918250912381 বা আপনার লিংক" style="margin-bottom:8px;" />
+          <label style="font-size:12px;font-weight:700;">বিজ্ঞাপনের বাটন লিংক:</label>
+          <input type="text" id="adminCustomAdUrl" placeholder="https://wa.me/918250912381" style="margin-bottom:8px;" />
           <button class="btn btn-yellow" style="width:100%;margin-bottom:14px;" id="btnSaveCustomAd">Save Custom Sponsor Ad</button>
 
           <h4 style="margin:0 0 8px;">৩. Admin PIN পরিবর্তন করুন</h4>
@@ -514,12 +548,12 @@
             <option value="dance">💃 নাচ ও ছন্দ (Dance & Action)</option>
             <option value="recite">🎙️ আবৃত্তি (Recitation)</option>
           </select>
-          <input type="text" id="newRhymeTitle" placeholder="শিরোনাম লিখুন (যেমন: প্রজাপতি প্রজাপতি বা বৃক্ষাসন)" style="margin-bottom:8px;" />
-          <textarea id="newRhymeBody" rows="3" placeholder="ছড়ার লাইন বা যোগব্যায়াম/নাচের নিয়ম এখানে লিখুন..." style="margin-bottom:8px;"></textarea>
+          <input type="text" id="newRhymeTitle" placeholder="শিরোনাম লিখুন" style="margin-bottom:8px;" />
+          <textarea id="newRhymeBody" rows="3" placeholder="ছড়ার লাইন বা যোগব্যায়াম/নাচের নিয়ম লিখুন..." style="margin-bottom:8px;"></textarea>
           <button class="btn btn-yellow" style="width:100%;margin-bottom:14px;" id="btnAddNewRhyme">+ নতুন আইটেম যুক্ত করুন</button>
 
           <h4 style="margin:0 0 8px;">৫. নতুন দিনের ওয়ার্কশিট যোগ করুন (Day 31+)</h4>
-          <input type="text" id="newDayTitle" placeholder="পাঠের শিরোনাম (যেমন: 'খ' ও 'C' শেখা)" style="margin-bottom:8px;" />
+          <input type="text" id="newDayTitle" placeholder="পাঠের শিরোনাম" style="margin-bottom:8px;" />
           <input type="text" id="newDayBn" placeholder="বাংলা বর্ণ (যেমন: খ)" style="margin-bottom:8px;" />
           <input type="text" id="newDayEn" placeholder="ইংরেজি অক্ষর (যেমন: C)" style="margin-bottom:8px;" />
           <input type="text" id="newDayImg" placeholder="Canva / Google Drive ছবির লিংক (ঐচ্ছিক)" style="margin-bottom:8px;" />
@@ -538,7 +572,7 @@
     <button class="nav-btn" data-target="tab-guide"><span class="nav-icon">👑</span>গাইড ও প্রো</button>
   </nav>
 
-  <!-- Post-Rhyme Dual Ad Modal (Custom Sponsor Banner + Monetag Action) -->
+  <!-- Post-Rhyme Dual Ad Modal -->
   <div class="modal-backdrop" id="postRhymeAdModal">
     <div class="modal-box">
       <div style="font-size:30px;">🎉</div>
@@ -595,6 +629,134 @@
   </div>
 
   <script>
+    // ==========================================
+    // 1. BUILT-IN PLAYFUL MUSIC ENGINE (WEB AUDIO API)
+    // ==========================================
+    let audioCtx = null;
+    let musicInterval = null;
+
+    function startBackgroundMelody(melodyType) {
+      stopBackgroundMelody();
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        if (!audioCtx) audioCtx = new AudioContext();
+        if (audioCtx.state === "suspended") audioCtx.resume();
+
+        // Playful nursery rhyme note sequences (Hz)
+        const melodies = {
+          twinkle: [261.63, 261.63, 392.00, 392.00, 440.00, 440.00, 392.00, 349.23, 349.23, 329.63, 329.63, 293.66, 293.66, 261.63],
+          bengali: [261.63, 293.66, 329.63, 392.00, 440.00, 392.00, 329.63, 293.66, 329.63, 392.00, 523.25, 440.00, 392.00, 329.63],
+          dance:   [329.63, 392.00, 523.25, 392.00, 440.00, 523.25, 587.33, 523.25, 392.00, 329.63, 293.66, 392.00],
+          yoga:    [261.63, 329.63, 392.00, 523.25, 392.00, 329.63]
+        };
+
+        const notes = melodies[melodyType] || melodies.bengali;
+        const tempo = melodyType === "yoga" ? 850 : 420;
+        let step = 0;
+
+        function playNote() {
+          if (!audioCtx) return;
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = melodyType === "yoga" ? "sine" : "triangle";
+          osc.frequency.setValueAtTime(notes[step % notes.length], audioCtx.currentTime);
+
+          gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + (tempo / 1000) * 0.9);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + (tempo / 1000) * 0.9);
+          step++;
+        }
+
+        playNote();
+        musicInterval = setInterval(playNote, tempo);
+      } catch (e) {}
+    }
+
+    function stopBackgroundMelody() {
+      if (musicInterval) {
+        clearInterval(musicInterval);
+        musicInterval = null;
+      }
+    }
+
+    function stopAllAudio() {
+      stopBackgroundMelody();
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    }
+
+    // ==========================================
+    // 2. YOGA SVG ILLUSTRATIONS (NO EXTERNAL LINKS NEEDED)
+    // ==========================================
+    const YOGA_SVGS = {
+      tree: `<div class="yoga-visual">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="200" rx="16" fill="#ecfdf5"/>
+          <circle cx="100" cy="48" r="14" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
+          <path d="M92 46 Q95 43 98 46 M102 46 Q105 43 108 46 M96 53 Q100 57 104 53" stroke="#7c2d12" stroke-width="2" fill="none"/>
+          <!-- Namaste Hands Up -->
+          <path d="M88 70 L75 35 L100 16 L125 35 L112 70" stroke="#f97316" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <!-- Torso -->
+          <rect x="86" y="64" width="28" height="44" rx="10" fill="#10b981"/>
+          <!-- Standing Leg -->
+          <line x1="95" y1="108" x2="95" y2="168" stroke="#2563eb" stroke-width="9" stroke-linecap="round"/>
+          <!-- Bent Tree Leg -->
+          <path d="M105 108 L128 125 L98 136" stroke="#2563eb" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <ellipse cx="100" cy="174" rx="45" ry="6" fill="#a7f3d0"/>
+        </svg>
+        <div class="yoga-caption">🌲 বৃক্ষাসন (Tree Pose) — এক পায়ে সোজা হয়ে হাত ওপরে তোলো</div>
+      </div>`,
+
+      butterfly: `<div class="yoga-visual">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="200" rx="16" fill="#fefce8"/>
+          <!-- Butterfly Wings behind -->
+          <ellipse cx="62" cy="95" rx="32" ry="22" fill="#fde047" stroke="#eab308" stroke-width="2"/>
+          <ellipse cx="138" cy="95" rx="32" ry="22" fill="#fde047" stroke="#eab308" stroke-width="2"/>
+          <!-- Head -->
+          <circle cx="100" cy="58" r="15" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
+          <path d="M95 62 Q100 67 105 62" stroke="#7c2d12" stroke-width="2" fill="none"/>
+          <!-- Torso -->
+          <rect x="85" y="75" width="30" height="45" rx="12" fill="#ec4899"/>
+          <!-- Bent Butterfly Legs -->
+          <path d="M88 118 L55 135 L95 148" stroke="#3b82f6" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M112 118 L145 135 L105 148" stroke="#3b82f6" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <!-- Hands holding feet -->
+          <path d="M86 85 L96 142 M114 85 L104 142" stroke="#fed7aa" stroke-width="6" stroke-linecap="round"/>
+          <ellipse cx="100" cy="158" rx="55" ry="6" fill="#fef08a"/>
+        </svg>
+        <div class="yoga-caption">🦋 প্রজাপতি আসন (Butterfly Pose) — দুই পা জোড়া করে হাঁটু নাড়াও</div>
+      </div>`,
+
+      lion: `<div class="yoga-visual">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="200" rx="16" fill="#fff7ed"/>
+          <!-- Lion Mane Aura -->
+          <circle cx="100" cy="68" r="28" fill="#fdba74" stroke="#ea580c" stroke-width="2" stroke-dasharray="6,4"/>
+          <!-- Head -->
+          <circle cx="100" cy="68" r="16" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
+          <!-- Roaring Mouth & Tongue -->
+          <circle cx="100" cy="74" r="6" fill="#991b1b"/>
+          <path d="M97 76 L97 84 Q100 88 103 84 L103 76" fill="#f43f5e"/>
+          <!-- Kneeling Body & Hands on knees -->
+          <rect x="83" y="88" width="34" height="44" rx="12" fill="#f59e0b"/>
+          <path d="M84 95 L72 135 M116 95 L128 135" stroke="#fed7aa" stroke-width="7" stroke-linecap="round"/>
+          <ellipse cx="100" cy="144" rx="48" ry="12" fill="#78350f"/>
+          <text x="100" y="176" font-size="14" font-weight="bold" text-anchor="middle" fill="#c2410c">হা... (Roar!)</text>
+        </svg>
+        <div class="yoga-caption">🦁 সিংহাসন (Lion Breath) — মুখ হাঁ করে সিংহের মতো শ্বাস ছাড়ো</div>
+      </div>`
+    };
+
+    // ==========================================
+    // 3. CURRICULUM & ACTIVITIES DATA
+    // ==========================================
     const FULL_BN_SWARABORNO = "অ-তে অজগর আসছে তেড়ে। আ-তে আমটি আমি খাব পেড়ে। ই-তে ইঁদুর ছানা ভয়ে মরে। ঈ-তে ঈগল পাখি পাছে ধরে। উ-তে উট চলেছে মুখটি তুলে। ঊ-তে ঊষা হাসে পুব আকাশে। ঋ-তে ঋষি মশাই বসেন পূজায়। এ-তে এক্কাগাড়ি খুব ছুটেছে। ঐ-তে ঐরাবতটি আসছে তেড়ে। ও-তে ওল খেও না ধরবে গলা। ঔ-তে ঔষধ খেতে মিছে বলা।";
 
     const FULL_EN_ALPHABET = "A for Apple, B for Ball, C for Cat, D for Dog, E for Elephant, F for Fish, G for Grapes, H for Hen, I for Ice-cream, J for Jug, K for Kite, L for Lion, M for Mango, N for Nest, O for Orange, P for Parrot, Q for Queen, R for Rabbit, S for Sun, T for Tiger, U for Umbrella, V for Van, W for Watch, X for Xylophone, Y for Yak, Z for Zebra.";
@@ -651,103 +813,123 @@
     const defaultActivities = [
       {
         cat: "bn_rhyme",
-        catLabel: "🇧🇩 বাংলা ছড়া",
+        catLabel: "🇧🇩 বাংলা ছড়া • 🎵 মিউজিকসহ",
+        melody: "bengali",
         title: "আতা গাছে তোতা পাখি",
         body: "আতা গাছে তোতা পাখি,\nডালিম গাছে মৌ।\nএত ডাকি তবু কথা,\nকও না কেন বউ?"
       },
       {
         cat: "bn_rhyme",
-        catLabel: "🇧🇩 বাংলা ছড়া",
+        catLabel: "🇧🇩 বাংলা ছড়া • 🎵 মিউজিকসহ",
+        melody: "bengali",
         title: "আয় আয় চাঁদ মামা",
         body: "আয় আয় চাঁদ মামা টিপ দিয়ে যা,\nচাঁদের কপালে চাঁদ টিপ দিয়ে যা।\nমাছ কাটলে মুড়ো দেব,\nধান ভানলে কুঁড়ো দেব,\nকালো গরুর দুধ দেব,\nচাঁদের কপালে চাঁদ টিপ দিয়ে যা।"
       },
       {
         cat: "bn_rhyme",
-        catLabel: "🇧🇩 বাংলা ছড়া",
+        catLabel: "🇧🇩 বাংলা ছড়া • 🎵 মিউজিকসহ",
+        melody: "bengali",
         title: "হাট্টিমাটিম টিম",
         body: "হাট্টিমাটিম টিম,\nতারা মাঠে পাড়ে ডিম,\nতাদের খাড়া দুটো শিং,\nতারা হাট্টিমাটিম টিম।"
       },
       {
         cat: "bn_rhyme",
-        catLabel: "🇧🇩 বাংলা ছড়া",
+        catLabel: "🇧🇩 বাংলা ছড়া • 🎵 মিউজিকসহ",
+        melody: "bengali",
         title: "নোটন নোটন পায়রাগুলি",
         body: "নোটন নোটন পায়রাগুলি ঝোঁটন বেঁধেছে,\nওপারেতে ছেলেমেয়ে নাইতে নেমেছে।\nদুই ধারে দুই রুই কাতলা ভেসে উঠেছে,\nকে দেখেছে কে দেখেছে দাদা দেখেছে।"
       },
       {
         cat: "en_rhyme",
-        catLabel: "🇬🇧 English Rhyme",
+        catLabel: "🇬🇧 English Rhyme • 🎵 With Music",
+        melody: "twinkle",
         title: "Twinkle, Twinkle, Little Star",
         body: "Twinkle, twinkle, little star,\nHow I wonder what you are!\nUp above the world so high,\nLike a diamond in the sky."
       },
       {
         cat: "en_rhyme",
-        catLabel: "🇬🇧 English Rhyme",
+        catLabel: "🇬🇧 English Rhyme • 🎵 With Music",
+        melody: "dance",
         title: "Johny Johny Yes Papa",
         body: "Johny, Johny, Yes, Papa?\nEating sugar? No, Papa!\nTelling lies? No, Papa!\nOpen your mouth, Ha! Ha! Ha!"
       },
       {
         cat: "en_rhyme",
-        catLabel: "🇬🇧 English Rhyme",
+        catLabel: "🇬🇧 English Rhyme • 🎵 With Music",
+        melody: "twinkle",
         title: "Baa, Baa, Black Sheep",
         body: "Baa, baa, black sheep, have you any wool?\nYes sir, yes sir, three bags full.\nOne for the master, one for the dame,\nAnd one for the little boy who lives down the lane."
       },
       {
         cat: "en_rhyme",
-        catLabel: "🇬🇧 English Rhyme",
+        catLabel: "🇬🇧 English Rhyme • 🎵 With Music",
+        melody: "dance",
         title: "Humpty Dumpty",
         body: "Humpty Dumpty sat on a wall,\nHumpty Dumpty had a great fall.\nAll the king's horses and all the king's men,\nCouldn't put Humpty together again."
       },
       {
         cat: "yoga",
-        catLabel: "🧘 যোগব্যায়াম (Kids Yoga)",
+        catLabel: "🧘 ছবিসহ যোগব্যায়াম (Kids Yoga)",
+        melody: "yoga",
+        yogaKey: "tree",
         title: "১. বৃক্ষাসন (Tree Pose — গাছের মতো দাঁড়ানো)",
         body: "নিয়ম: সোজা হয়ে দাঁড়িয়ে ডান পা ভাঁজ করে বাম উরুর ওপর রাখো। দুটি হাত নমস্কারের ভঙ্গিতে মাথার ওপর তোলো। গাছের মতো স্থির হয়ে ১০ পর্যন্ত গোনো। এতে মনোযোগ ও ভারসাম্য বাড়ে।"
       },
       {
         cat: "yoga",
-        catLabel: "🧘 যোগব্যায়াম (Kids Yoga)",
+        catLabel: "🧘 ছবিসহ যোগব্যায়াম (Kids Yoga)",
+        melody: "yoga",
+        yogaKey: "butterfly",
         title: "২. প্রজাপতি আসন (Butterfly Pose)",
         body: "নিয়ম: মেঝেতে বসে দুই পায়ের পাতা একসাথে জোড়া লাগাও। দুই হাত দিয়ে পায়ের আঙুল ধরে প্রজাপতির ডানার মতো হাঁটু দুটো ওপর-নিচ করো। ১৫ বার ডানা ঝাপটাও!"
       },
       {
         cat: "yoga",
-        catLabel: "🧘 যোগব্যায়াম (Kids Yoga)",
+        catLabel: "🧘 ছবিসহ যোগব্যায়াম (Kids Yoga)",
+        melody: "yoga",
+        yogaKey: "lion",
         title: "৩. সিংহাসন ও বেলুন শ্বাস (Lion & Balloon Breath)",
         body: "নিয়ম: নাক দিয়ে লম্বা শ্বাস নিয়ে পেটটাকে বড় বেলুনের মতো ফোলাও। এবার মুখ হাঁ করে জিভ বের করে সিংহের মতো 'হাঁ...' শব্দ করে শ্বাস ছাড়ো। ৩ বার করো।"
       },
       {
         cat: "dance",
-        catLabel: "💃 নাচ ও ছন্দ (Dance & Action)",
+        catLabel: "💃 নাচ ও ছন্দ • 🎵 মিউজিকসহ",
+        melody: "dance",
         title: "১. প্রজাপতি নাচ (হাত নেড়ে ও পায়ের তালে)",
         body: "গানের তালে তালে নাচো:\nপ্রজাপতি, প্রজাপতি,\nকোথায় পেলে ভাই এমন রঙিন পাখা!\n(দুই হাত ডানার মতো মেলে ঘরের চারপাশে ঘুরে ঘুরে নাচো ও তালি দাও!)"
       },
       {
         cat: "dance",
-        catLabel: "💃 নাচ ও ছন্দ (Dance & Action)",
+        catLabel: "💃 নাচ ও ছন্দ • 🎵 মিউজিকসহ",
+        melody: "dance",
         title: "২. If You're Happy and You Know It (Action Dance)",
         body: "If you're happy and you know it, clap your hands! (দুই হাতে তালি দাও)\nIf you're happy and you know it, stomp your feet! (মাটিতে পা ঠোকো)\nIf you're happy and you know it, turn around! (এক পাক ঘুরে নাচো)"
       },
       {
         cat: "dance",
-        catLabel: "💃 নাচ ও ছন্দ (Dance & Action)",
+        catLabel: "💃 নাচ ও ছন্দ • 🎵 মিউজিকসহ",
+        melody: "dance",
         title: "৩. আগডুম বাগডুম ঘোড়াডুম সাজে",
         body: "আগডুম বাগডুম ঘোড়াডুম সাজে,\nঢাক মৃদং ঝাঁঝর বাজে।\nবাজতে বাজতে চলল ঢুলি,\nঢুলি গেল সেই কমলাফুলি।\n(ঘোড়ার মতো লাফিয়ে লাফিয়ে তালে তালে পা ফেলে নাচো!)"
       },
       {
         cat: "recite",
         catLabel: "🎙️ আবৃত্তি (Recitation)",
+        melody: "yoga",
         title: "১. আমাদের ছোট নদী — রবীন্দ্রনাথ ঠাকুর",
         body: "আমাদের ছোট নদী চলে বাঁকে বাঁকে,\nবৈশাখ মাসে তার হাঁটু জল থাকে।\nপার হয়ে যায় গরু, পার হয় গাড়ি,\nদুই ধার উঁচু তার, ঢালু তার পাড়ি।"
       },
       {
         cat: "recite",
         catLabel: "🎙️ আবৃত্তি (Recitation)",
+        melody: "yoga",
         title: "২. কাজলা দিদি — যতীন্দ্রমোহন বাগচী",
         body: "বাঁশ বাগানের মাথার ওপর চাঁদ উঠেছে ওই,\nমাগো আমার শোলক বলা কাজলা দিদি কই?\nপুকুর ধারে নেবুর তলে থোকায় থোকায় জোনাই জ্বলে,\nফুলের গন্ধে ঘুম আসে না একলা জেগে রই।"
       },
       {
         cat: "recite",
         catLabel: "🎙️ আবৃত্তি (Recitation)",
+        melody: "yoga",
         title: "৩. তালগাছ — রবীন্দ্রনাথ ঠাকুর",
         body: "তালগাছ এক পায়ে দাঁড়িয়ে,\nসব গাছ ছাড়িয়ে,\nউঁকি মারে আকাশে।\nমনে সাধ কালো মেঘ ফুঁড়ে যায়,\nএকবারে উড়ে যায়,\nকোথা পাবে পাখা সে!"
       }
@@ -831,13 +1013,18 @@
       container.innerHTML = filtered.map((item) => {
         const realIndex = allItems.indexOf(item);
         const cardCls = getCardClassByCat(item.cat);
+        const yogaPicHtml = (item.yogaKey && YOGA_SVGS[item.yogaKey]) ? YOGA_SVGS[item.yogaKey] : "";
         return `
           <div class="rhyme-card ${cardCls}">
-            <span class="rhyme-badge">${item.catLabel}</span>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span class="rhyme-badge">${item.catLabel}</span>
+              <span class="music-pill">🎶 সুর ও মিউজিক</span>
+            </div>
             <div class="rhyme-header">
               <h4 class="rhyme-title">${item.title}</h4>
-              <button class="btn btn-yellow" style="padding:6px 12px;font-size:12px;white-space:nowrap;" onclick="playActivityByIndex(${realIndex})">🔊 শুনুন</button>
+              <button class="btn btn-yellow" style="padding:6px 12px;font-size:12px;white-space:nowrap;" onclick="playActivityByIndex(${realIndex})">🎵 সুরসহ শুনুন</button>
             </div>
+            ${yogaPicHtml}
             <div class="rhyme-lines">${item.body}</div>
           </div>
         `;
@@ -865,15 +1052,11 @@
       const item = getAllActivities()[idx];
       if (item) {
         const cleanText = item.body.split(String.fromCharCode(10)).join(" ").split(String.fromCharCode(13)).join(" ");
+        startBackgroundMelody(item.melody || "bengali");
         speakText(cleanText, () => {
+          stopBackgroundMelody();
           triggerPostRhymeAd();
-        });
-      }
-    }
-
-    function stopSpeech() {
-      if ("speechSynthesis" in window) {
-        window.speechSynthesis.cancel();
+        }, true);
       }
     }
 
@@ -962,15 +1145,17 @@
       drawGuide();
     }
 
-    function speakText(txt, onEndCallback) {
+    // Playful sing-song pitch & rate for rhymes
+    function speakText(txt, onEndCallback, isSingSong) {
       if (!("speechSynthesis" in window)) {
-        if (onEndCallback) setTimeout(onEndCallback, 2500);
+        if (onEndCallback) setTimeout(onEndCallback, 3000);
         return;
       }
       window.speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(txt);
       u.lang = /[ঀ-৿]/.test(txt) ? "bn-IN" : "en-US";
-      u.rate = 0.88;
+      u.rate = isSingSong ? 0.84 : 0.90;
+      u.pitch = isSingSong ? 1.22 : 1.05;
       if (onEndCallback) {
         u.onend = () => {
           onEndCallback();
@@ -1077,28 +1262,35 @@
     document.getElementById("btnGoTracing").addEventListener("click", () => switchTab("tab-tracing"));
     document.getElementById("btnGoPrint").addEventListener("click", () => switchTab("tab-print"));
     document.getElementById("btnPrintSheet").addEventListener("click", () => window.print());
+
     document.getElementById("btnPlayAudio").addEventListener("click", () => {
+      startBackgroundMelody("bengali");
       speakText(document.getElementById("rhymeText").textContent, () => {
+        stopBackgroundMelody();
         triggerPostRhymeAd();
-      });
+      }, true);
     });
 
     document.getElementById("btnPlayAllBn").addEventListener("click", () => {
       const box = document.getElementById("fullAlphabetBox");
       box.style.display = "block";
       box.innerHTML = `<strong>🇧🇩 স্বরবর্ণ ছড়া (অ – ঔ):</strong><br/>${FULL_BN_SWARABORNO}`;
+      startBackgroundMelody("bengali");
       speakText(FULL_BN_SWARABORNO, () => {
+        stopBackgroundMelody();
         triggerPostRhymeAd();
-      });
+      }, true);
     });
 
     document.getElementById("btnPlayAllEn").addEventListener("click", () => {
       const box = document.getElementById("fullAlphabetBox");
       box.style.display = "block";
       box.innerHTML = `<strong>🇬🇧 English Alphabet (A – Z):</strong><br/>${FULL_EN_ALPHABET}`;
+      startBackgroundMelody("twinkle");
       speakText(FULL_EN_ALPHABET, () => {
+        stopBackgroundMelody();
         triggerPostRhymeAd();
-      });
+      }, true);
     });
 
     document.getElementById("btnRhymeMonetagContinue").addEventListener("click", () => {
@@ -1261,7 +1453,7 @@
       const title = document.getElementById("newRhymeTitle").value.trim();
       const body = document.getElementById("newRhymeBody").value.trim();
       if (!title || !body) return alert("শিরোনাম ও বিবরণ/লাইনগুলো লিখুন!");
-      state.customActivities.push({ cat, catLabel, title, body });
+      state.customActivities.push({ cat, catLabel, title, body, melody: cat === "en_rhyme" ? "twinkle" : "bengali" });
       saveState();
       renderActivitiesList();
       document.getElementById("newRhymeTitle").value = "";
