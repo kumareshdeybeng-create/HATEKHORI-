@@ -415,7 +415,7 @@
         <div style="display:flex;justify-content:space-between;align-items:center;">
           <div>
             <h3 class="section-title" style="margin:0;">🎭 ছড়া, যোগব্যায়াম, নাচ ও আবৃত্তি</h3>
-            <p class="section-sub" style="margin:2px 0 4px;">পছন্দের বিভাগ বেছে নিয়ে '🔊 শুনুন ও করুন' বাটনে চাপুন</p>
+            <p class="section-sub" style="margin:2px 0 4px;">পছন্দের বিভাগ বেছে নিয়ে '🔊 শুনুন' বাটনে চাপুন</p>
           </div>
           <button class="btn" style="background:#fee2e2;color:#b91c1c;padding:6px 10px;font-size:12px;" onclick="stopSpeech()">⏹️ থামুন</button>
         </div>
@@ -595,12 +595,10 @@
   </div>
 
   <script>
-    // FULL BENGALI SWARABORNO (অ - ঔ) & ENGLISH ALPHABET (A - Z) CHANTS
     const FULL_BN_SWARABORNO = "অ-তে অজগর আসছে তেড়ে। আ-তে আমটি আমি খাব পেড়ে। ই-তে ইঁদুর ছানা ভয়ে মরে। ঈ-তে ঈগল পাখি পাছে ধরে। উ-তে উট চলেছে মুখটি তুলে। ঊ-তে ঊষা হাসে পুব আকাশে। ঋ-তে ঋষি মশাই বসেন পূজায়। এ-তে এক্কাগাড়ি খুব ছুটেছে। ঐ-তে ঐরাবতটি আসছে তেড়ে। ও-তে ওল খেও না ধরবে গলা। ঔ-তে ঔষধ খেতে মিছে বলা।";
 
     const FULL_EN_ALPHABET = "A for Apple, B for Ball, C for Cat, D for Dog, E for Elephant, F for Fish, G for Grapes, H for Hen, I for Ice-cream, J for Jug, K for Kite, L for Lion, M for Mango, N for Nest, O for Orange, P for Parrot, Q for Queen, R for Rabbit, S for Sun, T for Tiger, U for Umbrella, V for Van, W for Watch, X for Xylophone, Y for Yak, Z for Zebra.";
 
-    // 1. CURRICULUM DATA (30 DAYS WITH BENGALI (অ-ঔ) & ENGLISH (A-Z) RHYMES)
     const defaultLessons = [
       { day: 1, title: "Standing Line, ইংরেজি 'A' ও বাংলা 'অ', সংখ্যা 1", bn: "অ", en: "A", num: "1", stroke: "|", rhyme: "অ-তে অজগর আসছে তেড়ে। • A for Apple (অ্যা-পল)", q: "নিচের কোনটি আজকের শেখা বাংলা বর্ণ?", opts: ["অ", "ক", "ম"], ans: "অ", prompt: "🔍 বাড়িতে লাল রঙের কোনো ফল বা খেলনা দেখিয়ে শিশুকে জিজ্ঞেস করুন—এর রঙ কী?" },
       { day: 2, title: "Sleeping Line, ইংরেজি 'B' ও বাংলা 'আ', সংখ্যা 2", bn: "আ", en: "B", num: "2", stroke: "—", rhyme: "আ-তে আমটি আমি খাব পেড়ে। • B for Ball (ব-ল)", q: "B দিয়ে কোন শব্দটি শুরু হয়?", opts: ["Ball", "Apple", "Cat"], ans: "Ball", prompt: "🔍 দুটি হাতের আঙুল গুনে শিশুকে '১, ২' বলতে শেখান।" },
@@ -650,61 +648,55 @@
       });
     });
 
-    // MULTI-CATEGORY CONTENT: BENGALI RHYMES, ENGLISH RHYMES, YOGA, DANCE, RECITATION
     const defaultActivities = [
-      // BENGALI RHYMES
       {
         cat: "bn_rhyme",
         catLabel: "🇧🇩 বাংলা ছড়া",
         title: "আতা গাছে তোতা পাখি",
-        body: "আতা গাছে তোতা পাখি, ডালিম গাছে মৌ। এত ডাকি তবু কথা, কও না কেন বউ?"
+        body: "আতা গাছে তোতা পাখি,\nডালিম গাছে মৌ।\nএত ডাকি তবু কথা,\nকও না কেন বউ?"
       },
       {
         cat: "bn_rhyme",
         catLabel: "🇧🇩 বাংলা ছড়া",
         title: "আয় আয় চাঁদ মামা",
-        body: "আয় আয় চাঁদ মামা টিপ দিয়ে যা, চাঁদের কপালে চাঁদ টিপ দিয়ে যা। মাছ কাটলে মুড়ো দেব, ধান ভানলে কুঁড়ো দেব, কালো গরুর দুধ দেব, চাঁদের কপালে চাঁদ টিপ দিয়ে যা।"
+        body: "আয় আয় চাঁদ মামা টিপ দিয়ে যা,\nচাঁদের কপালে চাঁদ টিপ দিয়ে যা।\nমাছ কাটলে মুড়ো দেব,\nধান ভানলে কুঁড়ো দেব,\nকালো গরুর দুধ দেব,\nচাঁদের কপালে চাঁদ টিপ দিয়ে যা।"
       },
       {
         cat: "bn_rhyme",
         catLabel: "🇧🇩 বাংলা ছড়া",
         title: "হাট্টিমাটিম টিম",
-        body: "হাট্টিমাটিম টিম, তারা মাঠে পাড়ে ডিম, তাদের খাড়া দুটো শিং, তারা হাট্টিমাটিম টিম।"
+        body: "হাট্টিমাটিম টিম,\nতারা মাঠে পাড়ে ডিম,\nতাদের খাড়া দুটো শিং,\nতারা হাট্টিমাটিম টিম।"
       },
       {
         cat: "bn_rhyme",
         catLabel: "🇧🇩 বাংলা ছড়া",
         title: "নোটন নোটন পায়রাগুলি",
-        body: "নোটন নোটন পায়রাগুলি ঝোঁটন বেঁধেছে, ওপারেতে ছেলেমেয়ে নাইতে নেমেছে। দুই ধারে দুই রুই কাতলা ভেসে উঠেছে, কে দেখেছে কে দেখেছে দাদা দেখেছে।"
+        body: "নোটন নোটন পায়রাগুলি ঝোঁটন বেঁধেছে,\nওপারেতে ছেলেমেয়ে নাইতে নেমেছে।\nদুই ধারে দুই রুই কাতলা ভেসে উঠেছে,\nকে দেখেছে কে দেখেছে দাদা দেখেছে।"
       },
-
-      // ENGLISH RHYMES
       {
         cat: "en_rhyme",
         catLabel: "🇬🇧 English Rhyme",
         title: "Twinkle, Twinkle, Little Star",
-        body: "Twinkle, twinkle, little star, How I wonder what you are! Up above the world so high, Like a diamond in the sky."
+        body: "Twinkle, twinkle, little star,\nHow I wonder what you are!\nUp above the world so high,\nLike a diamond in the sky."
       },
       {
         cat: "en_rhyme",
         catLabel: "🇬🇧 English Rhyme",
         title: "Johny Johny Yes Papa",
-        body: "Johny, Johny, Yes, Papa? Eating sugar? No, Papa! Telling lies? No, Papa! Open your mouth, Ha! Ha! Ha!"
+        body: "Johny, Johny, Yes, Papa?\nEating sugar? No, Papa!\nTelling lies? No, Papa!\nOpen your mouth, Ha! Ha! Ha!"
       },
       {
         cat: "en_rhyme",
         catLabel: "🇬🇧 English Rhyme",
         title: "Baa, Baa, Black Sheep",
-        body: "Baa, baa, black sheep, have you any wool? Yes sir, yes sir, three bags full. One for the master, one for the dame, And one for the little boy who lives down the lane."
+        body: "Baa, baa, black sheep, have you any wool?\nYes sir, yes sir, three bags full.\nOne for the master, one for the dame,\nAnd one for the little boy who lives down the lane."
       },
       {
         cat: "en_rhyme",
         catLabel: "🇬🇧 English Rhyme",
         title: "Humpty Dumpty",
-        body: "Humpty Dumpty sat on a wall, Humpty Dumpty had a great fall. All the king's horses and all the king's men, Couldn't put Humpty together again."
+        body: "Humpty Dumpty sat on a wall,\nHumpty Dumpty had a great fall.\nAll the king's horses and all the king's men,\nCouldn't put Humpty together again."
       },
-
-      // KIDS YOGA (যোগব্যায়াম)
       {
         cat: "yoga",
         catLabel: "🧘 যোগব্যায়াম (Kids Yoga)",
@@ -723,49 +715,44 @@
         title: "৩. সিংহাসন ও বেলুন শ্বাস (Lion & Balloon Breath)",
         body: "নিয়ম: নাক দিয়ে লম্বা শ্বাস নিয়ে পেটটাকে বড় বেলুনের মতো ফোলাও। এবার মুখ হাঁ করে জিভ বের করে সিংহের মতো 'হাঁ...' শব্দ করে শ্বাস ছাড়ো। ৩ বার করো।"
       },
-
-      // DANCE & ACTION SONGS (নাচ ও ছন্দ)
       {
         cat: "dance",
         catLabel: "💃 নাচ ও ছন্দ (Dance & Action)",
         title: "১. প্রজাপতি নাচ (হাত নেড়ে ও পায়ের তালে)",
-        body: "গানের তালে তালে নাচো: প্রজাপতি, প্রজাপতি, কোথায় পেলে ভাই এমন রঙিন পাখা! দুই হাত ডানার মতো মেলে ঘরের চারপাশে ঘুরে ঘুরে নাচো ও তালি দাও!"
+        body: "গানের তালে তালে নাচো:\nপ্রজাপতি, প্রজাপতি,\nকোথায় পেলে ভাই এমন রঙিন পাখা!\n(দুই হাত ডানার মতো মেলে ঘরের চারপাশে ঘুরে ঘুরে নাচো ও তালি দাও!)"
       },
       {
         cat: "dance",
         catLabel: "💃 নাচ ও ছন্দ (Dance & Action)",
         title: "২. If You're Happy and You Know It (Action Dance)",
-        body: "If you're happy and you know it, clap your hands! দুই হাতে তালি দাও। If you're happy and you know it, stomp your feet! মাটিতে পা ঠোকো। If you're happy and you know it, turn around! এক পাক ঘুরে নাচো।"
+        body: "If you're happy and you know it, clap your hands! (দুই হাতে তালি দাও)\nIf you're happy and you know it, stomp your feet! (মাটিতে পা ঠোকো)\nIf you're happy and you know it, turn around! (এক পাক ঘুরে নাচো)"
       },
       {
         cat: "dance",
         catLabel: "💃 নাচ ও ছন্দ (Dance & Action)",
         title: "৩. আগডুম বাগডুম ঘোড়াডুম সাজে",
-        body: "আগডুম বাগডুম ঘোড়াডুম সাজে, ঢাক মৃদং ঝাঁঝর বাজে। বাজতে বাজতে চলল ঢুলি, ঢুলি গেল সেই কমলাফুলি। ঘোড়ার মতো লাফিয়ে লাফিয়ে তালে তালে পা ফেলে নাচো!"
+        body: "আগডুম বাগডুম ঘোড়াডুম সাজে,\nঢাক মৃদং ঝাঁঝর বাজে।\nবাজতে বাজতে চলল ঢুলি,\nঢুলি গেল সেই কমলাফুলি।\n(ঘোড়ার মতো লাফিয়ে লাফিয়ে তালে তালে পা ফেলে নাচো!)"
       },
-
-      // RECITATION (আবৃত্তি)
       {
         cat: "recite",
         catLabel: "🎙️ আবৃত্তি (Recitation)",
         title: "১. আমাদের ছোট নদী — রবীন্দ্রনাথ ঠাকুর",
-        body: "আমাদের ছোট নদী চলে বাঁকে বাঁকে, বৈশাখ মাসে তার হাঁটু জল থাকে। পার হয়ে যায় গরু, পার হয় গাড়ি, দুই ধার উঁচু তার, ঢালু তার পাড়ি।"
+        body: "আমাদের ছোট নদী চলে বাঁকে বাঁকে,\nবৈশাখ মাসে তার হাঁটু জল থাকে।\nপার হয়ে যায় গরু, পার হয় গাড়ি,\nদুই ধার উঁচু তার, ঢালু তার পাড়ি।"
       },
       {
         cat: "recite",
         catLabel: "🎙️ আবৃত্তি (Recitation)",
         title: "২. কাজলা দিদি — যতীন্দ্রমোহন বাগচী",
-        body: "বাঁশ বাগানের মাথার ওপর চাঁদ উঠেছে ওই, মাগো আমার শোলক বলা কাজলা দিদি কই? পুকুর ধারে নেবুর তলে থোকায় থোকায় জোনাই জ্বলে, ফুলের গন্ধে ঘুম আসে না একলা জেগে রই।"
+        body: "বাঁশ বাগানের মাথার ওপর চাঁদ উঠেছে ওই,\nমাগো আমার শোলক বলা কাজলা দিদি কই?\nপুকুর ধারে নেবুর তলে থোকায় থোকায় জোনাই জ্বলে,\nফুলের গন্ধে ঘুম আসে না একলা জেগে রই।"
       },
       {
         cat: "recite",
         catLabel: "🎙️ আবৃত্তি (Recitation)",
         title: "৩. তালগাছ — রবীন্দ্রনাথ ঠাকুর",
-        body: "তালগাছ এক পায়ে দাঁড়িয়ে, সব গাছ ছাড়িয়ে, উঁকি মারে আকাশে। মনে সাধ কালো মেঘ ফুঁড়ে যায়, একবারে উড়ে যায়, কোথা পাবে পাখা সে!"
+        body: "তালগাছ এক পায়ে দাঁড়িয়ে,\nসব গাছ ছাড়িয়ে,\nউঁকি মারে আকাশে।\nমনে সাধ কালো মেঘ ফুঁড়ে যায়,\nএকবারে উড়ে যায়,\nকোথা পাবে পাখা সে!"
       }
     ];
 
-    // 2. HARDCODED DEFAULT MONETIZATION, CUSTOM SPONSOR AD & ADMIN PIN
     const DEFAULT_PAY_LINK = "upi://pay?pa=8250912381@ikwik&pn=HateKhori&am=99&cu=INR";
     const DEFAULT_AD_LINK = "https://uplcm.com/4/12355529";
     const DEFAULT_ADMIN_PIN = "1234";
@@ -811,7 +798,6 @@
     let pendingUnlockDay = null;
     let activeActivityCat = "all";
 
-    // 3. UI RENDERING
     function updateHeaderUI() {
       document.getElementById("starCount").textContent = state.stars;
       document.getElementById("childNameLabel").textContent = state.childName;
@@ -878,8 +864,7 @@
     function playActivityByIndex(idx) {
       const item = getAllActivities()[idx];
       if (item) {
-        const cleanText = item.body.split("\n").join(" ").split("
-").join(" ");
+        const cleanText = item.body.split(String.fromCharCode(10)).join(" ").split(String.fromCharCode(13)).join(" ");
         speakText(cleanText, () => {
           triggerPostRhymeAd();
         });
@@ -977,7 +962,6 @@
       drawGuide();
     }
 
-    // 4. SPEECH / AUDIO WITH AUTO LANGUAGE DETECTION & ON-END CALLBACK
     function speakText(txt, onEndCallback) {
       if (!("speechSynthesis" in window)) {
         if (onEndCallback) setTimeout(onEndCallback, 2500);
@@ -995,7 +979,6 @@
       window.speechSynthesis.speak(u);
     }
 
-    // 5. TRACING CANVAS
     const canvas = document.getElementById("traceCanvas");
     const ctx = canvas.getContext("2d");
     let drawing = false;
@@ -1053,7 +1036,6 @@
     canvas.addEventListener("touchmove", moveDraw, { passive: false });
     canvas.addEventListener("touchend", endDraw);
 
-    // 6. SOUNDBOARD
     const sounds = [
       { c: "অ", w: "অজগর", say: "অ-তে অজগর" },
       { c: "আ", w: "আম", say: "আ-তে আম" },
@@ -1071,7 +1053,6 @@
       </div>
     `).join("");
 
-    // 7. NAVIGATION & EVENTS
     function switchTab(tabId) {
       document.querySelectorAll(".tab-pane").forEach(p => p.classList.remove("active"));
       document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
@@ -1084,7 +1065,6 @@
       btn.addEventListener("click", () => switchTab(btn.dataset.target));
     });
 
-    // Category filter pills
     document.querySelectorAll("#activityCatPills .cat-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         document.querySelectorAll("#activityCatPills .cat-btn").forEach(b => b.classList.remove("active"));
@@ -1121,7 +1101,6 @@
       });
     });
 
-    // Post-Rhyme Dual Ad Modal Buttons
     document.getElementById("btnRhymeMonetagContinue").addEventListener("click", () => {
       if (state.adLink) window.open(state.adLink, "_blank");
       document.getElementById("postRhymeAdModal").classList.remove("open");
@@ -1158,7 +1137,6 @@
       });
     });
 
-    // Day Selection & Rewarded Ad Lock
     document.getElementById("daySelect").addEventListener("change", (e) => {
       const chosen = Number(e.target.value);
       const isUnlocked = state.isPro || state.unlockedDays.includes(chosen);
@@ -1201,7 +1179,6 @@
       }, 1000);
     });
 
-    // Pro Upgrade Modal
     document.getElementById("btnOpenProModal").addEventListener("click", () => {
       document.getElementById("proModal").classList.add("open");
     });
@@ -1225,7 +1202,6 @@
       }
     });
 
-    // Child Name & Admin Studio
     document.getElementById("btnSaveChild").addEventListener("click", () => {
       const val = document.getElementById("inputChildName").value.trim();
       if (val) {
@@ -1315,7 +1291,6 @@
       alert(`✅ Day ${nextDay} সফলভাবে যুক্ত হয়েছে!`);
     });
 
-    // PWA Install Prompt
     let deferredPrompt;
     window.addEventListener("beforeinstallprompt", (e) => {
       e.preventDefault();
@@ -1331,7 +1306,6 @@
       }
     });
 
-    // Dynamic Manifest for PWA
     const manifest = {
       name: "হাতেখড়ি - Prothom Step Early Learning",
       short_name: "হাতেখড়ি",
