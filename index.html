@@ -406,7 +406,7 @@
     </div>
     <div class="stats">
       <div class="chip">★ <span id="starCount">0</span></div>
-      <div class="chip day-chip" id="dayChip">Day 1 / 30</div>
+      <div class="chip day-chip" id="dayChip">Day 1 / 60</div>
     </div>
   </header>
 
@@ -415,7 +415,7 @@
     <!-- TAB 1: DAILY PLAN + GUARDIAN WHATSAPP DEMAND BOX -->
     <section class="tab-pane active" id="tab-daily">
       <div class="card">
-        <label class="section-title" for="daySelect">দিনের পাঠ নির্বাচন করুন (Day 1 – 30)</label>
+        <label class="section-title" for="daySelect">দিনের পাঠ নির্বাচন করুন (৬০ দিনের অ্যাক্টিভিটি: Day 1 – 60)</label>
         <p class="section-sub">দিন ১–৭ সম্পূর্ণ ফ্রি • পরের দিনগুলো ইন-অ্যাপ ভিডিও কার্ড দেখে ফ্রি আনলক করুন</p>
         <select id="daySelect"></select>
       </div>
@@ -484,29 +484,31 @@
       </div>
     </section>
 
-    <!-- TAB 2: TRACING, REAL SONG PLAYER, YOGA WITH PICS, DANCE & RECITATION -->
+    <!-- TAB 2: FULL TRACING (BANGLA, A-Z, a-z, 1-100) + CHOBI ANKAA + 100 BN CHORA + 100 EN RHYMES + 50 YOGA WITH PICS -->
     <section class="tab-pane" id="tab-tracing">
       <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <div>
-            <h3 class="section-title" style="margin:0;">আঙুল দিয়ে ট্রেসিং বোর্ড</h3>
-            <span class="section-sub">ডটেড দাগের ওপর আঙুল ঘুরিয়ে লেখার অভ্যাস করুন</span>
-          </div>
-          <select id="strokeSelect" style="width:auto;padding:6px 10px;font-size:13px;">
-            <option value="|">Standing Line ( | )</option>
-            <option value="—">Sleeping Line ( — )</option>
-            <option value="O">Circle ( O )</option>
-            <option value="অ">বাংলা 'অ'</option>
-            <option value="আ">বাংলা 'আ'</option>
-            <option value="ক">বাংলা 'ক'</option>
-            <option value="A">Letter 'A'</option>
-            <option value="B">Letter 'B'</option>
-            <option value="1">Number '1'</option>
-          </select>
+        <h3 class="section-title" style="margin:0 0 4px;">✏️ বাংলা বর্ণ, A–Z / a–z, সংখ্যা লেখা ও 🎨 ছবি আঁকা</h3>
+        <p class="section-sub" style="margin:0 0 8px;">যেকোনো বিভাগ বেছে নিয়ে ডটেড দাগের ওপর আঙুল ঘুরিয়ে লেখা ও ছবি আঁকা অভ্যাস করুন</p>
+
+        <div class="cat-pills" id="traceModePills" style="margin:6px 0 8px;">
+          <button class="cat-btn active" data-tmode="bn">বাংলা বর্ণ (অ–ঁ)</button>
+          <button class="cat-btn" data-tmode="en_cap">A–Z বড় হাত</button>
+          <button class="cat-btn" data-tmode="en_sml">a–z ছোট হাত</button>
+          <button class="cat-btn" data-tmode="num_en">সংখ্যা (1–100)</button>
+          <button class="cat-btn" data-tmode="num_bn">সংখ্যা (১–১০০)</button>
+          <button class="cat-btn" data-tmode="draw">🎨 ছবি আঁকা</button>
+        </div>
+
+        <!-- Horizontal Quick Picker Strip -->
+        <div id="traceItemPicker" style="display:flex;gap:6px;overflow-x:auto;padding:6px 2px 10px;-webkit-overflow-scrolling:touch;"></div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:12px;">
+          <span id="traceCurrentLabel" style="font-weight:700;color:#0f766e;">নির্বাচিত: বাংলা বর্ণ 'অ'</span>
+          <button class="btn btn-yellow" style="padding:4px 10px;font-size:11px;" id="btnSpeakCurrentTrace">🔊 উচ্চারণ শুনুন</button>
         </div>
 
         <div class="canvas-wrap">
-          <canvas id="traceCanvas" width="600" height="260"></canvas>
+          <canvas id="traceCanvas" width="600" height="280"></canvas>
         </div>
 
         <div class="toolbar">
@@ -515,37 +517,45 @@
             <div class="color-dot" data-color="#ef4444" style="background:#ef4444;"></div>
             <div class="color-dot" data-color="#f59e0b" style="background:#f59e0b;"></div>
             <div class="color-dot" data-color="#2563eb" style="background:#2563eb;"></div>
+            <div class="color-dot" data-color="#16a34a" style="background:#16a34a;"></div>
             <div class="color-dot" data-color="#9333ea" style="background:#9333ea;"></div>
+            <div class="color-dot" data-color="#1e293b" style="background:#1e293b;"></div>
           </div>
-          <button class="btn" style="background:#e2e8f0;padding:8px 14px;" id="btnClearCanvas">🧹 মুছে ফেলুন</button>
+          <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+            <select id="brushSizeSelect" style="width:auto;padding:5px 8px;font-size:12px;">
+              <option value="8">সরু পেন্সিল</option>
+              <option value="13" selected>মাঝারি</option>
+              <option value="22">মোটা ব্রাশ</option>
+            </select>
+            <button class="btn" style="background:#fef3c7;color:#92400e;padding:6px 10px;font-size:12px;" id="btnEraser">🧽 রাবার</button>
+            <button class="btn" style="background:#e2e8f0;padding:6px 10px;font-size:12px;" id="btnClearCanvas">🧹 মুছুন</button>
+            <button class="btn btn-green" style="padding:6px 10px;font-size:12px;" id="btnSaveDrawing">💾 সেভ</button>
+          </div>
         </div>
       </div>
 
-      <div class="card">
-        <h3 class="section-title">ফনিক্স ও বর্ণমালা সাউন্ডবোর্ড (ট্যাপ করে শুনুন)</h3>
-        <div class="sound-grid" id="soundGrid"></div>
-      </div>
-
-      <!-- MULTI-CATEGORY KIDS CORNER -->
+      <!-- MULTI-CATEGORY KIDS CORNER: 100 BN CHORA, 100 EN RHYMES, 50 YOGA WITH PICS -->
       <div class="card">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
           <div>
-            <h3 class="section-title" style="margin:0;">🎭 আসল গানের সুরে ছড়া, যোগব্যায়াম, নাচ ও আবৃত্তি</h3>
-            <p class="section-sub" style="margin:2px 0 4px;">ছড়া শুনতে <strong>'🔊 অ্যাপে পড়ে শুনুন'</strong> বা গানের জন্য <strong>'▶️ YouTube গান'</strong> চাপুন</p>
+            <h3 class="section-title" style="margin:0;">🎭 ১০০ বাংলা ছড়া, ১০০ English Rhymes ও ৫০টি ছবিসহ যোগব্যায়াম</h3>
+            <p class="section-sub" style="margin:2px 0 6px;">অডিও শুনতে <strong>'🔊 অ্যাপে শুনুন'</strong> বা গানের জন্য <strong>'▶️ YouTube গান'</strong> চাপুন</p>
           </div>
           <button class="btn" style="background:#fee2e2;color:#b91c1c;padding:6px 10px;font-size:12px;white-space:nowrap;" onclick="stopAllAudio()">⏹️ থামুন</button>
         </div>
 
+        <input type="text" id="activitySearchInput" placeholder="🔍 ছড়া, rhyme বা যোগব্যায়াম খুঁজুন..." style="margin-bottom:8px;padding:9px 12px;font-size:13px;" />
+
         <div class="cat-pills" id="activityCatPills">
-          <button class="cat-btn active" data-cat="all">সবগুলো</button>
-          <button class="cat-btn" data-cat="bn_rhyme">🇧🇩 বাংলা ছড়া ও গান</button>
-          <button class="cat-btn" data-cat="en_rhyme">🇬🇧 English Rhymes</button>
-          <button class="cat-btn" data-cat="yoga">🧘 ছবিসহ যোগব্যায়াম</button>
+          <button class="cat-btn active" data-cat="bn_rhyme">🇧🇩 বাংলা ছড়া (১০০টি)</button>
+          <button class="cat-btn" data-cat="en_rhyme">🇬🇧 English Rhymes (100)</button>
+          <button class="cat-btn" data-cat="yoga">🧘 ছবিসহ যোগব্যায়াম (৫০টি)</button>
           <button class="cat-btn" data-cat="dance">💃 নাচ ও ছন্দ</button>
           <button class="cat-btn" data-cat="recite">🎙️ আবৃত্তি</button>
         </div>
 
         <div class="rhyme-list" id="rhymeListContainer"></div>
+        <button class="btn btn-outline" id="btnLoadMoreActivities" style="width:100%;margin-top:10px;background:#f1f5f9;border:1px solid #cbd5e1;display:none;">⬇️ আরও দেখুন (Load More)</button>
       </div>
     </section>
 
@@ -614,9 +624,9 @@
     <!-- TAB 5: PARENT GUIDE & QUICK UPLOAD ADMIN STUDIO -->
     <section class="tab-pane" id="tab-guide">
       <div class="card">
-        <h3 class="section-title">👑 HATEKHORI Pro (সব ৩০ দিন আনলক করুন)</h3>
-        <p class="section-sub">Day 1 থেকে Day 30 পর্যন্ত সব ওয়ার্কশিট ও A4 প্রিন্ট আনলক করুন মাত্র ₹৯৯ টাকায়।</p>
-        <button class="btn btn-orange" id="btnOpenProModal">🔓 ₹৯৯ দিয়ে সব ৩০ দিন আনলক করুন</button>
+        <h3 class="section-title">👑 HATEKHORI Pro (সব ৬০ দিন আনলক করুন)</h3>
+        <p class="section-sub">Day 1 থেকে Day 60 পর্যন্ত সব ওয়ার্কশিট ও A4 প্রিন্ট আনলক করুন মাত্র ₹৯৯ টাকায়।</p>
+        <button class="btn btn-orange" id="btnOpenProModal">🔓 ₹৯৯ দিয়ে সব ৬০ দিন আনলক করুন</button>
       </div>
 
       <div class="card">
@@ -729,7 +739,7 @@
       </div>
 
       <button class="btn btn-yellow" style="width:100%;margin-bottom:10px;" id="btnWatchAd">🎬 ইন-অ্যাপ ভিডিও দেখে ফ্রি আনলক করুন</button>
-      <button class="btn btn-orange" style="margin-bottom:10px;" id="btnModalGoPro">👑 সব ৩০ দিন আনলক করুন (₹৯৯)</button>
+      <button class="btn btn-orange" style="margin-bottom:10px;" id="btnModalGoPro">👑 সব ৬০ দিন আনলক করুন (₹৯৯)</button>
       <button class="btn" style="background:#e2e8f0;width:100%;" id="btnCloseUnlock">বন্ধ করুন</button>
     </div>
   </div>
@@ -751,7 +761,7 @@
     <div class="modal-box">
       <div style="font-size:36px;">👑</div>
       <h3 style="margin:6px 0;">HATEKHORI Pro (Lifetime Access)</h3>
-      <p style="font-size:13px;color:#475569;">মাত্র ₹৯৯ টাকা পেমেন্ট করে সব ৩০ দিনের ওয়ার্কশিট ও প্রিন্ট পিডিএফ আনলক করুন।</p>
+      <p style="font-size:13px;color:#475569;">মাত্র ₹৯৯ টাকা পেমেন্ট করে সব ৬০ দিনের ওয়ার্কশিট ও প্রিন্ট পিডিএফ আনলক করুন।</p>
       <a id="payExternalLink" href="upi://pay?pa=8250912381@ikwik&pn=HateKhori&am=99&cu=INR" target="_blank" class="btn btn-orange" style="text-decoration:none;margin-bottom:12px;">💳 ₹৯৯ পেমেন্ট করুন (UPI)</a>
       <div style="border-top:1px solid #e2e8f0;padding-top:12px;margin-top:8px;">
         <label style="font-size:12px;font-weight:700;display:block;margin-bottom:6px;">পেমেন্টের পর অ্যাক্টিভেশন কোড দিন (Demo কোড: PRO99):</label>
@@ -825,52 +835,104 @@
     }
 
     // ==========================================
-    // 2. YOGA SVG ILLUSTRATIONS
+    // 2. DYNAMIC 50-POSE YOGA SVG ILLUSTRATION ENGINE
     // ==========================================
-    const YOGA_SVGS = {
-      tree: `<div class="yoga-visual">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <rect width="200" height="200" rx="16" fill="#ecfdf5"/>
-          <circle cx="100" cy="48" r="14" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
-          <path d="M92 46 Q95 43 98 46 M102 46 Q105 43 108 46 M96 53 Q100 57 104 53" stroke="#7c2d12" stroke-width="2" fill="none"/>
-          <path d="M88 70 L75 35 L100 16 L125 35 L112 70" stroke="#f97316" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <rect x="86" y="64" width="28" height="44" rx="10" fill="#10b981"/>
-          <line x1="95" y1="108" x2="95" y2="168" stroke="#2563eb" stroke-width="9" stroke-linecap="round"/>
-          <path d="M105 108 L128 125 L98 136" stroke="#2563eb" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <ellipse cx="100" cy="174" rx="45" ry="6" fill="#a7f3d0"/>
+    function renderYogaSvg(poseType, bg, accent, title) {
+      let bodySvg = "";
+      if (poseType === "standing_tree") {
+        bodySvg = `<circle cx="100" cy="46" r="13" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
+          <path d="M88 68 L74 34 L100 16 L126 34 L112 68" stroke="${accent}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <rect x="86" y="62" width="28" height="44" rx="10" fill="${accent}"/>
+          <line x1="95" y1="106" x2="95" y2="168" stroke="#2563eb" stroke-width="9" stroke-linecap="round"/>
+          <path d="M105 106 L128 124 L98 135" stroke="#2563eb" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`;
+      } else if (poseType === "seated_butterfly") {
+        bodySvg = `<ellipse cx="62" cy="95" rx="30" ry="20" fill="#fde047" stroke="${accent}" stroke-width="2"/>
+          <ellipse cx="138" cy="95" rx="30" ry="20" fill="#fde047" stroke="${accent}" stroke-width="2"/>
+          <circle cx="100" cy="56" r="14" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
+          <rect x="85" y="73" width="30" height="44" rx="12" fill="${accent}"/>
+          <path d="M88 116 L55 134 L95 148 M112 116 L145 134 L105 148" stroke="#3b82f6" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`;
+      } else if (poseType === "seated_lion") {
+        bodySvg = `<circle cx="100" cy="66" r="27" fill="#fdba74" stroke="${accent}" stroke-width="2" stroke-dasharray="6,4"/>
+          <circle cx="100" cy="66" r="15" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
+          <circle cx="100" cy="72" r="5" fill="#991b1b"/>
+          <path d="M97 74 L97 82 Q100 86 103 82 L103 74" fill="#f43f5e"/>
+          <rect x="83" y="86" width="34" height="44" rx="12" fill="${accent}"/>
+          <path d="M84 94 L72 134 M116 94 L128 134" stroke="#fed7aa" stroke-width="7" stroke-linecap="round"/>
+          <ellipse cx="100" cy="144" rx="46" ry="11" fill="#78350f"/>`;
+      } else if (poseType === "allfours_cat" || poseType === "allfours_cow") {
+        const arch = poseType === "allfours_cat" ? "Q100 68 142 104" : "Q100 128 142 100";
+        const headY = poseType === "allfours_cat" ? 114 : 84;
+        bodySvg = `<circle cx="52" cy="${headY}" r="14" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
+          <path d="M64 104 ${arch}" stroke="${accent}" stroke-width="14" stroke-linecap="round" fill="none"/>
+          <line x1="70" y1="108" x2="66" y2="162" stroke="#fed7aa" stroke-width="8" stroke-linecap="round"/>
+          <line x1="138" y1="106" x2="142" y2="162" stroke="#2563eb" stroke-width="9" stroke-linecap="round"/>`;
+      } else if (poseType === "prone_cobra" || poseType === "prone_bow") {
+        bodySvg = `<circle cx="58" cy="76" r="14" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
+          <path d="M64 90 Q78 140 135 148 L168 148" stroke="${accent}" stroke-width="14" stroke-linecap="round" fill="none"/>
+          <line x1="72" y1="112" x2="68" y2="154" stroke="#fed7aa" stroke-width="8" stroke-linecap="round"/>
+          ${poseType === "prone_bow" ? '<path d="M135 148 Q162 120 148 92" stroke="#2563eb" stroke-width="9" stroke-linecap="round" fill="none"/><line x1="82" y1="104" x2="146" y2="96" stroke="#fed7aa" stroke-width="6" stroke-linecap="round"/>' : ''}`;
+      } else if (poseType === "inverted_v" || poseType === "inverted_bear") {
+        bodySvg = `<path d="M44 156 L100 68 L156 156" stroke="${accent}" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <circle cx="76" cy="116" r="13" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>`;
+      } else if (poseType === "squat_frog" || poseType === "squat_monkey") {
+        bodySvg = `<circle cx="100" cy="68" r="15" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
+          <rect x="84" y="84" width="32" height="36" rx="12" fill="${accent}"/>
+          <path d="M84 116 L54 126 L68 158 M116 116 L146 126 L132 158" stroke="#2563eb" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M88 94 L82 156 M112 94 L118 156" stroke="#fed7aa" stroke-width="7" stroke-linecap="round"/>`;
+      } else if (poseType === "standing_star" || poseType === "standing_warrior" || poseType === "standing_triangle") {
+        bodySvg = `<circle cx="100" cy="46" r="14" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
+          <line x1="42" y1="78" x2="158" y2="78" stroke="${accent}" stroke-width="8" stroke-linecap="round"/>
+          <rect x="86" y="62" width="28" height="46" rx="10" fill="${accent}"/>
+          <line x1="92" y1="108" x2="58" y2="168" stroke="#2563eb" stroke-width="9" stroke-linecap="round"/>
+          <line x1="108" y1="108" x2="142" y2="168" stroke="#2563eb" stroke-width="9" stroke-linecap="round"/>`;
+      } else if (poseType === "seated_boat" || poseType === "seated_flower") {
+        bodySvg = `<circle cx="66" cy="70" r="14" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
+          <path d="M72 86 L96 138 L148 86" stroke="${accent}" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <line x1="82" y1="104" x2="132" y2="104" stroke="#fed7aa" stroke-width="7" stroke-linecap="round"/>`;
+      } else if (poseType === "supine_bridge" || poseType === "table_crab") {
+        bodySvg = `<circle cx="46" cy="144" r="13" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
+          <path d="M58 142 Q100 84 134 114 L148 160" stroke="${accent}" stroke-width="14" stroke-linecap="round" fill="none"/>
+          <line x1="68" y1="146" x2="132" y2="156" stroke="#fed7aa" stroke-width="7" stroke-linecap="round"/>`;
+      } else if (poseType === "seated_child" || poseType === "seated_turtle") {
+        bodySvg = `<circle cx="58" cy="142" r="13" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
+          <path d="M70 142 Q105 98 144 138 L112 152" stroke="${accent}" stroke-width="16" stroke-linecap="round" fill="none"/>
+          <line x1="36" y1="154" x2="72" y2="150" stroke="#fed7aa" stroke-width="7" stroke-linecap="round"/>`;
+      } else if (poseType === "seated_lotus" || poseType === "seated_owl") {
+        bodySvg = `<circle cx="100" cy="56" r="15" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
+          <rect x="84" y="74" width="32" height="46" rx="12" fill="${accent}"/>
+          <path d="M84 120 L54 142 L106 146 M116 120 L146 142 L94 146" stroke="#2563eb" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M84 86 L62 126 M116 86 L138 126" stroke="#fed7aa" stroke-width="7" stroke-linecap="round"/>`;
+      } else if (poseType === "supine_candle" || poseType === "supine_baby" || poseType === "supine_fish" || poseType === "supine_relax") {
+        const legsUp = poseType === "supine_candle" ? '<line x1="108" y1="138" x2="108" y2="42" stroke="#2563eb" stroke-width="10" stroke-linecap="round"/>' :
+                       poseType === "supine_baby" ? '<path d="M110 142 L94 94 M124 142 L138 94" stroke="#2563eb" stroke-width="9" stroke-linecap="round"/>' :
+                       '<line x1="112" y1="146" x2="168" y2="146" stroke="#2563eb" stroke-width="10" stroke-linecap="round"/>';
+        bodySvg = `<circle cx="48" cy="144" r="13" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
+          <line x1="62" y1="146" x2="114" y2="146" stroke="${accent}" stroke-width="14" stroke-linecap="round"/>
+          ${legsUp}`;
+      } else if (poseType === "standing_airplane" || poseType === "standing_flamingo") {
+        bodySvg = `<circle cx="64" cy="74" r="13" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
+          <line x1="76" y1="84" x2="146" y2="96" stroke="${accent}" stroke-width="13" stroke-linecap="round"/>
+          <line x1="104" y1="92" x2="104" y2="166" stroke="#2563eb" stroke-width="9" stroke-linecap="round"/>
+          <line x1="92" y1="88" x2="118" y2="56" stroke="#fed7aa" stroke-width="7" stroke-linecap="round"/>`;
+      } else {
+        // standing_mountain, standing_tall, standing_kite, standing_moon, standing_sun, standing_chair, standing_eagle, standing_penguin, standing_elephant, kneel_camel, side_rainbow
+        const armsUp = (poseType === "standing_tall" || poseType === "standing_kite" || poseType === "standing_sun" || poseType === "standing_moon" || poseType === "standing_chair");
+        const armPath = armsUp ? "M86 68 L74 28 M114 68 L126 28" : "M84 72 L64 112 M116 72 L136 112";
+        bodySvg = `<circle cx="100" cy="48" r="14" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
+          <path d="${armPath}" stroke="${accent}" stroke-width="8" stroke-linecap="round" fill="none"/>
+          <rect x="85" y="64" width="30" height="48" rx="11" fill="${accent}"/>
+          <line x1="93" y1="112" x2="90" y2="168" stroke="#2563eb" stroke-width="9" stroke-linecap="round"/>
+          <line x1="107" y1="112" x2="110" y2="168" stroke="#2563eb" stroke-width="9" stroke-linecap="round"/>`;
+      }
+      return `<div class="yoga-visual" style="border-color:${accent};">
+        <svg viewBox="0 0 200 185" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="185" rx="16" fill="${bg}"/>
+          <ellipse cx="100" cy="170" rx="64" ry="7" fill="rgba(0,0,0,0.07)"/>
+          ${bodySvg}
         </svg>
-        <div class="yoga-caption">🌲 বৃক্ষাসন (Tree Pose) — এক পায়ে সোজা হয়ে হাত ওপরে তোলো</div>
-      </div>`,
-      butterfly: `<div class="yoga-visual">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <rect width="200" height="200" rx="16" fill="#fefce8"/>
-          <ellipse cx="62" cy="95" rx="32" ry="22" fill="#fde047" stroke="#eab308" stroke-width="2"/>
-          <ellipse cx="138" cy="95" rx="32" ry="22" fill="#fde047" stroke="#eab308" stroke-width="2"/>
-          <circle cx="100" cy="58" r="15" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
-          <path d="M95 62 Q100 67 105 62" stroke="#7c2d12" stroke-width="2" fill="none"/>
-          <rect x="85" y="75" width="30" height="45" rx="12" fill="#ec4899"/>
-          <path d="M88 118 L55 135 L95 148" stroke="#3b82f6" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <path d="M112 118 L145 135 L105 148" stroke="#3b82f6" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <path d="M86 85 L96 142 M114 85 L104 142" stroke="#fed7aa" stroke-width="6" stroke-linecap="round"/>
-          <ellipse cx="100" cy="158" rx="55" ry="6" fill="#fef08a"/>
-        </svg>
-        <div class="yoga-caption">🦋 প্রজাপতি আসন (Butterfly Pose) — দুই পা জোড়া করে হাঁটু নাড়াও</div>
-      </div>`,
-      lion: `<div class="yoga-visual">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <rect width="200" height="200" rx="16" fill="#fff7ed"/>
-          <circle cx="100" cy="68" r="28" fill="#fdba74" stroke="#ea580c" stroke-width="2" stroke-dasharray="6,4"/>
-          <circle cx="100" cy="68" r="16" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
-          <circle cx="100" cy="74" r="6" fill="#991b1b"/>
-          <path d="M97 76 L97 84 Q100 88 103 84 L103 76" fill="#f43f5e"/>
-          <rect x="83" y="88" width="34" height="44" rx="12" fill="#f59e0b"/>
-          <path d="M84 95 L72 135 M116 95 L128 135" stroke="#fed7aa" stroke-width="7" stroke-linecap="round"/>
-          <ellipse cx="100" cy="144" rx="48" ry="12" fill="#78350f"/>
-          <text x="100" y="176" font-size="14" font-weight="bold" text-anchor="middle" fill="#c2410c">হা... (Roar!)</text>
-        </svg>
-        <div class="yoga-caption">🦁 সিংহাসন (Lion Breath) — মুখ হাঁ করে সিংহের মতো শ্বাস ছাড়ো</div>
-      </div>`
-    };
+        <div class="yoga-caption" style="color:${accent};">🧘 ${title}</div>
+      </div>`;
+    }
 
     // ==========================================
     // 3. 3-MONTH (90 DAYS) MATH OLYMPIAD, ENGLISH OLYMPIAD & SPOKEN ENGLISH ENGINE
@@ -1016,119 +1078,47 @@
       adLink: "https://uplcm.com/4/12355529",
       adminPin: "1234",
       bannerTitle: "✏️ প্রাক-প্রাথমিক রঙিন ওয়ার্কশিট ও ছড়া বুক (India Edition)",
-      bannerDesc: "ভারতীয় প্রাক-প্রাথমিক শিক্ষার্থীদের জন্য তৈরি সব ৩০ দিনের ওয়ার্কশিট ও A4 প্রিন্ট আনলক করুন মাত্র ₹৯৯ টাকায়।",
+      bannerDesc: "ভারতীয় প্রাক-প্রাথমিক শিক্ষার্থীদের জন্য তৈরি সব ৬০ দিনের ওয়ার্কশিট ও A4 প্রিন্ট আনলক করুন মাত্র ₹৯৯ টাকায়।",
       bannerImg: "",
       bannerUrl: "upi://pay?pa=8250912381@ikwik&pn=HateKhoriPro&am=99&cu=INR"
     };
     /*__BAKED_DATA_END__*/
 
     // ==========================================
-    // 5. CURRICULUM (30 DAYS)
+    // 5. 60-DAY CURRICULUM + 100 BANGLA CHORA + 100 ENGLISH RHYMES + 50 YOGA POSES
     // ==========================================
     const FULL_BN_SWARABORNO = "অ-তে অজগর আসছে তেড়ে। আ-তে আমটি আমি খাব পেড়ে। ই-তে ইঁদুর ছানা ভয়ে মরে। ঈ-তে ঈগল পাখি পাছে ধরে। উ-তে উট চলেছে মুখটি তুলে। ঊ-তে ঊষা হাসে পুব আকাশে। ঋ-তে ঋষি মশাই বসেন পূজায়। এ-তে এক্কাগাড়ি খুব ছুটেছে। ঐ-তে ঐরাবতটি আসছে তেড়ে। ও-তে ওল খেও না ধরবে গলা। ঔ-তে ঔষধ খেতে মিছে বলা।";
 
     const FULL_EN_ALPHABET = "A for Apple, B for Ball, C for Cat, D for Dog, E for Elephant, F for Fish, G for Grapes, H for Hen, I for Ice-cream, J for Jug, K for Kite, L for Lion, M for Mango, N for Nest, O for Orange, P for Parrot, Q for Queen, R for Rabbit, S for Sun, T for Tiger, U for Umbrella, V for Van, W for Watch, X for Xylophone, Y for Yak, Z for Zebra.";
 
-    const defaultLessons = [
-      {
-        day: 1,
-        title: "Standing Line, ইংরেজি 'A' ও বাংলা 'অ', সংখ্যা 1",
-        bn: "অ", en: "A", num: "1", stroke: "|",
-        rhyme: "অ-তে অজগর আসছে তেড়ে। • A for Apple (অ্যা-পল)",
-        act1: "🖐️ হাতের ব্যায়াম: পেন্সিল ধরার আগে দুই হাতের আঙুল ১০ বার মুঠো করুন ও খুলুন, তারপর বাতাসে বড় করে 'A' এবং 'অ' আঁকুন।",
-        q: "নিচের কোনটি আজকের শেখা বাংলা বর্ণ?", opts: ["অ", "ক", "ম"], ans: "অ",
-        act2: "👏 তালি ও গণনা: ১ বার জোরে হাতে তালি দিন এবং নাক ও মুখ কয়টি আছে আঙুল দিয়ে ছুঁয়ে গুনুন।",
-        prompt: "🔍 বাড়িতে লাল রঙের কোনো ফল বা খেলনা দেখিয়ে শিশুকে জিজ্ঞেস করুন—এর রঙ কী?",
-        act3: "🍎 মজার কাজ: একটি আপেল বা গোল বল হাত দিয়ে গড়িয়ে খেলুন এবং 'A for Apple' বলুন।"
-      },
-      {
-        day: 2,
-        title: "Sleeping Line, ইংরেজি 'B' ও বাংলা 'আ', সংখ্যা 2",
-        bn: "আ", en: "B", num: "2", stroke: "—",
-        rhyme: "আ-তে আমটি আমি খাব পেড়ে। • B for Ball (ব-ল)",
-        act1: "🖐️ রেখা খেলা: টেবিলের ওপর আঙুল দিয়ে বাঁ দিক থেকে ডান দিকে সোজা Sleeping Line (—) টানার অভিনয় করুন।",
-        q: "B দিয়ে কোন শব্দটি শুরু হয়?", opts: ["Ball", "Apple", "Cat"], ans: "Ball",
-        act2: "👏 তালি ও গণনা: ২ বার হাতে তালি দিন এবং নিজের দুটি চোখ ও দুটি কান গুনে দেখান।",
-        prompt: "🔍 দুটি হাতের আঙুল গুনে শিশুকে '১, ২' বলতে শেখান।",
-        act3: "⚽ মজার কাজ: একটি বল মাটিতে ড্রপ দিয়ে ধরুন আর প্রতিবার 'B for Ball' বলুন।"
-      },
-      {
-        day: 3,
-        title: "Circle (গোল), ইংরেজি 'C' ও বাংলা 'ই', সংখ্যা 3",
-        bn: "ই", en: "C", num: "3", stroke: "O",
-        rhyme: "ই-তে ইঁদুর ছানা ভয়ে মরে। • C for Cat (ক্যা-ট)",
-        act1: "🖐️ হাতের ব্যায়াম: দুই হাত মাথার ওপর তুলে গোল চাঁদ (O) বানান এবং 'C' অক্ষরের মতো অর্ধেক চাঁদ তৈরি করুন।",
-        q: "নিচের কোনটি 'C' অক্ষর?", opts: ["C", "O", "A"], ans: "C",
-        act2: "👏 তালি ও গণনা: ৩ বার হাতে তালি দিয়ে ৩টি ছোট খেলনা বা চামচ একসাথে সাজিয়ে রাখুন।",
-        prompt: "🔍 বিড়াল কেমন করে ডাকে তা শিশুকে নকল করে দেখাতে বলুন।",
-        act3: "🐱 মজার কাজ: বিড়ালের মতো চার হাত-পায়ে হেঁটে 'মিউ মিউ' ডাকুন ও মজা করুন।"
-      }
-    ];
+    const defaultLessons = [{"day": 1, "title": "বাংলা 'অ', ইংরেজি 'A a', সংখ্যা 1 ও আম (Mango) আঁকা", "bn": "অ", "en": "A a", "num": "1", "stroke": "অ", "rhyme": "অ-তে অজগর • A for Apple • আজকের ছবি আঁকা: আম (Mango)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'অ' এবং ইংরেজি বড় ও ছোট হাতের 'A a' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["অ", "ক", "ম"], "ans": "অ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 1 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '1' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'আম (Mango)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'অজগর' এবং 'Apple' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 2, "title": "বাংলা 'আ', ইংরেজি 'B b', সংখ্যা 2 ও আপেল (Apple) আঁকা", "bn": "আ", "en": "B b", "num": "2", "stroke": "আ", "rhyme": "আ-তে আম • B for Ball • আজকের ছবি আঁকা: আপেল (Apple)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'আ' এবং ইংরেজি বড় ও ছোট হাতের 'B b' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["আ", "অ", "ম"], "ans": "আ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 2 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '2' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'আপেল (Apple)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'আম' এবং 'Ball' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 3, "title": "বাংলা 'ই', ইংরেজি 'C c', সংখ্যা 3 ও সূর্য (Sun) আঁকা", "bn": "ই", "en": "C c", "num": "3", "stroke": "ই", "rhyme": "ই-তে ইঁদুর • C for Cat • আজকের ছবি আঁকা: সূর্য (Sun)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ই' এবং ইংরেজি বড় ও ছোট হাতের 'C c' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ই", "অ", "ম"], "ans": "ই", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 3 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '3' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'সূর্য (Sun)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ইঁদুর' এবং 'Cat' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 4, "title": "বাংলা 'ঈ', ইংরেজি 'D d', সংখ্যা 4 ও ঘর (House) আঁকা", "bn": "ঈ", "en": "D d", "num": "4", "stroke": "ঈ", "rhyme": "ঈ-তে ঈগল • D for Dog • আজকের ছবি আঁকা: ঘর (House)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ঈ' এবং ইংরেজি বড় ও ছোট হাতের 'D d' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ঈ", "অ", "ম"], "ans": "ঈ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 4 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '4' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'ঘর (House)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ঈগল' এবং 'Dog' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 5, "title": "বাংলা 'উ', ইংরেজি 'E e', সংখ্যা 5 ও নৌকা (Boat) আঁকা", "bn": "উ", "en": "E e", "num": "5", "stroke": "উ", "rhyme": "উ-তে উট • E for Elephant • আজকের ছবি আঁকা: নৌকা (Boat)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'উ' এবং ইংরেজি বড় ও ছোট হাতের 'E e' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["উ", "অ", "ম"], "ans": "উ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 5 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '5' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'নৌকা (Boat)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'উট' এবং 'Elephant' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 6, "title": "বাংলা 'ঊ', ইংরেজি 'F f', সংখ্যা 6 ও মাছ (Fish) আঁকা", "bn": "ঊ", "en": "F f", "num": "6", "stroke": "ঊ", "rhyme": "ঊ-তে ঊষা • F for Fish • আজকের ছবি আঁকা: মাছ (Fish)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ঊ' এবং ইংরেজি বড় ও ছোট হাতের 'F f' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ঊ", "অ", "ম"], "ans": "ঊ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 6 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '6' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'মাছ (Fish)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ঊষা' এবং 'Fish' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 7, "title": "বাংলা 'ঋ', ইংরেজি 'G g', সংখ্যা 7 ও ফুল (Flower) আঁকা", "bn": "ঋ", "en": "G g", "num": "7", "stroke": "ঋ", "rhyme": "ঋ-তে ঋষি • G for Grapes • আজকের ছবি আঁকা: ফুল (Flower)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ঋ' এবং ইংরেজি বড় ও ছোট হাতের 'G g' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ঋ", "অ", "ম"], "ans": "ঋ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 7 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '7' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'ফুল (Flower)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ঋষি' এবং 'Grapes' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 8, "title": "বাংলা 'এ', ইংরেজি 'H h', সংখ্যা 8 ও গাছ (Tree) আঁকা", "bn": "এ", "en": "H h", "num": "8", "stroke": "এ", "rhyme": "এ-তে এক্কাগাড়ি • H for Hen • আজকের ছবি আঁকা: গাছ (Tree)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'এ' এবং ইংরেজি বড় ও ছোট হাতের 'H h' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["এ", "অ", "ম"], "ans": "এ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 8 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '8' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'গাছ (Tree)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'এক্কাগাড়ি' এবং 'Hen' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 9, "title": "বাংলা 'ঐ', ইংরেজি 'I i', সংখ্যা 9 ও প্রজাপতি (Butterfly) আঁকা", "bn": "ঐ", "en": "I i", "num": "9", "stroke": "ঐ", "rhyme": "ঐ-তে ঐরাবত • I for Ice-cream • আজকের ছবি আঁকা: প্রজাপতি (Butterfly)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ঐ' এবং ইংরেজি বড় ও ছোট হাতের 'I i' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ঐ", "অ", "ম"], "ans": "ঐ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 9 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '9' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'প্রজাপতি (Butterfly)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ঐরাবত' এবং 'Ice-cream' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 10, "title": "বাংলা 'ও', ইংরেজি 'J j', সংখ্যা 10 ও ছাতা (Umbrella) আঁকা", "bn": "ও", "en": "J j", "num": "10", "stroke": "ও", "rhyme": "ও-তে ওল • J for Jug • আজকের ছবি আঁকা: ছাতা (Umbrella)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ও' এবং ইংরেজি বড় ও ছোট হাতের 'J j' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ও", "অ", "ম"], "ans": "ও", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 10 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '10' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'ছাতা (Umbrella)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ওল' এবং 'Jug' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 11, "title": "বাংলা 'ঔ', ইংরেজি 'K k', সংখ্যা 11 ও তারা (Star) আঁকা", "bn": "ঔ", "en": "K k", "num": "11", "stroke": "ঔ", "rhyme": "ঔ-তে ঔষধ • K for Kite • আজকের ছবি আঁকা: তারা (Star)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ঔ' এবং ইংরেজি বড় ও ছোট হাতের 'K k' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ঔ", "অ", "ম"], "ans": "ঔ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 11 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '11' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'তারা (Star)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ঔষধ' এবং 'Kite' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 12, "title": "বাংলা 'ক', ইংরেজি 'L l', সংখ্যা 12 ও বল (Ball) আঁকা", "bn": "ক", "en": "L l", "num": "12", "stroke": "ক", "rhyme": "ক-তে কবুতর • L for Lion • আজকের ছবি আঁকা: বল (Ball)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ক' এবং ইংরেজি বড় ও ছোট হাতের 'L l' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ক", "অ", "ম"], "ans": "ক", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 12 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '12' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'বল (Ball)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'কবুতর' এবং 'Lion' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 13, "title": "বাংলা 'খ', ইংরেজি 'M m', সংখ্যা 13 ও আম (Mango) আঁকা", "bn": "খ", "en": "M m", "num": "13", "stroke": "খ", "rhyme": "খ-তে খরগোশ • M for Mango • আজকের ছবি আঁকা: আম (Mango)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'খ' এবং ইংরেজি বড় ও ছোট হাতের 'M m' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["খ", "অ", "ম"], "ans": "খ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 13 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '13' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'আম (Mango)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'খরগোশ' এবং 'Mango' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 14, "title": "বাংলা 'গ', ইংরেজি 'N n', সংখ্যা 14 ও আপেল (Apple) আঁকা", "bn": "গ", "en": "N n", "num": "14", "stroke": "গ", "rhyme": "গ-তে গরু • N for Nest • আজকের ছবি আঁকা: আপেল (Apple)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'গ' এবং ইংরেজি বড় ও ছোট হাতের 'N n' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["গ", "অ", "ম"], "ans": "গ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 14 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '14' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'আপেল (Apple)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'গরু' এবং 'Nest' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 15, "title": "বাংলা 'ঘ', ইংরেজি 'O o', সংখ্যা 15 ও সূর্য (Sun) আঁকা", "bn": "ঘ", "en": "O o", "num": "15", "stroke": "ঘ", "rhyme": "ঘ-তে ঘোড়া • O for Orange • আজকের ছবি আঁকা: সূর্য (Sun)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ঘ' এবং ইংরেজি বড় ও ছোট হাতের 'O o' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ঘ", "অ", "ম"], "ans": "ঘ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 15 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '15' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'সূর্য (Sun)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ঘোড়া' এবং 'Orange' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 16, "title": "বাংলা 'ঙ', ইংরেজি 'P p', সংখ্যা 16 ও ঘর (House) আঁকা", "bn": "ঙ", "en": "P p", "num": "16", "stroke": "ঙ", "rhyme": "ঙ-তে ব্যাঙ • P for Parrot • আজকের ছবি আঁকা: ঘর (House)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ঙ' এবং ইংরেজি বড় ও ছোট হাতের 'P p' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ঙ", "অ", "ম"], "ans": "ঙ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 16 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '16' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'ঘর (House)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ব্যাঙ' এবং 'Parrot' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 17, "title": "বাংলা 'চ', ইংরেজি 'Q q', সংখ্যা 17 ও নৌকা (Boat) আঁকা", "bn": "চ", "en": "Q q", "num": "17", "stroke": "চ", "rhyme": "চ-তে চড়ুই • Q for Queen • আজকের ছবি আঁকা: নৌকা (Boat)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'চ' এবং ইংরেজি বড় ও ছোট হাতের 'Q q' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["চ", "অ", "ম"], "ans": "চ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 17 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '17' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'নৌকা (Boat)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'চড়ুই' এবং 'Queen' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 18, "title": "বাংলা 'ছ', ইংরেজি 'R r', সংখ্যা 18 ও মাছ (Fish) আঁকা", "bn": "ছ", "en": "R r", "num": "18", "stroke": "ছ", "rhyme": "ছ-তে ছাতা • R for Rabbit • আজকের ছবি আঁকা: মাছ (Fish)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ছ' এবং ইংরেজি বড় ও ছোট হাতের 'R r' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ছ", "অ", "ম"], "ans": "ছ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 18 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '18' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'মাছ (Fish)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ছাতা' এবং 'Rabbit' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 19, "title": "বাংলা 'জ', ইংরেজি 'S s', সংখ্যা 19 ও ফুল (Flower) আঁকা", "bn": "জ", "en": "S s", "num": "19", "stroke": "জ", "rhyme": "জ-তে জাহাজ • S for Sun • আজকের ছবি আঁকা: ফুল (Flower)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'জ' এবং ইংরেজি বড় ও ছোট হাতের 'S s' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["জ", "অ", "ম"], "ans": "জ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 19 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '19' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'ফুল (Flower)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'জাহাজ' এবং 'Sun' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 20, "title": "বাংলা 'ঝ', ইংরেজি 'T t', সংখ্যা 20 ও গাছ (Tree) আঁকা", "bn": "ঝ", "en": "T t", "num": "20", "stroke": "ঝ", "rhyme": "ঝ-তে ঝুড়ি • T for Tiger • আজকের ছবি আঁকা: গাছ (Tree)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ঝ' এবং ইংরেজি বড় ও ছোট হাতের 'T t' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ঝ", "অ", "ম"], "ans": "ঝ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '20' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'গাছ (Tree)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ঝুড়ি' এবং 'Tiger' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 21, "title": "বাংলা 'ঞ', ইংরেজি 'U u', সংখ্যা 21 ও প্রজাপতি (Butterfly) আঁকা", "bn": "ঞ", "en": "U u", "num": "21", "stroke": "ঞ", "rhyme": "ঞ-তে মিঞা • U for Umbrella • আজকের ছবি আঁকা: প্রজাপতি (Butterfly)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ঞ' এবং ইংরেজি বড় ও ছোট হাতের 'U u' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ঞ", "অ", "ম"], "ans": "ঞ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '21' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'প্রজাপতি (Butterfly)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'মিঞা' এবং 'Umbrella' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 22, "title": "বাংলা 'ট', ইংরেজি 'V v', সংখ্যা 22 ও ছাতা (Umbrella) আঁকা", "bn": "ট", "en": "V v", "num": "22", "stroke": "ট", "rhyme": "ট-তে টিয়া • V for Van • আজকের ছবি আঁকা: ছাতা (Umbrella)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ট' এবং ইংরেজি বড় ও ছোট হাতের 'V v' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ট", "অ", "ম"], "ans": "ট", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '22' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'ছাতা (Umbrella)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'টিয়া' এবং 'Van' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 23, "title": "বাংলা 'ঠ', ইংরেজি 'W w', সংখ্যা 23 ও তারা (Star) আঁকা", "bn": "ঠ", "en": "W w", "num": "23", "stroke": "ঠ", "rhyme": "ঠ-তে ঠাকুমা • W for Watch • আজকের ছবি আঁকা: তারা (Star)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ঠ' এবং ইংরেজি বড় ও ছোট হাতের 'W w' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ঠ", "অ", "ম"], "ans": "ঠ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '23' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'তারা (Star)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ঠাকুমা' এবং 'Watch' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 24, "title": "বাংলা 'ড', ইংরেজি 'X x', সংখ্যা 24 ও বল (Ball) আঁকা", "bn": "ড", "en": "X x", "num": "24", "stroke": "ড", "rhyme": "ড-তে ডাব • X for Xylophone • আজকের ছবি আঁকা: বল (Ball)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ড' এবং ইংরেজি বড় ও ছোট হাতের 'X x' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ড", "অ", "ম"], "ans": "ড", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '24' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'বল (Ball)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ডাব' এবং 'Xylophone' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 25, "title": "বাংলা 'ঢ', ইংরেজি 'Y y', সংখ্যা 25 ও আম (Mango) আঁকা", "bn": "ঢ", "en": "Y y", "num": "25", "stroke": "ঢ", "rhyme": "ঢ-তে ঢোল • Y for Yak • আজকের ছবি আঁকা: আম (Mango)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ঢ' এবং ইংরেজি বড় ও ছোট হাতের 'Y y' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ঢ", "অ", "ম"], "ans": "ঢ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '25' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'আম (Mango)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ঢোল' এবং 'Yak' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 26, "title": "বাংলা 'ণ', ইংরেজি 'Z z', সংখ্যা 26 ও আপেল (Apple) আঁকা", "bn": "ণ", "en": "Z z", "num": "26", "stroke": "ণ", "rhyme": "ণ-তে হরিণ • Z for Zebra • আজকের ছবি আঁকা: আপেল (Apple)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ণ' এবং ইংরেজি বড় ও ছোট হাতের 'Z z' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ণ", "অ", "ম"], "ans": "ণ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '26' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'আপেল (Apple)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'হরিণ' এবং 'Zebra' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 27, "title": "বাংলা 'ত', ইংরেজি 'A a', সংখ্যা 27 ও সূর্য (Sun) আঁকা", "bn": "ত", "en": "A a", "num": "27", "stroke": "ত", "rhyme": "ত-তে তালগাছ • A for Apple • আজকের ছবি আঁকা: সূর্য (Sun)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ত' এবং ইংরেজি বড় ও ছোট হাতের 'A a' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ত", "অ", "ম"], "ans": "ত", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '27' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'সূর্য (Sun)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'তালগাছ' এবং 'Apple' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 28, "title": "বাংলা 'থ', ইংরেজি 'B b', সংখ্যা 28 ও ঘর (House) আঁকা", "bn": "থ", "en": "B b", "num": "28", "stroke": "থ", "rhyme": "থ-তে থালা • B for Ball • আজকের ছবি আঁকা: ঘর (House)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'থ' এবং ইংরেজি বড় ও ছোট হাতের 'B b' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["থ", "অ", "ম"], "ans": "থ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '28' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'ঘর (House)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'থালা' এবং 'Ball' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 29, "title": "বাংলা 'দ', ইংরেজি 'C c', সংখ্যা 29 ও নৌকা (Boat) আঁকা", "bn": "দ", "en": "C c", "num": "29", "stroke": "দ", "rhyme": "দ-তে দোয়েল • C for Cat • আজকের ছবি আঁকা: নৌকা (Boat)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'দ' এবং ইংরেজি বড় ও ছোট হাতের 'C c' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["দ", "অ", "ম"], "ans": "দ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '29' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'নৌকা (Boat)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'দোয়েল' এবং 'Cat' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 30, "title": "বাংলা 'ধ', ইংরেজি 'D d', সংখ্যা 30 ও মাছ (Fish) আঁকা", "bn": "ধ", "en": "D d", "num": "30", "stroke": "ধ", "rhyme": "ধ-তে ধান • D for Dog • আজকের ছবি আঁকা: মাছ (Fish)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ধ' এবং ইংরেজি বড় ও ছোট হাতের 'D d' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ধ", "অ", "ম"], "ans": "ধ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '30' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'মাছ (Fish)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ধান' এবং 'Dog' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 31, "title": "বাংলা 'ন', ইংরেজি 'E e', সংখ্যা 31 ও ফুল (Flower) আঁকা", "bn": "ন", "en": "E e", "num": "31", "stroke": "ন", "rhyme": "ন-তে নৌকা • E for Elephant • আজকের ছবি আঁকা: ফুল (Flower)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ন' এবং ইংরেজি বড় ও ছোট হাতের 'E e' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ন", "অ", "ম"], "ans": "ন", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '31' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'ফুল (Flower)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'নৌকা' এবং 'Elephant' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 32, "title": "বাংলা 'প', ইংরেজি 'F f', সংখ্যা 32 ও গাছ (Tree) আঁকা", "bn": "প", "en": "F f", "num": "32", "stroke": "প", "rhyme": "প-তে পদ্ম • F for Fish • আজকের ছবি আঁকা: গাছ (Tree)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'প' এবং ইংরেজি বড় ও ছোট হাতের 'F f' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["প", "অ", "ম"], "ans": "প", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '32' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'গাছ (Tree)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'পদ্ম' এবং 'Fish' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 33, "title": "বাংলা 'ফ', ইংরেজি 'G g', সংখ্যা 33 ও প্রজাপতি (Butterfly) আঁকা", "bn": "ফ", "en": "G g", "num": "33", "stroke": "ফ", "rhyme": "ফ-তে ফুল • G for Grapes • আজকের ছবি আঁকা: প্রজাপতি (Butterfly)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ফ' এবং ইংরেজি বড় ও ছোট হাতের 'G g' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ফ", "অ", "ম"], "ans": "ফ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '33' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'প্রজাপতি (Butterfly)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ফুল' এবং 'Grapes' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 34, "title": "বাংলা 'ব', ইংরেজি 'H h', সংখ্যা 34 ও ছাতা (Umbrella) আঁকা", "bn": "ব", "en": "H h", "num": "34", "stroke": "ব", "rhyme": "ব-তে বই • H for Hen • আজকের ছবি আঁকা: ছাতা (Umbrella)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ব' এবং ইংরেজি বড় ও ছোট হাতের 'H h' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ব", "অ", "ম"], "ans": "ব", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '34' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'ছাতা (Umbrella)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'বই' এবং 'Hen' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 35, "title": "বাংলা 'ভ', ইংরেজি 'I i', সংখ্যা 35 ও তারা (Star) আঁকা", "bn": "ভ", "en": "I i", "num": "35", "stroke": "ভ", "rhyme": "ভ-তে ভালুক • I for Ice-cream • আজকের ছবি আঁকা: তারা (Star)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ভ' এবং ইংরেজি বড় ও ছোট হাতের 'I i' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ভ", "অ", "ম"], "ans": "ভ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '35' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'তারা (Star)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ভালুক' এবং 'Ice-cream' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 36, "title": "বাংলা 'ম', ইংরেজি 'J j', সংখ্যা 36 ও বল (Ball) আঁকা", "bn": "ম", "en": "J j", "num": "36", "stroke": "ম", "rhyme": "ম-তে মাছ • J for Jug • আজকের ছবি আঁকা: বল (Ball)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ম' এবং ইংরেজি বড় ও ছোট হাতের 'J j' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ম", "অ", "ব"], "ans": "ম", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '36' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'বল (Ball)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'মাছ' এবং 'Jug' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 37, "title": "বাংলা 'য', ইংরেজি 'K k', সংখ্যা 37 ও আম (Mango) আঁকা", "bn": "য", "en": "K k", "num": "37", "stroke": "য", "rhyme": "য-তে যব • K for Kite • আজকের ছবি আঁকা: আম (Mango)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'য' এবং ইংরেজি বড় ও ছোট হাতের 'K k' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["য", "অ", "ম"], "ans": "য", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '37' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'আম (Mango)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'যব' এবং 'Kite' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 38, "title": "বাংলা 'র', ইংরেজি 'L l', সংখ্যা 38 ও আপেল (Apple) আঁকা", "bn": "র", "en": "L l", "num": "38", "stroke": "র", "rhyme": "র-তে রংধনু • L for Lion • আজকের ছবি আঁকা: আপেল (Apple)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'র' এবং ইংরেজি বড় ও ছোট হাতের 'L l' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["র", "অ", "ম"], "ans": "র", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '38' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'আপেল (Apple)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'রংধনু' এবং 'Lion' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 39, "title": "বাংলা 'ল', ইংরেজি 'M m', সংখ্যা 39 ও সূর্য (Sun) আঁকা", "bn": "ল", "en": "M m", "num": "39", "stroke": "ল", "rhyme": "ল-তে লাটিম • M for Mango • আজকের ছবি আঁকা: সূর্য (Sun)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ল' এবং ইংরেজি বড় ও ছোট হাতের 'M m' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ল", "অ", "ম"], "ans": "ল", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '39' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'সূর্য (Sun)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'লাটিম' এবং 'Mango' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 40, "title": "বাংলা 'শ', ইংরেজি 'N n', সংখ্যা 40 ও ঘর (House) আঁকা", "bn": "শ", "en": "N n", "num": "40", "stroke": "শ", "rhyme": "শ-তে শাপলা • N for Nest • আজকের ছবি আঁকা: ঘর (House)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'শ' এবং ইংরেজি বড় ও ছোট হাতের 'N n' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["শ", "অ", "ম"], "ans": "শ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '40' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'ঘর (House)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'শাপলা' এবং 'Nest' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 41, "title": "বাংলা 'ষ', ইংরেজি 'O o', সংখ্যা 41 ও নৌকা (Boat) আঁকা", "bn": "ষ", "en": "O o", "num": "41", "stroke": "ষ", "rhyme": "ষ-তে ষাঁড় • O for Orange • আজকের ছবি আঁকা: নৌকা (Boat)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ষ' এবং ইংরেজি বড় ও ছোট হাতের 'O o' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ষ", "অ", "ম"], "ans": "ষ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '41' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'নৌকা (Boat)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ষাঁড়' এবং 'Orange' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 42, "title": "বাংলা 'স', ইংরেজি 'P p', সংখ্যা 42 ও মাছ (Fish) আঁকা", "bn": "স", "en": "P p", "num": "42", "stroke": "স", "rhyme": "স-তে সূর্য • P for Parrot • আজকের ছবি আঁকা: মাছ (Fish)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'স' এবং ইংরেজি বড় ও ছোট হাতের 'P p' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["স", "অ", "ম"], "ans": "স", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '42' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'মাছ (Fish)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'সূর্য' এবং 'Parrot' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 43, "title": "বাংলা 'হ', ইংরেজি 'Q q', সংখ্যা 43 ও ফুল (Flower) আঁকা", "bn": "হ", "en": "Q q", "num": "43", "stroke": "হ", "rhyme": "হ-তে হাতি • Q for Queen • আজকের ছবি আঁকা: ফুল (Flower)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'হ' এবং ইংরেজি বড় ও ছোট হাতের 'Q q' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["হ", "অ", "ম"], "ans": "হ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '43' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'ফুল (Flower)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'হাতি' এবং 'Queen' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 44, "title": "বাংলা 'ড়', ইংরেজি 'R r', সংখ্যা 44 ও গাছ (Tree) আঁকা", "bn": "ড়", "en": "R r", "num": "44", "stroke": "ড়", "rhyme": "ড়-তে ঘুড়ি • R for Rabbit • আজকের ছবি আঁকা: গাছ (Tree)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ড়' এবং ইংরেজি বড় ও ছোট হাতের 'R r' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ড়", "অ", "ম"], "ans": "ড়", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '44' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'গাছ (Tree)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ঘুড়ি' এবং 'Rabbit' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 45, "title": "বাংলা 'ঢ়', ইংরেজি 'S s', সংখ্যা 45 ও প্রজাপতি (Butterfly) আঁকা", "bn": "ঢ়", "en": "S s", "num": "45", "stroke": "ঢ়", "rhyme": "ঢ়-তে আষাঢ় • S for Sun • আজকের ছবি আঁকা: প্রজাপতি (Butterfly)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ঢ়' এবং ইংরেজি বড় ও ছোট হাতের 'S s' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ঢ়", "অ", "ম"], "ans": "ঢ়", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '45' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'প্রজাপতি (Butterfly)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'আষাঢ়' এবং 'Sun' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 46, "title": "বাংলা 'য়', ইংরেজি 'T t', সংখ্যা 46 ও ছাতা (Umbrella) আঁকা", "bn": "য়", "en": "T t", "num": "46", "stroke": "য়", "rhyme": "য়-তে ময়না • T for Tiger • আজকের ছবি আঁকা: ছাতা (Umbrella)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'য়' এবং ইংরেজি বড় ও ছোট হাতের 'T t' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["য়", "অ", "ম"], "ans": "য়", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '46' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'ছাতা (Umbrella)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ময়না' এবং 'Tiger' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 47, "title": "বাংলা 'ৎ', ইংরেজি 'U u', সংখ্যা 47 ও তারা (Star) আঁকা", "bn": "ৎ", "en": "U u", "num": "47", "stroke": "ৎ", "rhyme": "ৎ-তে হঠাৎ • U for Umbrella • আজকের ছবি আঁকা: তারা (Star)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ৎ' এবং ইংরেজি বড় ও ছোট হাতের 'U u' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ৎ", "অ", "ম"], "ans": "ৎ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '47' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'তারা (Star)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'হঠাৎ' এবং 'Umbrella' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 48, "title": "বাংলা 'ং', ইংরেজি 'V v', সংখ্যা 48 ও বল (Ball) আঁকা", "bn": "ং", "en": "V v", "num": "48", "stroke": "ং", "rhyme": "ং-তে চিংড়ি • V for Van • আজকের ছবি আঁকা: বল (Ball)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ং' এবং ইংরেজি বড় ও ছোট হাতের 'V v' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ং", "অ", "ম"], "ans": "ং", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '48' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'বল (Ball)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'চিংড়ি' এবং 'Van' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 49, "title": "বাংলা 'ঃ', ইংরেজি 'W w', সংখ্যা 49 ও আম (Mango) আঁকা", "bn": "ঃ", "en": "W w", "num": "49", "stroke": "ঃ", "rhyme": "ঃ-তে দুঃখ • W for Watch • আজকের ছবি আঁকা: আম (Mango)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ঃ' এবং ইংরেজি বড় ও ছোট হাতের 'W w' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ঃ", "অ", "ম"], "ans": "ঃ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '49' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'আম (Mango)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'দুঃখ' এবং 'Watch' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 50, "title": "বাংলা 'ঁ', ইংরেজি 'X x', সংখ্যা 50 ও আপেল (Apple) আঁকা", "bn": "ঁ", "en": "X x", "num": "50", "stroke": "ঁ", "rhyme": "ঁ-তে চাঁদ • X for Xylophone • আজকের ছবি আঁকা: আপেল (Apple)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ঁ' এবং ইংরেজি বড় ও ছোট হাতের 'X x' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ঁ", "অ", "ম"], "ans": "ঁ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '50' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'আপেল (Apple)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'চাঁদ' এবং 'Xylophone' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 51, "title": "বাংলা 'অ–ঔ', ইংরেজি 'Y y', সংখ্যা 51 ও সূর্য (Sun) আঁকা", "bn": "অ–ঔ", "en": "Y y", "num": "51", "stroke": "Y", "rhyme": "অ–ঔ-তে স্বরবর্ণ রিভিশন • Y for Yak • আজকের ছবি আঁকা: সূর্য (Sun)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'অ–ঔ' এবং ইংরেজি বড় ও ছোট হাতের 'Y y' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["অ–ঔ", "অ", "ম"], "ans": "অ–ঔ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '51' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'সূর্য (Sun)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'স্বরবর্ণ রিভিশন' এবং 'Yak' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 52, "title": "বাংলা 'ক–ঞ', ইংরেজি 'Z z', সংখ্যা 52 ও ঘর (House) আঁকা", "bn": "ক–ঞ", "en": "Z z", "num": "52", "stroke": "Z", "rhyme": "ক–ঞ-তে ব্যঞ্জন রিভিশন ১ • Z for Zebra • আজকের ছবি আঁকা: ঘর (House)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ক–ঞ' এবং ইংরেজি বড় ও ছোট হাতের 'Z z' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ক–ঞ", "অ", "ম"], "ans": "ক–ঞ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '52' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'ঘর (House)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ব্যঞ্জন রিভিশন ১' এবং 'Zebra' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 53, "title": "বাংলা 'ট–ন', ইংরেজি 'A a', সংখ্যা 53 ও নৌকা (Boat) আঁকা", "bn": "ট–ন", "en": "A a", "num": "53", "stroke": "A", "rhyme": "ট–ন-তে ব্যঞ্জন রিভিশন ২ • A for Apple • আজকের ছবি আঁকা: নৌকা (Boat)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ট–ন' এবং ইংরেজি বড় ও ছোট হাতের 'A a' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ট–ন", "অ", "ম"], "ans": "ট–ন", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '53' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'নৌকা (Boat)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ব্যঞ্জন রিভিশন ২' এবং 'Apple' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 54, "title": "বাংলা 'প–ম', ইংরেজি 'B b', সংখ্যা 54 ও মাছ (Fish) আঁকা", "bn": "প–ম", "en": "B b", "num": "54", "stroke": "B", "rhyme": "প–ম-তে ব্যঞ্জন রিভিশন ৩ • B for Ball • আজকের ছবি আঁকা: মাছ (Fish)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'প–ম' এবং ইংরেজি বড় ও ছোট হাতের 'B b' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["প–ম", "অ", "ম"], "ans": "প–ম", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '54' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'মাছ (Fish)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ব্যঞ্জন রিভিশন ৩' এবং 'Ball' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 55, "title": "বাংলা 'য–হ', ইংরেজি 'C c', সংখ্যা 55 ও ফুল (Flower) আঁকা", "bn": "য–হ", "en": "C c", "num": "55", "stroke": "C", "rhyme": "য–হ-তে ব্যঞ্জন রিভিশন ৪ • C for Cat • আজকের ছবি আঁকা: ফুল (Flower)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'য–হ' এবং ইংরেজি বড় ও ছোট হাতের 'C c' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["য–হ", "অ", "ম"], "ans": "য–হ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '55' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'ফুল (Flower)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ব্যঞ্জন রিভিশন ৪' এবং 'Cat' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 56, "title": "বাংলা 'ড়–ঁ', ইংরেজি 'D d', সংখ্যা 56 ও গাছ (Tree) আঁকা", "bn": "ড়–ঁ", "en": "D d", "num": "56", "stroke": "D", "rhyme": "ড়–ঁ-তে বর্ণ রিভিশন ৫ • D for Dog • আজকের ছবি আঁকা: গাছ (Tree)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'ড়–ঁ' এবং ইংরেজি বড় ও ছোট হাতের 'D d' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["ড়–ঁ", "অ", "ম"], "ans": "ড়–ঁ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '56' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'গাছ (Tree)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'বর্ণ রিভিশন ৫' এবং 'Dog' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 57, "title": "বাংলা 'দুই অক্ষর', ইংরেজি 'E e', সংখ্যা 57 ও প্রজাপতি (Butterfly) আঁকা", "bn": "দুই অক্ষর", "en": "E e", "num": "57", "stroke": "E", "rhyme": "দুই অক্ষর-তে ফল ও বই • E for Elephant • আজকের ছবি আঁকা: প্রজাপতি (Butterfly)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'দুই অক্ষর' এবং ইংরেজি বড় ও ছোট হাতের 'E e' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["দুই অক্ষর", "অ", "ম"], "ans": "দুই অক্ষর", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '57' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'প্রজাপতি (Butterfly)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'ফল ও বই' এবং 'Elephant' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 58, "title": "বাংলা 'দুই অক্ষর', ইংরেজি 'F f', সংখ্যা 58 ও ছাতা (Umbrella) আঁকা", "bn": "দুই অক্ষর", "en": "F f", "num": "58", "stroke": "F", "rhyme": "দুই অক্ষর-তে জল ও ঘর • F for Fish • আজকের ছবি আঁকা: ছাতা (Umbrella)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'দুই অক্ষর' এবং ইংরেজি বড় ও ছোট হাতের 'F f' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["দুই অক্ষর", "অ", "ম"], "ans": "দুই অক্ষর", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '58' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'ছাতা (Umbrella)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'জল ও ঘর' এবং 'Fish' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 59, "title": "বাংলা 'তিন অক্ষর', ইংরেজি 'G g', সংখ্যা 59 ও তারা (Star) আঁকা", "bn": "তিন অক্ষর", "en": "G g", "num": "59", "stroke": "G", "rhyme": "তিন অক্ষর-তে কমল ও কলম • G for Grapes • আজকের ছবি আঁকা: তারা (Star)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'তিন অক্ষর' এবং ইংরেজি বড় ও ছোট হাতের 'G g' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["তিন অক্ষর", "অ", "ম"], "ans": "তিন অক্ষর", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '59' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'তারা (Star)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: 'কমল ও কলম' এবং 'Grapes' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}, {"day": 60, "title": "বাংলা 'সব বর্ণ', ইংরেজি 'H h', সংখ্যা 60 ও বল (Ball) আঁকা", "bn": "সব বর্ণ", "en": "H h", "num": "60", "stroke": "H", "rhyme": "সব বর্ণ-তে ৬০ দিন গ্র্যান্ড রিভিশন • H for Hen • আজকের ছবি আঁকা: বল (Ball)", "act1": "🖐️ হাতের ব্যায়াম ও লেখা: বাতাসে আঙুল ঘুরিয়ে বাংলা 'সব বর্ণ' এবং ইংরেজি বড় ও ছোট হাতের 'H h' আঁকুন।", "q": "আজকের পাঠে শেখা বাংলা বর্ণ কোনটি?", "opts": ["সব বর্ণ", "অ", "ম"], "ans": "সব বর্ণ", "act2": "🔢 সংখ্যা ও গণনা: ১ থেকে 20 পর্যন্ত গুনুন এবং ট্রেসিং বোর্ডে সংখ্যা '60' লিখে অভ্যাস করুন।", "prompt": "🎨 আজকের ছবি আঁকা ও বাস্তব খোঁজা: ট্রেসিং ও ছবি আঁকা ট্যাবে গিয়ে 'বল (Ball)' আঁকুন এবং পছন্দের রঙ ভরো!", "act3": "🎭 মজার খেলা: '৬০ দিন গ্র্যান্ড রিভিশন' এবং 'Hen' শব্দ দুটি ৩ বার জোরে জোরে উচ্চারণ করুন ও তালি দিন।"}];
 
-    const extraTopics = [
-      { en: "D", bn: "ঈ", num: "4", bnRhyme: "ঈ-তে ঈগল পাখি পাছে ধরে।", enRhyme: "D for Dog (ড-গ)", act1: "🖐️ আঙুল দিয়ে বাতাসে 'D' এবং 'ঈ' এঁকে ঈগল পাখির মতো দুই হাত ডানা মেলে ওড়ার অভিনয় করুন।", act2: "👏 ৪ বার হাতে তালি দিন এবং ঘরের ৪টি কোণা আঙুল দিয়ে দেখান।", prompt: "🔍 কুকুর কেমন করে 'ভউ ভউ' ডাকে তা শিশুকে নকল করে দেখাতে বলুন।", act3: "🐶 মজার খেলা: ঘরের এক প্রান্ত থেকে অন্য প্রান্ত পর্যন্ত কুকুরছানার মতো হামাগুড়ি দিয়ে যান।" },
-      { en: "E", bn: "উ", num: "5", bnRhyme: "উ-তে উট চলেছে মুখটি তুলে।", enRhyme: "E for Elephant (এলিফ্যান্ট)", act1: "🖐️ হাতের ৫টি আঙুল ছড়িয়ে 'E' বানান এবং নাকের সামনে হাত রেখে হাতির শুঁড় দোলান।", act2: "👏 এক হাতের ৫টি আঙুল গুনে নিন এবং ৫ বার লাফ দিন।", prompt: "🔍 হাতির কান বড় না ইঁদুরের কান বড়—শিশুকে জিজ্ঞেস করুন।", act3: "🐘 মজার খেলা: হাতির মতো ভারী পা ফেলে ধুপধাপ শব্দ করে ৫ কদম হাঁটুন।" },
-      { en: "F", bn: "ঊ", num: "6", bnRhyme: "ঊ-তে ঊষা হাসে পুব আকাশে।", enRhyme: "F for Fish (ফি-শ)", act1: "🖐️ দুই হাতের তালু একসাথে জুড়ে জলের ভেতর মাছের সাঁতার কাটার ভঙ্গি করুন।", act2: "👏 ৬টি ছোট বাটি বা চামচ সারিবদ্ধভাবে সাজিয়ে ১ থেকে ৬ পর্যন্ত গুনুন।", prompt: "🔍 মাছ কোথায় থাকে—জলে না গাছে? শিশুকে বলতে দিন।", act3: "🐟 কাগজের খেলা: একটি কাগজে মাছ এঁকে বাচ্চাকে হলুদ ও কমলা ক্রেয়ন দিয়ে রঙ করতে দিন।" },
-      { en: "G", bn: "ঋ", num: "7", bnRhyme: "ঋ-তে ঋষি মশাই বসেন পূজায়।", enRhyme: "G for Grapes (গ্রেপস)", act1: "🖐️ একতারা বাজানোর অভিনয় করুন এবং আঙুল দিয়ে গোল করে 'G' লিখুন।", act2: "👏 ৭ বার আঙুল দিয়ে টেবিলে টোকা দিন এবং ১ থেকে ৭ পর্যন্ত গুনুন।", prompt: "🔍 সবুজ রঙের কোনো সবজি বা পাতা দেখিয়ে এর রঙ জিজ্ঞেস করুন।", act3: "🍇 আঙুর আঁকা: একটি সাদা কাগজে আঙুলের ছাপ দিয়ে সবুজ রঙের আঙুরের থোকা বানান।" },
-      { en: "H", bn: "এ", num: "8", bnRhyme: "এ-তে এক্কাগাড়ি খুব ছুটেছে।", enRhyme: "H for Hen (হে-ন)", act1: "🖐️ থালায় সামান্য আটা বা সুজি ছড়িয়ে তার ওপর আঙুল বুলিয়ে 'H' এবং 'এ' লিখুন।", act2: "👏 ৮টি বোতাম বা কয়েন দুটি আলাদা বাটিতে ৪টি ও ৪টি করে ভাগ করে সাজান।", prompt: "🔍 মুরগি সকালে কেমন করে ডাকে এবং কী খায়—শিশুর সাথে গল্প করুন।", act3: "🚂 এক্কাগাড়ি খেলা: মা-বাবার কোমর ধরে ট্রেনের মতো 'ঝিক-ঝিক' শব্দ করে সারা ঘর ঘুরুন!" },
-      { en: "I", bn: "ঐ", num: "9", bnRhyme: "ঐ-তে ঐরাবতটি আসছে তেড়ে।", enRhyme: "I for Ice-cream (আইসক্রিম)", act1: "🖐️ সোজা দাঁড়িয়ে হাত ওপরে তুলে লম্বা 'I' হোন, তারপর নরম আটার দলা পাকিয়ে 'ঐ' বানান।", act2: "👏 ৯ বার এক পায়ে লাফান এবং প্রতি লাফে সংখ্যা গুনুন।", prompt: "🔍 আইসক্রিম ঠান্ডা লাগে না গরম? শিশুকে জিজ্ঞেস করুন।", act3: "🍦 আইসক্রিম ক্রাফট: কাগজ দিয়ে একটি ত্রিকোণ কোণ এঁকে তার ওপর গোল আইসক্রিম এঁকে রঙ করুন।" },
-      { en: "J", bn: "ও", num: "10", bnRhyme: "ও-তে ওল খেও না ধরবে গলা।", enRhyme: "J for Jug (জা-গ)", act1: "🖐️ একটি প্লাস্টিক কাপ থেকে আরেকটি কাপে জল ঢালার অনুশীলন করুন।", act2: "👏 দুই হাতের সবকটি (১০টি) আঙুল খুলে ১ থেকে ১০ পর্যন্ত জোরে গুনুন।", prompt: "🔍 আমরা জল কী দিয়ে খাই—গ্লাস না প্লেট? শিশুকে জিজ্ঞেস করুন।", act3: "💧 স্পঞ্জ খেলা: একটি ভেজা স্পঞ্জ হাত দিয়ে চেপে অন্য বাটিতে জল ভরার খেলা খেলুন।" },
-      { en: "K", bn: "ঔ", num: "1", bnRhyme: "ঔ-তে ঔষধ খেতে মিছে বলা।", enRhyme: "K for Kite (কাইট)", act1: "🖐️ আকাশে ঘুড়ি ওড়ানোর মতো সুতো টানার অভিনয় করুন এবং বাতাসে 'K' আঁকুন।", act2: "👏 ঘর থেকে ঠিক ১টি নীল রঙের এবং ১টি হলুদ রঙের জিনিস খুঁজে আনুন।", prompt: "🔍 ঘুড়ি কোথায় ওড়ে—আকাশে না জলে? শিশুকে উত্তর দিতে দিন।", act3: "🪁 ঘুড়ি তৈরি: একটি চৌকো কাগজে রঙিন সুতো বা লেজ লাগিয়ে ছোট্ট ঘুড়ি বানান।" },
-      { en: "L", bn: "অ-আ", num: "2", bnRhyme: "অ-তে অজগর, আ-তে আমটি আমি খাব পেড়ে।", enRhyme: "L for Lion (লায়ন)", act1: "🖐️ বুড়ো আঙুল ও তর্জনী সোজা করে 'L' বানান।", act2: "👏 বড় থেকে ছোট—ঘরের এমন ২টি জিনিস পাশাপাশি সাজান।", prompt: "🔍 বনের রাজা কে? সিংহ কেমন করে গর্জন করে তা শিশুকে করে দেখাতে বলুন।", act3: "🦁 সিংহাসন ব্যায়াম: নাক দিয়ে লম্বা শ্বাস নিয়ে সিংহের মতো 'হাঁ...' শব্দ করে শ্বাস ছাড়ুন।" },
-      { en: "M", bn: "ই-ঈ", num: "3", bnRhyme: "ই-তে ইঁদুর ছানা, ঈ-তে ঈগল পাখি পাছে ধরে।", enRhyme: "M for Mango (ম্যাঙ্গো)", act1: "🖐️ দুই হাতের আঙুল জুড়ে পাহাড়ের মতো 'M' বানান।", act2: "👏 ৩টি আলাদা আকারের চামচ বা গ্লাস ছোট থেকে বড় ক্রমে সাজান।", prompt: "🔍 আম খেতে কেমন—মিষ্টি না টক? কাঁচা ও পাকা আমের রঙ কী?", act3: "🥭 আম আঁকা: খাতায় বড় করে একটি আম এঁকে হলুদ ও সবুজ ক্রেয়ন দিয়ে রঙ ভরো।" },
-      { en: "N", bn: "উ-ঊ", num: "4", bnRhyme: "উ-তে উট চলেছে, ঊ-তে ঊষা হাসে পুব আকাশে।", enRhyme: "N for Nest (নেস্ট)", act1: "🖐️ দেশলাই কাঠি বা পেন্সিল সাজিয়ে 'N' অক্ষরটি মেঝেতে তৈরি করুন।", act2: "👏 ৪টি বালিশ বা খেলনা দিয়ে একটি গোল পাখির বাসা বানান।", prompt: "🔍 পাখিরা কোথায় ডিম পাড়ে এবং থাকে? শিশুকে বলুন।", act3: "🪺 বাছাই খেলা: বাটিতে রাখা ছোলা ও মটর আলাদা দুটি বাটিতে বেছে রাখুন।" },
-      { en: "O", bn: "ঋ-এ", num: "5", bnRhyme: "ঋ-তে ঋষি মশাই, এ-তে এক্কাগাড়ি খুব ছুটেছে।", enRhyme: "O for Orange (অরেঞ্জ)", act1: "🖐️ চুড়ি বা বাটির চারপাশ দিয়ে পেন্সিল ঘুরিয়ে নিখুঁত গোল 'O' আঁকার অভ্যাস করুন।", act2: "👏 ঘরের ভেতর থেকে গোল (Circle) আকৃতির ৫টি জিনিস খুঁজে দেখান।", prompt: "🔍 কমলালেবুর খোসা ছাড়িয়ে কোয়াগুলো শিশুকে গুনতে দিন।", act3: "🍊 কমলা রঙ খেলা: লাল ও হলুদ রঙ মিশিয়ে কীভাবে কমলা রঙ তৈরি হয় তা দেখান।" },
-      { en: "P", bn: "ঐ-ও-ঔ", num: "6", bnRhyme: "ঐ-তে ঐরাবত, ও-তে ওল, ঔ-তে ঔষধ খেতে মিছে বলা।", enRhyme: "P for Parrot (প্যারট)", act1: "🖐️ টিয়াপাখির মতো মিষ্টি সুরে কথা বলার অভিনয় করুন এবং বাতাসে 'P' আঁকুন।", act2: "👏 ৬টি কাপ বা গ্লাস উল্টো করে রেখে তার ওপর একটি ছোট বল লুকিয়ে রাখার খেলা খেলুন।", prompt: "🔍 টিয়াপাখির গায়ের রঙ এবং ঠোঁটের রঙ কী—শিশুকে জিজ্ঞেস করুন।", act3: "🦜 পাতা দিয়ে পাখি: বাগান থেকে ঝরে পড়া সবুজ পাতা কাগজে আঠা দিয়ে লাগিয়ে টিয়াপাখি বানান।" },
-      { en: "Q", bn: "অ", num: "7", bnRhyme: "অ-তে অজগর আসছে তেড়ে।", enRhyme: "Q for Queen (কুইন)", act1: "🖐️ কাগজের মুকুট মাথায় দিয়ে রানির মতো সোজা হয়ে হাঁটুন।", act2: "👏 সপ্তাহের ৭টি দিনের নাম ছড়ার তালে তালে ৭ বার তালি দিয়ে বলুন।", prompt: "🔍 রানির মাথায় কী থাকে? শিশুকে বলতে দিন।", act3: "👑 কাগজের মুকুট: একটি লম্বা কাগজ কেটে রঙ করে শিশুর মাথার মাপে মুকুট তৈরি করে দিন।" },
-      { en: "R", bn: "আ", num: "8", bnRhyme: "আ-তে আমটি আমি খাব পেড়ে।", enRhyme: "R for Rabbit (র‍্যাবিট)", act1: "🖐️ মাথার ওপর দুই হাত কান বানিয়ে খরগোশের মতো তিড়িং-বিড়িং করে লাফান।", act2: "👏 ৮ বার খরগোশের মতো ছোট ছোট লাফ দিন এবং প্রতিবার সংখ্যা গুনুন।", prompt: "🔍 খরগোশ কী খেতে সবচেয়ে ভালোবাসে (গাজর)—শিশুকে বলুন।", act3: "🐇 তুলোর খরগোশ: কাগজে খরগোশ এঁকে তার লেজে সাদা তুলো আঠা দিয়ে লাগান।" },
-      { en: "S", bn: "ই", num: "9", bnRhyme: "ই-তে ইঁদুর ছানা ভয়ে মরে।", enRhyme: "S for Sun (সা-ন)", act1: "🖐️ সাপের মতো আঁকাবাঁকা ঢেউ খেলিয়ে আঙুল দিয়ে 'S' লিখুন।", act2: "👏 ৯টি কাঠি বা পেন্সিল দিয়ে সূর্যের চারপাশের রশ্মি সাজান।", prompt: "🔍 দিনের বেলা আকাশে কী ওঠে—সূর্য না চাঁদ? সূর্য আমাদের কী দেয়?", act3: "☀️ সূর্য আঁকা: একটি গোল থালা বসিয়ে বৃত্ত এঁকে তার চারপাশে হলুদ ও কমলা রশ্মি আঁকুন।" },
-      { en: "T", bn: "ঈ", num: "10", bnRhyme: "ঈ-তে ঈগল পাখি পাছে ধরে।", enRhyme: "T for Tiger (টাইগার)", act1: "🖐️ দুই হাত পাশে মেলে সোজা হয়ে দাঁড়িয়ে 'T' অক্ষরের মতো ভঙ্গি করুন।", act2: "👏 ১০টি ব্লক বা বাটি দিয়ে উঁচু টাওয়ার বানান।", prompt: "🔍 বাঘের গায়ে কী রঙের ডোরাকাটা দাগ থাকে? বাঘ আমাদের জাতীয় পশু।", act3: "🐯 বাঘের মুখোশ: কাগজের প্লেটে কমলা রঙ ও কালো ডোরা এঁকে বাঘের মুখোশ বানান।" },
-      { en: "U", bn: "উ", num: "1", bnRhyme: "উ-তে উট চলেছে মুখটি তুলে।", enRhyme: "U for Umbrella (আমব্রেলা)", act1: "🖐️ বৃষ্টির ছাতা ধরার অভিনয় করুন এবং নিচ থেকে ওপরে বাঁকিয়ে 'U' লিখুন।", act2: "👏 ঘর থেকে ১টি ছাতা খুলে দেখান এবং ছাতার কয়টি রঙ আছে গুনুন।", prompt: "🔍 আমরা কখন ছাতা ব্যবহার করি—বৃষ্টি ও রোদে! শিশুকে জিজ্ঞেস করুন।", act3: "☂️ ছাতা রঙ করা: খাতায় একটি বড় ছাতা এঁকে প্রতিটি ভাগে আলাদা আলাদা রঙ ভরো।" },
-      { en: "V", bn: "ঊ", num: "2", bnRhyme: "ঊ-তে ঊষা হাসে পুব আকাশে।", enRhyme: "V for Van (ভ্যা-ন)", act1: "🖐️ হাতের দুটি আঙুল ফাঁক করে বিজয়ের চিহ্ন 'V' বানান।", act2: "👏 গাড়ির ২টি সামনের ও ২টি পেছনের চাকা গুনে দেখান।", prompt: "🔍 স্কুল ভ্যান বা গাড়ির হর্ন কেমন করে বাজে—'পোঁ পোঁ' করে দেখান।", act3: "🚐 গাড়ি চালানো: একটি ছোট বাক্স ধরে ড্রাইভারের মতো স্টিয়ারিং ঘুরিয়ে খেলুন।" },
-      { en: "W", bn: "ঋ", num: "3", bnRhyme: "ঋ-তে ঋষি মশাই বসেন পূজায়।", enRhyme: "W for Watch (ওয়াচ)", act1: "🖐️ হাতের ৩টি মাঝের আঙুল তুলে 'W' বানান।", act2: "👏 ঘড়ির ৩টি কাঁটা দেখান এবং ৩ বার তালি দিন।", prompt: "🔍 আমরা হাতে ঘড়ি কেন পরি—সময় দেখার জন্য! শিশুকে জিজ্ঞেস করুন।", act3: "⌚ কাগজের ঘড়ি: কাগজের ফিতে কেটে তাতে ডায়াল এঁকে শিশুর হাতে ঘড়ি পরিয়ে দিন।" },
-      { en: "X", bn: "এ", num: "4", bnRhyme: "এ-তে এক্কাগাড়ি খুব ছুটেছে।", enRhyme: "X for Xylophone (জাইলোফোন)", act1: "🖐️ দুটি হাত ক্রস করে বুকের সামনে 'X' চিহ্ন তৈরি করুন।", act2: "👏 স্টিলের ৪টি বাটিতে চামচ দিয়ে টুং-টাং সুর তুলে বাজান।", prompt: "🔍 কোন বাটিতে আওয়াজ জোরে হচ্ছে আর কোনটিতে আস্তে—শিশুকে শুনতে বলুন।", act3: "🎶 মিউজিক খেলা: বাটি বাজিয়ে ছড়ার তালে তালে ছোট্ট কনসার্ট করুন!" },
-      { en: "Y", bn: "ঐ", num: "5", bnRhyme: "ঐ-তে ঐরাবতটি আসছে তেড়ে।", enRhyme: "Y for Yak (ইয়াক)", act1: "🖐️ দুই হাত ওপরে V-এর মতো তুলে সোজা দাঁড়িয়ে 'Y' ভঙ্গি করুন।", act2: "👏 ৫টি আলাদা রঙের রুমাল ভাঁজ করে একটার ওপর একটা সাজান।", prompt: "🔍 পাহাড়ে থাকে এমন লোমশ প্রাণী চমরী গাই (Yak)-এর ছবি দেখান।", act3: "🧶 উল বা সুতোর কাজ: কাগজে 'Y' লিখে তার ওপর রঙিন উলের সুতো আঠা দিয়ে বসান।" },
-      { en: "Z", bn: "ও-ঔ", num: "6", bnRhyme: "ও-তে ওল খেও না, ঔ-তে ঔষধ খেতে মিছে বলা।", enRhyme: "Z for Zebra (জেব্রা)", act1: "🖐️ মেঝেতে জিগজ্যাগ লাইন এঁকে তার ওপর দিয়ে ব্যালেন্স রেখে হাঁটুন।", act2: "👏 সাদা ও কালো রঙের জিনিস খুঁজে বের করুন এবং ৬ বার জিগজ্যাগ করে দৌড়ান।", prompt: "🔍 জেব্রার গায়ে কী রঙের ডোরা থাকে—সাদা ও কালো!", act3: "🦓 জেব্রা স্ট্রাইপ: সাদা কাগজে কালো রঙ দিয়ে জেব্রার মতো ডোরাকাটা দাগ আঁকুন।" },
-      { en: "A–G রিভিশন", bn: "অ–ঈ", num: "7", bnRhyme: "অ-তে অজগর, আ-তে আম, ই-তে ইঁদুর, ঈ-তে ঈগল।", enRhyme: "A for Apple থেকে G for Grapes পর্যন্ত বলো", act1: "🖐️ A থেকে G এবং অ থেকে ঈ পর্যন্ত অক্ষরগুলো এলোমেলো করে সাজিয়ে সঠিক ক্রমে বসান।", act2: "👏 প্রতিটি সঠিক অক্ষর চেনার পর ১টি করে মোট ৭টি স্টার আঁকুন।", prompt: "🔍 A থেকে G পর্যন্ত কোন অক্ষরটি লিখতে সবচেয়ে সহজ?", act3: "🏆 মেমোরি গেম: ৩টি অক্ষর দেখিয়ে ১টি লুকিয়ে ফেলুন এবং শিশুকে বলতে দিন কোনটি হারিয়ে গেছে!" },
-      { en: "H–N রিভিশন", bn: "উ–এ", num: "8", bnRhyme: "উ-তে উট, ঊ-তে ঊষা, ঋ-তে ঋষি, এ-তে এক্কাগাড়ি।", enRhyme: "H for Hen থেকে N for Nest পর্যন্ত বলো", act1: "🖐️ খাতায় H থেকে N পর্যন্ত যেকোনো ৩টি অক্ষর বড় করে লিখুন।", act2: "👏 ৮টি ছোট খেলনা একসাথে রেখে ২টি করে জোড়া বানান।", prompt: "🔍 উট, হাতি ও সিংহের মধ্যে কোনটি সবচেয়ে লম্বা?", act3: "🎭 অভিনয় খেলা: মা-বাবা যে প্রাণীর নাম বলবেন, শিশু সেটির মতো ডাকবে ও হাঁটবে।" },
-      { en: "O–U রিভিশন", bn: "ঐ–ঔ", num: "9", bnRhyme: "ঐ-তে ঐরাবত, ও-তে ওল, ঔ-তে ঔষধ।", enRhyme: "O for Orange থেকে U for Umbrella পর্যন্ত বলো", act1: "🖐️ 'O' এবং 'Q'-এর মধ্যে পার্থক্য পেন্সিল দিয়ে এঁকে দেখান।", act2: "👏 ৯টি ছোট কাগজের টুকরোয় O থেকে U লিখে মেঝেতে ছড়িয়ে দিন—নাম বললে শিশু লাফিয়ে দাঁড়াবে!", prompt: "🔍 কমলালেবু, টিয়াপাখি ও ছাতার রঙ কী কী?", act3: "🌈 রংধনু আঁকা: ছাতার নিচে বৃষ্টি পড়ছে এমন একটি সুন্দর ছবি এঁকে রঙ করুন।" },
-      { en: "V–Z রিভিশন", bn: "অ–ঔ", num: "10", bnRhyme: "অ থেকে ঔ পর্যন্ত সব স্বরবর্ণ একসাথে বলো।", enRhyme: "V for Van থেকে Z for Zebra পর্যন্ত বলো", act1: "🖐️ গ্র্যান্ড ফিনালে: অ থেকে ঔ এবং A থেকে Z পর্যন্ত পুরো বর্ণমালা ছড়ার সুরে আবৃত্তি করুন!", act2: "👏 ১ থেকে ১০ পর্যন্ত আঙুল গুনে ১০ বার আনন্দের তালি দিয়ে আজকের কোর্স সম্পন্ন করুন।", prompt: "🔍 গত ৩০ দিনে শিশু যা যা শিখেছে তার জন্য তাকে জড়িয়ে ধরে বাহবা দিন!", act3: "🎓 হাতেখড়ি সার্টিফিকেট: খাতার এক পাতায় শিশুর নাম লিখে পাশে বড় করে ৫টি স্টার এঁকে দিন!" }
-    ];
-
-    extraTopics.forEach((item, idx) => {
-      const d = idx + 4;
-      defaultLessons.push({
-        day: d,
-        title: `রেখা অনুশীলন, ইংরেজি '${item.en}' ও বাংলা '${item.bn}', সংখ্যা ${item.num}`,
-        bn: item.bn, en: item.en, num: item.num, stroke: item.bn.charAt(0),
-        rhyme: `${item.bnRhyme} • ${item.enRhyme}`,
-        act1: item.act1,
-        q: `আজকের পাঠের বাংলা বর্ণ কোনটি?`,
-        opts: [item.bn, "ক", "ম"], ans: item.bn,
-        act2: item.act2,
-        prompt: item.prompt,
-        act3: item.act3
-      });
-    });
+    const BN_RHYMES_100 = [{"t": "১. আতা গাছে তোতা পাখি", "b": "আতা গাছে তোতা পাখি,\nডালিম গাছে মৌ।\nএত ডাকি তবু কথা,\nকও না কেন বউ?"}, {"t": "২. আয় আয় চাঁদ মামা", "b": "আয় আয় চাঁদ মামা টিপ দিয়ে যা,\nচাঁদের কপালে চাঁদ টিপ দিয়ে যা।\nমাছ কাটলে মুড়ো দেব,\nধান ভানলে কুঁড়ো দেব।"}, {"t": "৩. হাট্টিমাটিম টিম", "b": "হাট্টিমাটিম টিম,\nতারা মাঠে পাড়ে ডিম,\nতাদের খাড়া দুটো শিং,\nতারা হাট্টিমাটিম টিম।"}, {"t": "৪. নোটন নোটন পায়রাগুলি", "b": "নোটন নোটন পায়রাগুলি ঝোঁটন বেঁধেছে,\nওপারেতে ছেলেমেয়ে নাইতে নেমেছে।\nদুই ধারে দুই রুই কাতলা ভেসে উঠেছে,\nকে দেখেছে কে দেখেছে দাদা দেখেছে।"}, {"t": "৫. খোকন খোকন ডাক পাড়ি", "b": "খোকন খোকন ডাক পাড়ি,\nখোকন মোদের কার বাড়ি?\nআয় রে খোকন ঘরে আয়,\nদুধ মাখা ভাত কাকে খায়।"}, {"t": "৬. আয় বৃষ্টি ঝেঁপে", "b": "আয় বৃষ্টি ঝেঁপে,\nধান দেব মেপে।\nলেবুর পাতা করমচা,\nযা বৃষ্টি ধরে যা।"}, {"t": "৭. তাই তাই তাই", "b": "তাই তাই তাই,\nমামার বাড়ি যাই।\nমামা দিল দুধ ভাত,\nদুয়ারে বসে খাই।"}, {"t": "৮. আগডুম বাগডুম ঘোড়াডুম সাজে", "b": "আগডুম বাগডুম ঘোড়াডুম সাজে,\nঢাক মৃদং ঝাঁঝর বাজে।\nবাজতে বাজতে চলল ঢুলি,\nঢুলি গেল সেই কমলাফুলি।"}, {"t": "৯. খোকা ঘুমালো পাড়া জুড়ালো", "b": "খোকা ঘুমালো পাড়া জুড়ালো,\nবর্গী এল দেশে।\nবুলবুলিতে ধান খেয়েছে,\nখাজনা দেব কিসে?"}, {"t": "১০. আম পাতা জোড়া জোড়া", "b": "আম পাতা জোড়া জোড়া,\nমারব চাবুক চড়ব ঘোড়া।\nওরে বুবু সরে দাঁড়া,\nআসছে আমার পাগলা ঘোড়া।"}, {"t": "১১. বাক বাকুম পায়রা", "b": "বাক বাকুম পায়রা,\nমাথায় দিয়ে টায়রা।\nবউ সাজবে কাল কি,\nচড়বে সোনার পালকি।"}, {"t": "১২. ইতল বিতল গাছের পাতা", "b": "ইতল বিতল গাছের পাতা,\nগাছের তলায় ব্যাঙের ছাতা।\nবৃষ্টি পড়ে ভাঙে ছাতা,\nডোবায় ডুবে ব্যাঙের মাথা।"}, {"t": "১৩. কাঠবেড়ালী কাঠবেড়ালী", "b": "কাঠবেড়ালী! কাঠবেড়ালী! পেয়ারা তুমি খাও?\nগুড়-মুড়ি খাও? দুধ-ভাত খাও? বাতাবি লেবু? লাউ?\nবেড়াল-বাচ্চা? কুকুর-ছানা? তাও?"}, {"t": "১৪. আমাদের ছোট নদী", "b": "আমাদের ছোট নদী চলে বাঁকে বাঁকে,\nবৈশাখ মাসে তার হাঁটু জল থাকে।\nপার হয়ে যায় গরু, পার হয় গাড়ি,\nদুই ধার উঁচু তার, ঢালু তার পাড়ি।"}, {"t": "১৫. তালগাছ এক পায়ে দাঁড়িয়ে", "b": "তালগাছ এক পায়ে দাঁড়িয়ে,\nসব গাছ ছাড়িয়ে,\nউঁকি মারে আকাশে।\nমনে সাধ কালো মেঘ ফুঁড়ে যায়।"}, {"t": "১৬. কাজলা দিদি", "b": "বাঁশ বাগানের মাথার ওপর চাঁদ উঠেছে ওই,\nমাগো আমার শোলক বলা কাজলা দিদি কই?\nপুকুর ধারে নেবুর তলে থোকায় থোকায় জোনাই জ্বলে।"}, {"t": "১৭. প্রজাপতি প্রজাপতি", "b": "প্রজাপতি! প্রজাপতি!\nকোথায় পেলে ভাই এমন রঙিন পাখা?\nটুকটুকে লাল নীল ঝিলিমিলি আঁকা-বাঁকা।"}, {"t": "১৮. ভোর হলো দোর খোলো", "b": "ভোর হলো, দোর খোলো,\nখুকুমণি ওঠো রে।\nওই ডাকে জুঁই-শাখে,\nফুল-খুকী ছোটো রে।"}, {"t": "১৯. মামার বাড়ি", "b": "আয় ছেলেরা, আয় মেয়েরা,\nফুল তুলিতে যাই।\nফুলের মালা গলায় দিয়ে,\nমামার বাড়ি যাই।"}, {"t": "২০. খুকি ও কাঠবেড়ালী", "b": "ওই দেখা যায় তালগাছ,\nওই আমাদের গাঁ।\nওইখানেতে বাস করে,\nকানাবগীর ছা।"}, {"t": "২১. কানাবগীর ছা", "b": "ও বগী তুই খাস কি?\nপান্তা ভাত চাস কি?\nপান্তা আমি খাই না,\nপুঁটি মাছ পাই না।"}, {"t": "২২. চাঁদ উঠেছে ফুল ফুটেছে", "b": "চাঁদ উঠেছে, ফুল ফুটেছে,\nকদমতলায় কে?\nহাতি নাচছে, ঘোড়া নাচছে,\nসোনামণির বে।"}, {"t": "২৩. মেঘের কোলে রোদ হেসেছে", "b": "মেঘের কোলে রোদ হেসেছে,\nবাদল গেছে টুটি।\nআজ আমাদের ছুটি ও ভাই,\nআজ আমাদের ছুটি।"}, {"t": "২৪. ছোট্ট পাখি ময়না", "b": "ছোট্ট পাখি ময়না,\nকথা কেন কয় না?\nচুপটি করে বসে থাকে,\nআম গাছের ওই ডালটাতে।"}, {"t": "২৫. এক দুই তিন", "b": "এক দুই তিন,\nনাচো তা ধিন ধিন।\nচার পাঁচ ছয়,\nকরো না কো ভয়।"}, {"t": "২৬. সাত আট নয়", "b": "সাত আট নয়,\nহবে মোদের জয়।\nদশ হলো শেষ,\nভালো থাকো বেশ।"}, {"t": "২৭. লাল নীল সবুজ", "b": "লাল নীল সবুজ রঙ,\nআঁকব ছবি মজার ঢঙ।\nহলুদ সূর্য নীল আকাশ,\nবইছে দেখো মিষ্টি বাতাস।"}, {"t": "২৮. সকালের সূর্য", "b": "পূর্ব আকাশে সূর্য ওঠে,\nবাগানেতে ফুল ফোটে।\nপাখিরা সব গান গায়,\nখোকা-খুকি স্কুলে যায়।"}, {"t": "২৯. আমার স্কুল", "b": "আমার স্কুল ভারী সুন্দর,\nপড়াশোনার মিষ্টি ঘর।\nটিচার মোদের ভালোবাসেন,\nখেলার ছলে অঙ্ক কষেন।"}, {"t": "৩০. মায়ের আদর", "b": "মা গো তুমি সবার সেরা,\nতোমার আদর স্নেহে ঘেরা।\nতোমার কোলে মাথা রাখি,\nতোমায় দেখে ভালো থাকি।"}, {"t": "৩১. বাবার হাত", "b": "বাবার হাত ধরে হাঁটি,\nবাবা মোদের সোনার খাঁটি।\nসন্ধ্যাবেলা বাড়ি ফিরে,\nগল্প বলেন আমায় ঘিরে।"}, {"t": "৩২. দাদু-ঠাম্মা", "b": "দাদু বলেন রূপকথা,\nঠাম্মা রাঁধেন পিঠেপুলি।\nছুটির দিনে মজা করি,\nদুঃখ-কষ্ট সব যে ভুলি।"}, {"t": "৩৩. মজার রেলগাড়ি", "b": "ঝিক ঝিক ঝিক রেলগাড়ি,\nযাবে নাকি মামার বাড়ি?\nকু ঝিক ঝিক শব্দ করে,\nচলল গাড়ি মাঠ পেরিয়ে।"}, {"t": "৩৪. কাগজের নৌকা", "b": "বৃষ্টি জলে ভাসাই ভেলা,\nকাগজ দিয়ে নৌকা বানাই।\nসারা দুপুর দারুণ খেলা,\nবন্ধু মিলে মজা যে পাই।"}, {"t": "৩৫. রঙিন ঘুড়ি", "b": "নীল আকাশে উড়ছে ঘুড়ি,\nলাটাই হাতে দিচ্ছি পাড়ি।\nরঙিন লেজটা দুলছে হাওয়ায়,\nমনটা আমার খুশিতে গায়।"}, {"t": "৩৬. মিষ্টি আম", "b": "পাকা আম হলুদ রঙ,\nখেতে ভারী মিষ্টি।\nগরমকালে গাছের তলায়,\nআম কুড়ানো খাঁটি।"}, {"t": "৩৭. লাল আপেল", "b": "গোলগাল লাল আপেল,\nখেলে হবে গাল লাল।\nরোজ একটি ফল খেলে,\nথাকবে শরীর চিরকাল ভাল।"}, {"t": "৩৮. হলুদ কলা", "b": "হলুদ রঙের পাকা কলা,\nপুষ্টিগুণে ভরা।\nরোজ সকালে খেলে কলা,\nশক্তি আসে ত্বরা।"}, {"t": "৩৯. সবুজ টিয়া", "b": "সবুজ রঙের টিয়াপাখি,\nলাল টুকটুকে ঠোঁট।\nপেয়ারা খেতে ভালোবাসে,\nডাকে মিষ্টি নোট।"}, {"t": "৪০. কালো কাক", "b": "কা কা করে ডাকে কাক,\nগাছের ডালে বসে।\nরুটি পেলে খুশি হয়ে,\nখায় যে বড় রসে।"}, {"t": "৪১. চড়ুই পাখি", "b": "কিচির মিচির চড়ুই পাখি,\nঘরের কোণে বাঁধে বাসা।\nধানের দানা খুঁটে খায়,\nমনে ভরা কত আশা।"}, {"t": "৪২. নাচে ময়ূর", "b": "মেঘ ডাকলে গুড়গুড়,\nপেখম মেলে নাচে ময়ূর।\nনীল সবুজে রঙের বাহার,\nদেখতে লাগে চমৎকার।"}, {"t": "৪৩. দুষ্টু বিড়াল", "b": "মিউ মিউ ডাকে বিড়াল,\nদুধের বাটি খোঁজে।\nচুপটি করে মাছ খেয়ে সে,\nআদর পেলে চোখ বোজে।"}, {"t": "৪৪. বিশ্বস্ত কুকুর", "b": "ভউ ভউ ডাকে কুকুর,\nপাহারা দেয় বাড়ি।\nলেজ নেড়ে সে আদর চায়,\nবন্ধু সবার ভারী।"}, {"t": "৪৫. মস্ত হাতি", "b": "মস্ত বড় হাতি আসে,\nদুলিয়ে লম্বা শুঁড়।\nকান দুটি তার কুলোর মতো,\nচলে অনেক দূর।"}, {"t": "৪৬. বনের রাজা সিংহ", "b": "হালুম ডাকে বনের রাজা,\nমাথায় ঘন কেশর।\nসব প্রাণী ভয় পায়,\nশুনলে তাহার স্বর।"}, {"t": "৪৭. ডোরাকাটা বাঘ", "b": "হলুদ গায়ে কালো ডোরা,\nরয়্যাল বেঙ্গল বাঘ।\nসুন্দরবনে থাকে তারা,\nদেখলে কাঁপে পাগ।"}, {"t": "৪৮. সাদা খরগোশ", "b": "তুলোর মতো সাদা খরগোশ,\nলম্বা দুটি কান।\nগাজর খেতে ভালোবাসে,\nলাফিয়ে চলে প্রাণ।"}, {"t": "৪৯. দুষ্টু বাঁদর", "b": "এ ডাল থেকে ও ডালে,\nলাফায় দুষ্টু বাঁদর।\nকলা পেলে খুশি হয়ে,\nকরে যে কত আদর।"}, {"t": "৫০. জলের মাছ", "b": "রুপোলি মাছ জলে ভাসে,\nলেজ নাড়িয়ে সাঁতার কাটে।\nজল ছাড়া সে বাঁচে না,\nখেলে বেড়ায় পুকুর ঘাটে।"}, {"t": "৫১. সবুজ ব্যাঙ", "b": "ঘ্যাঙর ঘ্যাঙ ডাকে ব্যাঙ,\nবর্ষাকালে জলে।\nলাফিয়ে লাফিয়ে চলে তারা,\nসবুজ ঘাসের দলে।"}, {"t": "৫২. ছোট্ট পিঁপড়ে", "b": "সারি বেঁধে চলে পিঁপড়ে,\nচিনির দানা মুখে।\nকাজ করে সব মিলেমিশে,\nথাকে ভারী সুখে।"}, {"t": "৫৩. মধুর মৌমাছি", "b": "গুনগুন করে মৌমাছি,\nফুলে ফুলে ওড়ে।\nমধু জমায় মৌচাকে,\nকাজ করে দিন ভরে।"}, {"t": "৫৪. রঙধনু সাত রঙ", "b": "বৃষ্টির পর নীল আকাশে,\nওঠে বাঁকা রঙধনু।\nসাতটি রঙে সেজে ওঠে,\nদেখতে দারুণ তনু।"}, {"t": "৫৫. রাতের তারা", "b": "মিটমিট করে জ্বলে তারা,\nরাতের কালো আকাশে।\nচাঁদমামা হাসে তখন,\nতাদের পাশে বসে।"}, {"t": "৫৬. দাঁত মাজা", "b": "সকাল-রাতে দাঁত মাজি,\nচকচকে হয় মুখ।\nপোকা-মাকড় দূরে থাকে,\nমনে থাকে সুখ।"}, {"t": "৫৭. হাত ধোয়া", "b": "খাওয়ার আগে সাবান দিয়ে,\nভালো করে হাত ধুই।\nরোগ-জীবাণু পালায় দূরে,\nসুস্থ হয়ে রই।"}, {"t": "৫৮. নখ কাটা", "b": "ছোট রাখি হাতের নখ,\nথাকি পরিষ্কার।\nমা-বাবা খুশি হন,\nআদর দেন বারবার।"}, {"t": "৫৯. সত্য কথা", "b": "সবসময় সত্য বলব,\nমিথ্যে বলব না।\nভালো ছেলে-মেয়ে হয়ে,\nকরব লেখাপড়া।"}, {"t": "৬০. বড়দের সম্মান", "b": "মা-বাবা আর গুরুজনে,\nকরব মোরা শ্রদ্ধা।\nতাঁদের কথা মেনে চললে,\nজীবন হবে শুদ্ধা।"}, {"t": "৬১. গাছ লাগানো", "b": "একটি গাছ একটি প্রাণ,\nসবাই লাগাই গাছ।\nফল ফুল আর ছায়া দেবে,\nথাকবে পরিবেশ সাঁচ।"}, {"t": "৬২. জল বাঁচানো", "b": "জলই জীবন, জল বাঁচাই,\nঅপচয় নয় আর।\nকল খোলা থাকলে মোরা,\nবন্ধ করি তার।"}, {"t": "৬৩. পরিষ্কার ঘর", "b": "খেলার শেষে খেলনাগুলো,\nগুছিয়ে রাখি বক্সে।\nনোংরা কাগজ ফেলব না,\nরাখব ডাস্টবিন বাক্সে।"}, {"t": "৬৪. শাকসবজি খাওয়া", "b": "আলু পটল গাজর শাক,\nখাই যে রোজ পাতে।\nশরীর হবে শক্ত-পোক্ত,\nজোর বাড়বে হাতে।"}, {"t": "৬৫. দুধ খাওয়া", "b": "এক গ্লাস গরম দুধ,\nখাই যে রোজ রাতে।\nহাড় ও দাঁত মজবুত হয়,\nবুদ্ধি বাড়ে তাতে।"}, {"t": "৬৬. ব্যায়াম করা", "b": "সকালবেলা উঠব ভোরে,\nকরব যোগব্যায়াম।\nমনটা হবে ফুরফুরে,\nথাকবে না কোনো ঘাম।"}, {"t": "৬৭. ছাতা মাথায়", "b": "টিপ টিপ বৃষ্টি পড়ে,\nছাতা মাথায় দিই।\nভিজব না কো বৃষ্টির জলে,\nরঙিন ছাতা নিই।"}, {"t": "৬৮. শীতের সকাল", "b": "কুয়াশা ঘেরা শীতের সকাল,\nগায়ে দিই সোয়েটার।\nরোদ পোহাতে ভালো লাগে,\nমিষ্টি পিঠের বাহার।"}, {"t": "৬৯. বসন্তের কোকিল", "b": "কুহু কুহু ডাকে কোকিল,\nবসন্তকাল এলে।\nপলাশ শিমুল ফোটে গাছে,\nরঙের মেলা মেলে।"}, {"t": "৭০. শরতের কাশফুল", "b": "সাদা মেঘের ভেলা ভাসে,\nশরতের নীল আকাশে।\nনদীর ধারে কাশফুল দোলে,\nপুজো পুজো গন্ধ ভাসে।"}, {"t": "৭১. দুর্গাপুজোর ঢাক", "b": "ঢাকের তালে কোমর দোলে,\nমা এসেছেন ঘরে।\nনতুন জামা পরে সবাই,\nআনন্দ যে করে।"}, {"t": "৭২. দীপাবলির আলো", "b": "মাটির প্রদীপ জ্বালাই ঘরে,\nআঁধার যাবে দূরে।\nমিষ্টি মুখে হাসি ফোটে,\nআনন্দ দিন জুড়ে।"}, {"t": "৭৩. রঙের উৎসব দোল", "b": "লাল হলুদ সবুজ আবির,\nমাখি সবার গালে।\nদোলের দিনে গান গাই,\nনাচি তালে তালে।"}, {"t": "৭৪. বাংলা নববর্ষ", "b": "এসো হে বৈশাখ এসো,\nনতুন বছর এল।\nমিষ্টি মুখ আর হালখাতায়,\nআনন্দ যে হলো।"}, {"t": "৭৫. স্বাধীনতা দিবস", "b": "তেরঙা পতাকা উড়ছে দেখো,\nআকাশের ওই বুকে।\nভারত আমার প্রিয় দেশ,\nথাকি মোরা সুখে।"}, {"t": "৭৬. লাল গোলাপ", "b": "বাগানেতে ফুটেছে দেখো,\nটুকটুকে লাল গোলাপ।\nমিষ্টি গন্ধে ভরে ওঠে,\nসকালের ওই আলাপ।"}, {"t": "৭৭. সাদা পদ্ম", "b": "পুকুর জলে ফুটেছে পদ্ম,\nসাদা ও গোলাপি।\nজাতীয় ফুল মোদের পদ্ম,\nদেখতে ভারী সুখী।"}, {"t": "৭৮. সূর্যমুখী ফুল", "b": "হলুদ রঙের সূর্যমুখী,\nসূর্যের দিকে চায়।\nহাসি মুখে দুলতে থাকে,\nসকালবেলার বায়।"}, {"t": "৭৯. আমার পেন্সিল", "b": "হাতে আমার রঙ পেন্সিল,\nআঁকব মজার ছবি।\nআকাশ নদী পাহাড় গাছ,\nআর সকালের রবি।"}, {"t": "৮০. গল্পের বই", "b": "রঙিন ছবির গল্পের বই,\nপড়তে ভারী মজা।\nরাজারানী আর পরীর দেশে,\nযাই যে সোজাসুজি।"}, {"t": "৮১. খেলার বল", "b": "লাল নীল বড় বল,\nলাফায় টপাটপ।\nমাঠে গিয়ে বন্ধু মিলে,\nখেলি ধপাধপ।"}, {"t": "৮২. ছোট্ট পুতুল", "b": "আমার আছে মিষ্টি পুতুল,\nলাল জামা পরা।\nঘুম পাড়াই কোলে নিয়ে,\nআদরেতে ভরা।"}, {"t": "৮৩. সাইকেল চালানো", "b": "ক্রিং ক্রিং ঘণ্টি বাজাই,\nচালাই ছোট্ট সাইকেল।\nপ্যাডেল ঘুরিয়ে এগিয়ে চলি,\nবিকেলের ওই বিকেল।"}, {"t": "৮৪. আকাশের বিমান", "b": "সোঁ সোঁ করে উড়ে যায়,\nআকাশেতে বিমান।\nমেঘের দেশে পাড়ি দেয়,\nপাখির মতো সমান।"}, {"t": "৮৫. সমুদ্রের ঢেউ", "b": "ছলছলিয়ে আসে ঢেউ,\nসাগরের ওই তীরে।\nবালির ঘর বানাই মোরা,\nঝিনুক কুড়াই ধীরে।"}, {"t": "৮৬. উঁচু পাহাড়", "b": "সাদা বরফ মাথায় নিয়ে,\nদাঁড়িয়ে উঁচু পাহাড়।\nমেঘেরা সব খেলা করে,\nদেখতে চমৎকার।"}, {"t": "৮৭. বয়ে চলা নদী", "b": "কলকলিয়ে বয়ে চলে,\nছোট্ট রূপোলি নদী।\nনৌকা ভাসে পাল তুলে,\nদেখতে যেতাম যদি!"}, {"t": "৮৮. হাতের দশ আঙুল", "b": "দুই হাতে দশটি আঙুল,\nগুনি এক দুই তিন।\nতালি দিই ছন্দ তুলে,\nখুশিতে সারাদিন।"}, {"t": "৮৯. দুটি চোখ", "b": "দুটি চোখে জগৎ দেখি,\nদুটি কানে শুনি।\nনাক দিয়ে গন্ধ নিই,\nমনে মনে গুনি।"}, {"t": "৯০. হাসি মুখ", "b": "সদাই রাখব হাসি মুখ,\nরাগ করব না।\nভালোবাসা ছড়িয়ে দেব,\nদুঃখ দেব না।"}, {"t": "৯১. প্রিয় বন্ধু", "b": "তুমি আমার সেরা বন্ধু,\nখেলি সারাবেলা।\nটিফিন ভাগ করে খাই,\nহয় না কোনো হেলা।"}, {"t": "৯২. মিষ্টি দই", "b": "মাটির ভাঁড়ে মিষ্টি দই,\nখেতে ভারী স্বাদ।\nচামচ দিয়ে তুলে খাই,\nপূরণ হয় সাধ।"}, {"t": "৯৩. গোল রসগোল্লা", "b": "সাদা গোল রসগোল্লা,\nবাংলার প্রিয় মিষ্টি।\nমুখে দিলেই গলে যায়,\nজুড়ায় সবার দৃষ্টি।"}, {"t": "৯৪. টিক টিক ঘড়ি", "b": "টিক টিক করে চলে ঘড়ি,\nসময় বলে দেয়।\nসময়মতো কাজ করলে,\nসবার মন জয়।"}, {"t": "৯৫. গরম খিচুড়ি", "b": "বৃষ্টি দিনে গরম খিচুড়ি,\nসাথে আলু ভাজা।\nমায়ের হাতের রান্না খেতে,\nলাগে ভারী মজা।"}, {"t": "৯৬. জোনাকি পোকা", "b": "রাতের আঁধারে জ্বলে ওঠে,\nছোট্ট জোনাকি পোকা।\nমিটমিট আলো জ্বালিয়ে ওড়ে,\nদেখে হাসে খোকা।"}, {"t": "৯৭. সাত দিনের নাম", "b": "রবি সোম মঙ্গল বুধ,\nবৃহস্পতি শুক্র শনি।\nসাত দিনে এক সপ্তাহ,\nআঙুলেতে গুনি।"}, {"t": "৯৮. বাংলা ছয় ঋতু", "b": "গ্রীষ্ম বর্ষা শরৎ হেমন্ত,\nশীত আর বসন্ত।\nছয় ঋতুর বাংলা দেশ,\nরূপের নেই যে অন্ত।"}, {"t": "৯৯. বড় হয়ে কী হব", "b": "বড় হয়ে হব মানুষ,\nসবার করব ভালো।\nজ্ঞান ও শিক্ষার প্রদীপ জ্বেলে,\nছড়িয়ে দেব আলো।"}, {"t": "১০০. হাতেখড়ির গান", "b": "অ আ ক খ এ বি সি,\nহাতেখড়িতে শিখি।\nখেলার ছলে ছড়া গেয়ে,\nসুন্দর করে লিখি।"}];
+    const EN_RHYMES_100 = [{"t": "1. Twinkle, Twinkle, Little Star", "b": "Twinkle, twinkle, little star,\nHow I wonder what you are!\nUp above the world so high,\nLike a diamond in the sky."}, {"t": "2. Johny, Johny, Yes Papa", "b": "Johny, Johny, Yes, Papa?\nEating sugar? No, Papa!\nTelling lies? No, Papa!\nOpen your mouth, Ha! Ha! Ha!"}, {"t": "3. Baa, Baa, Black Sheep", "b": "Baa, baa, black sheep, have you any wool?\nYes sir, yes sir, three bags full.\nOne for the master, one for the dame,\nAnd one for the little boy who lives down the lane."}, {"t": "4. Humpty Dumpty", "b": "Humpty Dumpty sat on a wall,\nHumpty Dumpty had a great fall.\nAll the king's horses and all the king's men,\nCouldn't put Humpty together again."}, {"t": "5. Jack and Jill", "b": "Jack and Jill went up the hill,\nTo fetch a pail of water.\nJack fell down and broke his crown,\nAnd Jill came tumbling after."}, {"t": "6. Hickory Dickory Dock", "b": "Hickory dickory dock,\nThe mouse ran up the clock.\nThe clock struck one, the mouse ran down,\nHickory dickory dock."}, {"t": "7. Rain, Rain, Go Away", "b": "Rain, rain, go away,\nCome again another day.\nLittle children want to play,\nRain, rain, go away."}, {"t": "8. London Bridge Is Falling Down", "b": "London Bridge is falling down,\nFalling down, falling down.\nLondon Bridge is falling down,\nMy fair lady."}, {"t": "9. Mary Had a Little Lamb", "b": "Mary had a little lamb,\nLittle lamb, little lamb.\nIts fleece was white as snow,\nAnd everywhere that Mary went, the lamb was sure to go."}, {"t": "10. Row, Row, Row Your Boat", "b": "Row, row, row your boat,\nGently down the stream.\nMerrily, merrily, merrily, merrily,\nLife is but a dream."}, {"t": "11. The Wheels on the Bus", "b": "The wheels on the bus go round and round,\nRound and round, round and round.\nThe wheels on the bus go round and round,\nAll through the town."}, {"t": "12. Old MacDonald Had a Farm", "b": "Old MacDonald had a farm, E-I-E-I-O!\nAnd on his farm he had a cow, E-I-E-I-O!\nWith a moo-moo here and a moo-moo there,\nEverywhere a moo-moo."}, {"t": "13. Five Little Monkeys", "b": "Five little monkeys jumping on the bed,\nOne fell off and bumped his head.\nMama called the doctor and the doctor said,\nNo more monkeys jumping on the bed!"}, {"t": "14. Itsy Bitsy Spider", "b": "The itsy bitsy spider climbed up the water spout,\nDown came the rain and washed the spider out.\nOut came the sun and dried up all the rain,\nAnd the itsy bitsy spider climbed up the spout again."}, {"t": "15. Ring-a-Ring o' Roses", "b": "Ring-a-ring o' roses,\nA pocket full of posies.\nA-tishoo! A-tishoo!\nWe all fall down!"}, {"t": "16. One, Two, Buckle My Shoe", "b": "One, two, buckle my shoe;\nThree, four, knock at the door;\nFive, six, pick up sticks;\nSeven, eight, lay them straight."}, {"t": "17. ABC Song", "b": "A B C D E F G,\nH I J K L M N O P,\nQ R S T U V, W X Y and Z.\nNow I know my ABCs, next time won't you sing with me?"}, {"t": "18. Head, Shoulders, Knees and Toes", "b": "Head, shoulders, knees and toes, knees and toes!\nEyes and ears and mouth and nose!\nHead, shoulders, knees and toes, knees and toes!"}, {"t": "19. If You're Happy and You Know It", "b": "If you're happy and you know it, clap your hands!\nIf you're happy and you know it, stomp your feet!\nIf you're happy and you know it, shout hooray!"}, {"t": "20. Teddy Bear, Teddy Bear", "b": "Teddy bear, teddy bear, turn around!\nTeddy bear, teddy bear, touch the ground!\nTeddy bear, teddy bear, polish your shoe,\nTeddy bear, teddy bear, off to school!"}, {"t": "21. Little Miss Muffet", "b": "Little Miss Muffet sat on a tuffet,\nEating her curds and whey.\nAlong came a spider who sat down beside her,\nAnd frightened Miss Muffet away."}, {"t": "22. Little Bo Peep", "b": "Little Bo Peep has lost her sheep,\nAnd doesn't know where to find them.\nLeave them alone, and they'll come home,\nWagging their tails behind them."}, {"t": "23. Hey Diddle Diddle", "b": "Hey diddle diddle, the cat and the fiddle,\nThe cow jumped over the moon.\nThe little dog laughed to see such sport,\nAnd the dish ran away with the spoon."}, {"t": "24. Pat-a-Cake", "b": "Pat-a-cake, pat-a-cake, baker's man,\nBake me a cake as fast as you can.\nPat it and prick it and mark it with B,\nAnd put it in the oven for baby and me."}, {"t": "25. Five Little Ducks", "b": "Five little ducks went out one day,\nOver the hill and far away.\nMother duck said, 'Quack, quack, quack, quack,'\nBut only four little ducks came back."}, {"t": "26. One, Two, Three, Four, Five", "b": "One, two, three, four, five,\nOnce I caught a fish alive.\nSix, seven, eight, nine, ten,\nThen I let it go again."}, {"t": "27. Chubby Cheeks", "b": "Chubby cheeks, dimple chin,\nRosy lips, teeth within.\nCurly hair, very fair,\nEyes are blue, lovely too!"}, {"t": "28. Early to Bed", "b": "Early to bed and early to rise,\nMakes a child healthy, wealthy, and wise.\nBrush your teeth and wash your face,\nStart your day with a happy grace."}, {"t": "29. Two Little Dicky Birds", "b": "Two little dicky birds sitting on a wall,\nOne named Peter, one named Paul.\nFly away Peter, fly away Paul,\nCome back Peter, come back Paul."}, {"t": "30. Cobbler, Cobbler", "b": "Cobbler, cobbler, mend my shoe,\nGet it done by half past two.\nStitch it up and stitch it down,\nThen I'll give you half a crown."}, {"t": "31. Hot Cross Buns", "b": "Hot cross buns! Hot cross buns!\nOne a penny, two a penny,\nHot cross buns!\nIf you have no daughters, give them to your sons."}, {"t": "32. Three Blind Mice", "b": "Three blind mice, three blind mice,\nSee how they run, see how they run!\nThey all ran after the farmer's wife,\nDid you ever see such a sight in your life?"}, {"t": "33. Georgie Porgie", "b": "Georgie Porgie, pudding and pie,\nKissed the girls and made them cry.\nWhen the boys came out to play,\nGeorgie Porgie ran away."}, {"t": "34. Little Jack Horner", "b": "Little Jack Horner sat in the corner,\nEating a Christmas pie.\nHe put in his thumb and pulled out a plum,\nAnd said, 'What a good boy am I!'"}, {"t": "35. Little Boy Blue", "b": "Little Boy Blue, come blow your horn,\nThe sheep's in the meadow, the cow's in the corn.\nWhere is the boy who looks after the sheep?\nHe's under a haystack, fast asleep."}, {"t": "36. Pussy Cat, Pussy Cat", "b": "Pussy cat, pussy cat, where have you been?\nI've been to London to visit the Queen.\nPussy cat, pussy cat, what did you there?\nI frightened a little mouse under her chair."}, {"t": "37. Rock-a-bye Baby", "b": "Rock-a-bye baby, on the treetop,\nWhen the wind blows, the cradle will rock.\nWhen the bough breaks, the cradle will fall,\nAnd down will come baby, cradle and all."}, {"t": "38. Are You Sleeping (Brother John)", "b": "Are you sleeping, are you sleeping,\nBrother John, Brother John?\nMorning bells are ringing, morning bells are ringing,\nDing, dang, dong! Ding, dang, dong!"}, {"t": "39. Ten Little Fingers", "b": "Ten little fingers, ten little toes,\nTwo little ears and one little nose.\nTwo little eyes that shine so bright,\nAnd one little mouth to kiss mother goodnight."}, {"t": "40. I'm a Little Teapot", "b": "I'm a little teapot, short and stout,\nHere is my handle, here is my spout.\nWhen I get all steamed up, hear me shout,\nTip me over and pour me out!"}, {"t": "41. Hickory Dickory Dare", "b": "Hickory, dickory, dare,\nThe pig flew up in the air.\nThe man in brown soon brought him down,\nHickory, dickory, dare."}, {"t": "42. Mulberry Bush", "b": "Here we go round the mulberry bush,\nThe mulberry bush, the mulberry bush.\nThis is the way we wash our face,\nSo early in the morning."}, {"t": "43. Pease Porridge Hot", "b": "Pease porridge hot, pease porridge cold,\nPease porridge in the pot, nine days old.\nSome like it hot, some like it cold,\nSome like it in the pot, nine days old."}, {"t": "44. Wee Willie Winkie", "b": "Wee Willie Winkie runs through the town,\nUpstairs and downstairs in his nightgown.\nRapping at the window, crying through the lock,\nAre the children all in bed? For now it's eight o'clock!"}, {"t": "45. Rub-a-Dub-Dub", "b": "Rub-a-dub-dub, three men in a tub,\nAnd who do you think they be?\nThe butcher, the baker, the candlestick maker,\nAnd all of them out to sea."}, {"t": "46. Yankee Doodle", "b": "Yankee Doodle went to town,\nA-riding on a pony.\nStuck a feather in his cap,\nAnd called it macaroni."}, {"t": "47. Star Light, Star Bright", "b": "Star light, star bright,\nFirst star I see tonight.\nI wish I may, I wish I might,\nHave the wish I wish tonight."}, {"t": "48. Hickory, Dickory, Two", "b": "The clock struck two, the mouse said boo!\nThe clock struck three, he climbed a tree!\nThe clock struck four, he hit the floor,\nHickory dickory dock!"}, {"t": "49. Little Tommy Tucker", "b": "Little Tommy Tucker sings for his supper.\nWhat shall we give him? White bread and butter.\nHow shall he cut it without any knife?\nHow will he be married without any wife?"}, {"t": "50. Roses Are Red", "b": "Roses are red, violets are blue,\nSugar is sweet, and so are you!\nBirds in the sky, fish in the sea,\nYou are a wonderful friend to me."}, {"t": "51. Ladybug, Ladybug", "b": "Ladybug, ladybug, fly away home,\nYour house is on fire and your children are gone.\nAll except one, and that's Little Ann,\nFor she has crept under the warming pan."}, {"t": "52. Polly Put the Kettle On", "b": "Polly put the kettle on,\nPolly put the kettle on,\nPolly put the kettle on,\nWe'll all have tea."}, {"t": "53. Sing a Song of Sixpence", "b": "Sing a song of sixpence, a pocket full of rye,\nFour and twenty blackbirds baked in a pie.\nWhen the pie was opened, the birds began to sing,\nWasn't that a dainty dish to set before the king?"}, {"t": "54. Simple Simon", "b": "Simple Simon met a pieman going to the fair;\nSaid Simple Simon to the pieman, 'Let me taste your ware.'\nSaid the pieman to Simple Simon, 'Show me first your penny.'"}, {"t": "55. Goosey Goosey Gander", "b": "Goosey, goosey gander, whither shall I wander?\nUpstairs and downstairs and in my lady's chamber.\nThere I met an old man who wouldn't say his prayers."}, {"t": "56. It's Raining, It's Pouring", "b": "It's raining, it's pouring,\nThe old man is snoring.\nHe went to bed and bumped his head,\nAnd couldn't get up in the morning."}, {"t": "57. Little Robin Redbreast", "b": "Little Robin Redbreast sat upon a tree,\nUp went Pussy-cat, and down went he.\nDown came Pussy-cat, and away Robin ran,\nSays little Robin Redbreast, 'Catch me if you can!'"}, {"t": "58. BINGO Dog Song", "b": "There was a farmer who had a dog,\nAnd Bingo was his name-o.\nB-I-N-G-O, B-I-N-G-O, B-I-N-G-O,\nAnd Bingo was his name-o!"}, {"t": "59. Five Little Speckled Frogs", "b": "Five little speckled frogs sat on a speckled log,\nEating some most delicious bugs, yum, yum!\nOne jumped into the pool where it was nice and cool,\nThen there were four green speckled frogs."}, {"t": "60. Skidamarink", "b": "Skidamarink a-dink a-dink,\nSkidamarink a-doo, I love you!\nI love you in the morning and in the afternoon,\nI love you in the evening and underneath the moon."}, {"t": "61. Good Morning Song", "b": "Good morning, good morning,\nHow are you today?\nI am happy, I am fine,\nLet us learn and play!"}, {"t": "62. Brush Your Teeth", "b": "Brush, brush, brush your teeth,\nBrush them every day.\nFather, mother, brother, sister,\nBrush them every day!"}, {"t": "63. Wash Your Hands", "b": "Wash, wash, wash your hands,\nPlay our handy game.\nRub and scrub, and scrub and rub,\nGerms go down the drain!"}, {"t": "64. Red Light, Green Light", "b": "Red light, red light, what do you say?\nI say stop, and stop right away!\nYellow light, yellow light, what do you mean?\nI mean wait till the light turns green!"}, {"t": "65. Butterfly, Butterfly", "b": "Butterfly, butterfly, flutter around,\nButterfly, butterfly, touch the ground.\nButterfly, butterfly, fly so free,\nLand on a flower and smile at me!"}, {"t": "66. Little Bunny Foo Foo", "b": "Little Bunny Foo Foo hopping through the forest,\nScooping up the field mice and bopping them on the head.\nBe kind to little friends, the good fairy said!"}, {"t": "67. My Little Dog", "b": "I have a little dog, his coat is soft and brown,\nHe wags his tail so happily whenever I'm around.\nHe runs and fetches every ball and barks a cheerful sound!"}, {"t": "68. Counting Apples", "b": "One red apple on the tree,\nTwo red apples just for me.\nThree red apples shiny and bright,\nFour red apples, what a sweet bite!"}, {"t": "69. Sunshine Smile", "b": "Hello Mr. Sun, shining in the sky,\nSmiling down on everyone as clouds go floating by.\nThank you for the warmth and light you bring to us each day!"}, {"t": "70. Rainbow Colors", "b": "Red and orange, yellow and green,\nBlue and indigo, violet sheen!\nSeven pretty colors arching in the sky,\nPainting up a rainbow after rain goes by."}, {"t": "71. Happy Little Elephant", "b": "An elephant goes like this and that,\nHe's terribly big and he's terribly fat.\nHe has no fingers, he has no toes,\nBut goodness gracious, what a nose!"}, {"t": "72. Little Green Frog", "b": "Goes the little green frog one day,\nMmmm-ahhh went the little green frog!\nAnd we all know frogs go la-de-da-de-da,\nJumping in the pond to play."}, {"t": "73. Zoom, Zoom, Zoom", "b": "Zoom, zoom, zoom, we're going to the moon!\nIf you want to take a trip, climb aboard my rocket ship.\nFive, four, three, two, one — BLAST OFF!"}, {"t": "74. Open, Shut Them", "b": "Open, shut them; open, shut them;\nGive a little clap, clap, clap!\nOpen, shut them; open, shut them;\nPut them in your lap, lap, lap!"}, {"t": "75. Clap Your Hands", "b": "Clap, clap, clap your hands,\nClap your hands together.\nTap, tap, tap your feet,\nIn the sunny weather!"}, {"t": "76. Look at the Moon", "b": "Look at the moon, she is shining up there,\nO mother, she looks like a lamp in the air.\nLast week she was smaller and shaped like a bow,\nBut now she's grown bigger and round as an O."}, {"t": "77. My Family", "b": "This is my mother, kind and sweet,\nThis is my father, strong and neat.\nThis is my brother, tall and true,\nAnd here is baby smiling at you!"}, {"t": "78. The Muffin Man", "b": "Do you know the muffin man,\nThe muffin man, the muffin man?\nDo you know the muffin man,\nWho lives on Drury Lane?"}, {"t": "79. Pop Goes the Weasel", "b": "All around the mulberry bush,\nThe monkey chased the weasel.\nThe monkey thought 'twas all in fun,\nPop! goes the weasel."}, {"t": "80. Hickory Dickory Bumblebee", "b": "Hickory dickory bumblebee,\nCan you say your name for me?\nClap it out and whisper low,\nThen shout it out so all will know!"}, {"t": "81. Days of the Week", "b": "Sunday, Monday, Tuesday too,\nWednesday, Thursday just for you.\nFriday, Saturday, that's the end,\nNow let's say those days again!"}, {"t": "82. Months of the Year", "b": "January, February, March, and April,\nMay, June, July, and August.\nSeptember, October, November, December,\nTwelve happy months to remember!"}, {"t": "83. Magic Words", "b": "Please and Thank You, Sorry too,\nMagic words for me and you.\nUse them gently every day,\nMake the world a kinder way!"}, {"t": "84. Healthy Fruits", "b": "Apples, mangoes, grapes so sweet,\nBananas, oranges — what a treat!\nEat your fruits every single day,\nKeep the doctor far away!"}, {"t": "85. Little Seed", "b": "I plant a little seed in the ground,\nOut comes the sun, big and round.\nDown come the raindrops soft and slow,\nUp comes a flower, watch it grow!"}, {"t": "86. My Little Bicycle", "b": "Ring, ring, ring my bell,\nI can ride my bike so well.\nPedal fast and pedal slow,\nWatch me smile as off I go!"}, {"t": "87. Choo Choo Train", "b": "Choo, choo, choo, here comes the train,\nRunning through the sun and rain.\nChug-a-chug-a along the track,\nGoing forward, coming back!"}, {"t": "88. Little Kitten", "b": "Soft little kitten, purr, purr, purr,\nSmooth and shiny is your fur.\nDrink your milk and chase the ball,\nYou're the cutest pet of all!"}, {"t": "89. Five Little Stars", "b": "Five little stars twinkling in the night,\nOne flew away out of sight.\nFour little stars shining bright and clear,\nWhispering sweet dreams in my ear."}, {"t": "90. Shapes Song", "b": "Circle is round like a bouncing ball,\nSquare has four sides, equal and tall.\nTriangle has three corners neat,\nShapes are everywhere we meet!"}, {"t": "91. Clean Up Song", "b": "Clean up, clean up, everybody everywhere!\nClean up, clean up, everybody do your share!\nPut the toys back in their place,\nWith a smile upon your face!"}, {"t": "92. Sharing Is Caring", "b": "Sharing is caring, yes it's true,\nI will share my toys with you.\nPlaying together is so much fun,\nThere is room for everyone!"}, {"t": "93. Little Boat", "b": "Paper boat floating on the stream,\nSailing softly like a dream.\nWhite sails blowing in the breeze,\nGliding past the leafy trees."}, {"t": "94. Busy Bee", "b": "Buzz, buzz, buzz, goes the busy bee,\nFlying from the flower to the tree.\nMaking honey sweet and gold,\nWhat a lovely sight to behold!"}, {"t": "95. Happy Duckling", "b": "Waddle, waddle, goes the duck,\nSplashing in the pond for luck.\nQuack, quack, quack, it sings with glee,\nSwimming happily and free!"}, {"t": "96. My School Bag", "b": "Pack my books and pencil bright,\nZip my school bag neat and tight.\nWave goodbye to Mom and Dad,\nGoing to school makes me glad!"}, {"t": "97. Winter Mittens", "b": "Put on your sweater, put on your hat,\nWinter is chilly, imagine that!\nWarm little mittens on my hands,\nPlaying happily on the lands."}, {"t": "98. Summer Ice Cream", "b": "Sunny summer, warm and bright,\nIce cream cone is my delight!\nMango, chocolate, sweet and cool,\nAfter coming home from school."}, {"t": "99. Thank You Prayer", "b": "Thank you for the world so sweet,\nThank you for the food we eat.\nThank you for the birds that sing,\nThank you, God, for everything!"}, {"t": "100. Goodnight Lullaby", "b": "Close your eyes and go to sleep,\nCount the fluffy little sheep.\nMoon is watching from above,\nSending you a blanket of love."}];
+    const YOGA_POSES_50 = [{"t": "১. বৃক্ষাসন (Tree Pose)", "p": "standing_tree", "bg": "#ecfdf5", "c": "#10b981", "b": "সোজা হয়ে দাঁড়িয়ে ডান পা ভাঁজ করে বাম উরুর ওপর রাখো। দুই হাত নমস্কার করে মাথার ওপর তোলো। ১০ পর্যন্ত গোনো।"}, {"t": "২. প্রজাপতি আসন (Butterfly Pose)", "p": "seated_butterfly", "bg": "#fefce8", "c": "#eab308", "b": "মেঝেতে বসে দুই পায়ের পাতা জোড়া লাগাও। দুই হাত দিয়ে পা ধরে প্রজাপতির ডানার মতো হাঁটু ওপর-নিচ করো।"}, {"t": "৩. সিংহাসন (Lion Breath Pose)", "p": "seated_lion", "bg": "#fff7ed", "c": "#ea580c", "b": "হাঁটু মুড়ে বসে নাক দিয়ে লম্বা শ্বাস নাও। মুখ হাঁ করে জিভ বের করে 'হাঁ...' শব্দে শ্বাস ছাড়ো।"}, {"t": "৪. বিড়াল আসন (Cat Pose)", "p": "allfours_cat", "bg": "#fdf2f8", "c": "#db2777", "b": "চার হাত-পায়ে হামাগুড়ির ভঙ্গিতে বসো। পিঠটাকে বিড়ালের মতো ওপরে গোল করে তোলো এবং মাথা নিচু করো।"}, {"t": "৫. গরু আসন (Cow Pose)", "p": "allfours_cow", "bg": "#eff6ff", "c": "#2563eb", "b": "চার হাত-পায়ে থেকে পেটটা নিচের দিকে নামাও এবং মাথা ওপরে তুলে আকাশের দিকে তাকাও।"}, {"t": "৬. ভুজঙ্গাসন (Cobra Pose)", "p": "prone_cobra", "bg": "#f0fdf4", "c": "#16a34a", "b": "উপুড় হয়ে শুয়ে দুই হাত বুকের পাশে রাখো। শ্বাস নিয়ে সাপের ফণার মতো বুক ও মাথা ওপরে তোলো।"}, {"t": "৭. অধোমুখ শ্বানাসন (Downward Dog)", "p": "inverted_v", "bg": "#fef3c7", "c": "#d97706", "b": "হাত ও পা মাটিতে রেখে কোমর ওপরে তুলে উল্টো 'V'-এর মতো হও। কুকুরের মতো শরীর টানটান করো।"}, {"t": "৮. ব্যাঙ আসন (Frog Pose)", "p": "squat_frog", "bg": "#ecfdf5", "c": "#059669", "b": "দুই পা ফাঁক করে ব্যাঙের মতো উবু হয়ে বসো। দুই হাত মাটিতে রাখো এবং লাফ দেওয়ার ভঙ্গি করো।"}, {"t": "৯. তারা আসন (Star Pose)", "p": "standing_star", "bg": "#eff6ff", "c": "#3b82f6", "b": "দুই পা ফাঁক করে দাঁড়াও এবং দুই হাত দুই পাশে মেলে দাও—আকাশের তারার মতো!"}, {"t": "১০. পর্বতাসন (Mountain Pose)", "p": "standing_mountain", "bg": "#f1f5f9", "c": "#475569", "b": "দুই পা জোড়া করে পাহাড়ের মতো সোজা ও স্থির হয়ে দাঁড়াও। লম্বা শ্বাস নাও ও ছাড়ো।"}, {"t": "১১. বীরভদ্রাসন (Warrior Pose)", "p": "standing_warrior", "bg": "#fff7ed", "c": "#f97316", "b": "এক পা সামনে ও এক পা পেছনে রেখে সামনের হাঁটু ভাঁজ করো। দুই হাত পাশে মেলে বীরের মতো দাঁড়াও।"}, {"t": "১২. নৌকাসন (Boat Pose)", "p": "seated_boat", "bg": "#e0f2fe", "c": "#0284c7", "b": "মেঝেতে বসে দুই পা ওপরে তোলো এবং দুই হাত সামনে সোজা করে নৌকার মতো ব্যালেন্স রাখো।"}, {"t": "১৩. সেতুবন্ধাসন (Bridge Pose)", "p": "supine_bridge", "bg": "#f3e8ff", "c": "#9333ea", "b": "চিত হয়ে শুয়ে হাঁটু ভাঁজ করো। এবার কোমর ওপরে তুলে ব্রিজ বা সেতুর মতো আকৃতি তৈরি করো।"}, {"t": "১৪. বালাসন (Child's Pose)", "p": "seated_child", "bg": "#fef2f2", "c": "#ef4444", "b": "বজ্রাসনে বসে সামনের দিকে ঝুঁকে কপাল মাটিতে ঠেকাও। দুই হাত সামনে ছড়িয়ে আরাম করো।"}, {"t": "১৫. পদ্মাসন (Lotus Pose)", "p": "seated_lotus", "bg": "#fdf4ff", "c": "#c026d3", "b": "বাবু হয়ে পা ক্রস করে সোজা হয়ে বসো। দুই হাত হাঁটুর ওপর রেখে চোখ বন্ধ করে শান্ত থাকো।"}, {"t": "১৬. ত্রিকোণাসন (Triangle Pose)", "p": "standing_triangle", "bg": "#ecfeff", "c": "#0891b2", "b": "পা ফাঁক করে দাঁড়িয়ে এক হাত নিচের পায়ে ছোঁয়াও এবং অন্য হাত সোজা ওপরে আকাশের দিকে তোলো।"}, {"t": "১৭. উৎকটাসন (Chair Pose)", "p": "standing_chair", "bg": "#fefce8", "c": "#ca8a04", "b": "অদৃশ্য চেয়ারে বসার মতো হাঁটু ভাঁজ করো এবং দুই হাত সোজা ওপরে তোলো।"}, {"t": "১৮. গরুড়াসন (Eagle Pose)", "p": "standing_eagle", "bg": "#f5f3ff", "c": "#7c3aed", "b": "এক পা আরেক পায়ের সাথে জড়িয়ে এবং দুই হাত সামনে পেঁচিয়ে ঈগল পাখির মতো ব্যালেন্স রাখো।"}, {"t": "১৯. ফ্লেমিঙ্গো আসন (Flamingo Pose)", "p": "standing_flamingo", "bg": "#fdf2f8", "c": "#ec4899", "b": "এক পায়ে দাঁড়িয়ে অন্য পা পেছনে ভাঁজ করে হাত দিয়ে ধরো—ফ্লেমিঙ্গো পাখির মতো!"}, {"t": "২০. উষ্ট্রাসন (Camel Pose)", "p": "kneel_camel", "bg": "#fffbeb", "c": "#d97706", "b": "হাঁটু গেড়ে দাঁড়িয়ে ধীরে ধীরে পেছনে ঝুঁকে দুই হাত দিয়ে গোড়ালি ছোঁয়ার চেষ্টা করো।"}, {"t": "২১. ধনুরাসন (Bow Pose)", "p": "prone_bow", "bg": "#f0fdfa", "c": "#0d9488", "b": "উপুড় হয়ে শুয়ে দুই পা ভাঁজ করে হাত দিয়ে গোড়ালি ধরো এবং ধনুকের মতো ওপর দিকে টানো।"}, {"t": "২২. মৎস্যাসন (Fish Pose)", "p": "supine_fish", "bg": "#e0f2fe", "c": "#0369a1", "b": "চিত হয়ে শুয়ে কনুইয়ের সাহায্যে বুকটা একটু ওপরে তোলো এবং মাছের মতো গভীর শ্বাস নাও।"}, {"t": "২৩. কূর্মাসন (Turtle Pose)", "p": "seated_turtle", "bg": "#ecfdf5", "c": "#15803d", "b": "পা ফাঁক করে বসে সামনে ঝুঁকে মাথা নিচু করো—কচ্ছপের খোলসের মতো!"}, {"t": "২৪. জিরাফ আসন (Giraffe Pose)", "p": "standing_tall", "bg": "#fefce8", "c": "#eab308", "b": "পায়ের আঙুলের ওপর ভর দিয়ে হাত একদম ওপরে তুলে জিরাফের মতো লম্বা হও।"}, {"t": "২৫. হাতি আসন (Elephant Pose)", "p": "standing_elephant", "bg": "#f1f5f9", "c": "#64748b", "b": "সামনে ঝুঁকে দুই হাত জুড়ে হাতির শুঁড় বানাও এবং ডানে-বাঁয়ে দোলাও।"}, {"t": "২৬. বিমান আসন (Airplane Pose)", "p": "standing_airplane", "bg": "#eff6ff", "c": "#1d4ed8", "b": "এক পায়ে দাঁড়িয়ে অন্য পা পেছনে তোলো, আর দুই হাত ডানার মতো পাশে মেলে ওড়ো।"}, {"t": "২৭. ঘুড়ি আসন (Kite Pose)", "p": "standing_kite", "bg": "#fdf2f8", "c": "#be185d", "b": "দুই হাত ওপরে জোড়া করে কোমর ডানে ও বাঁয়ে হেলাও—আকাশে ওড়া ঘুড়ির মতো!"}, {"t": "২৮. ফুল আসন (Flower Pose)", "p": "seated_flower", "bg": "#fef2f2", "c": "#e11d48", "b": "বসে দুই পা সামান্য ওপরে তুলে হাত দুটি হাঁটুর নিচ দিয়ে এনে ফুটন্ত ফুলের মতো বসো।"}, {"t": "২৯. মোমবাতি আসন (Candle Pose)", "p": "supine_candle", "bg": "#fff7ed", "c": "#ea580c", "b": "চিত হয়ে শুয়ে দুই পা সোজা ওপরে আকাশের দিকে তুলে ধরো—জ্বলন্ত মোমবাতির মতো!"}, {"t": "৩০. অর্ধচন্দ্রাসন (Half Moon Pose)", "p": "standing_moon", "bg": "#f5f3ff", "c": "#6d28d9", "b": "সোজা দাঁড়িয়ে হাত ওপরে তুলে বাঁকা চাঁদের মতো একদিকে হেলিয়ে ধরো।"}, {"t": "৩১. সূর্য প্রণাম (Sun Salutation)", "p": "standing_sun", "bg": "#fef9c3", "c": "#ca8a04", "b": "সূর্যের দিকে মুখ করে দুই হাত ওপরে তুলে নমস্কার করো এবং গভীর শ্বাস নাও।"}, {"t": "৩২. রামধনু আসন (Rainbow Pose)", "p": "side_rainbow", "bg": "#ecfeff", "c": "#06b6d4", "b": "হাঁটু গেড়ে এক পা পাশে ছড়িয়ে অন্য হাত মাথার ওপর দিয়ে বাঁকিয়ে রামধনু বানাও।"}, {"t": "৩৩. বানর আসন (Monkey Pose)", "p": "squat_monkey", "bg": "#fffbeb", "c": "#b45309", "b": "দুই পা ভাঁজ করে বানরের মতো বসে হাত দুটি দুলিয়ে হাসিমুখে ছোট লাফ দাও।"}, {"t": "৩৪. পেঙ্গুইন আসন (Penguin Walk)", "p": "standing_penguin", "bg": "#f8fafc", "c": "#334155", "b": "হাত দুটি শরীরের পাশে সোজা রেখে পেঙ্গুইনের মতো ছোট ছোট পায়ে হেঁটে বেড়াও।"}, {"t": "৩৫. ভালুক হাঁটা (Bear Walk)", "p": "inverted_bear", "bg": "#fef3c7", "c": "#92400e", "b": "হাত ও পায়ের পাতা মাটিতে রেখে হাঁটু সোজা রেখে ভালুকের মতো ধীর পায়ে হাঁটো।"}, {"t": "৩৬. ডলফিন আসন (Dolphin Pose)", "p": "inverted_v", "bg": "#e0f2fe", "c": "#0284c7", "b": "কনুই মাটিতে রেখে কোমর ওপরে তোলো এবং ডলফিনের মতো সামনে-পেছনে দোলো।"}, {"t": "৩৭. কাঁকড়া আসন (Crab Pose)", "p": "table_crab", "bg": "#fee2e2", "c": "#dc2626", "b": "বসে হাত পেছনে রেখে কোমর ওপরে তুলে টেবিলের মতো হও এবং কাঁকড়ার মতো হাঁটো।"}, {"t": "৩৮. মাকড়সা আসন (Spider Pose)", "p": "squat_frog", "bg": "#f3e8ff", "c": "#7e22ce", "b": "দুই পা ফাঁক করে বসে হাত দুটি পায়ের পেছন দিয়ে ঘুরিয়ে মাকড়সার মতো ভঙ্গি করো।"}, {"t": "৩৯. মৌমাছি শ্বাস (Bumblebee Breath)", "p": "seated_lotus", "bg": "#fefce8", "c": "#ca8a04", "b": "পদ্মাসনে বসে কানে আঙুল দিয়ে মুখ বন্ধ করে 'ম্মম্ম...' করে মৌমাছির মতো শব্দ ছাড়ো।"}, {"t": "৪০. পেঁচা আসন (Owl Pose)", "p": "seated_owl", "bg": "#f1f5f9", "c": "#475569", "b": "হাঁটু মুড়ে বসে ধীরে ধীরে ঘাড় ডানে ও বাঁয়ে ঘুরিয়ে পেঁচার মতো চারপাশ দেখো।"}, {"t": "৪১. ময়ূর আসন (Peacock Stretch)", "p": "seated_butterfly", "bg": "#ecfdf5", "c": "#047857", "b": "পা দুটি দুই পাশে ছড়িয়ে দুই হাত পেখমের মতো মাথার ওপরে মেলে ধরো।"}, {"t": "৪২. হাঁস আসন (Swan Pose)", "p": "prone_cobra", "bg": "#eff6ff", "c": "#2563eb", "b": "ভুজঙ্গাসনে উঠে দুই পা ভাঁজ করে মাথার কাছে আনার চেষ্টা করো—সাদা হাঁসের মতো!"}, {"t": "৪৩. রকেট আসন (Rocket Pose)", "p": "standing_tall", "bg": "#fef2f2", "c": "#dc2626", "b": "নিচু হয়ে বসে ৫-৪-৩-২-১ গুনে রকেটের মতো লাফ দিয়ে হাত ওপরে তোলো।"}, {"t": "৪৪. ট্রেন আসন (Train Breath)", "p": "seated_lotus", "bg": "#f0fdfa", "c": "#0f766e", "b": "সোজা বসে হাত কনুইয়ে ভাঁজ করে ট্রেনের চাকার মতো ঘোরাও আর 'ছুক-ছুক' শ্বাস ছাড়ো।"}, {"t": "৪৫. ঘড়ি আসন (Clock Stretch)", "p": "standing_kite", "bg": "#eff6ff", "c": "#1d4ed8", "b": "দাঁড়িয়ে দুই হাত ঘড়ির কাঁটার মতো ডানে-বাঁয়ে হেলাও আর 'টিক-টক' বলো।"}, {"t": "৪৬. আনন্দ শিশু আসন (Happy Baby)", "p": "supine_baby", "bg": "#fdf2f8", "c": "#db2777", "b": "চিত হয়ে শুয়ে দুই পায়ের পাতা হাত দিয়ে ধরে হাসিমুখে ডানে-বাঁয়ে দোলো।"}, {"t": "৪৭. বজ্রাসন (Thunderbolt Pose)", "p": "seated_child", "bg": "#f5f3ff", "c": "#7c3aed", "b": "দুই পা পেছনে ভাঁজ করে গোড়ালির ওপর সোজা হয়ে বসো। খাওয়ার পর এটি খুব উপকারী।"}, {"t": "৪৮. পবনমুক্তাসন (Wind Relieving)", "p": "supine_baby", "bg": "#ecfdf5", "c": "#16a34a", "b": "চিত হয়ে শুয়ে দুই হাঁটু বুকের কাছে টেনে জড়িয়ে ধরো—গোল বলের মতো!"}, {"t": "৪৯. তাড়াসন (Palm Tree Pose)", "p": "standing_tall", "bg": "#fffbeb", "c": "#d97706", "b": "হাতের আঙুল জড়িয়ে ওপরে তুলে গোড়ালি উঁচু করে তালগাছের মতো টানটান হও।"}, {"t": "৫০. শবাসন (Relaxation Pose)", "p": "supine_relax", "bg": "#f0f9ff", "c": "#0284c7", "b": "চিত হয়ে আরাম করে শুয়ে চোখ বন্ধ করো। পুরো শরীর ঢিলে ছেড়ে শান্ত হয়ে শ্বাস নাও।"}];
 
     const defaultActivities = [
-      { cat: "bn_rhyme", catLabel: "🇧🇩 বাংলা ছড়া ও গান", melody: "bengali", songUrl: "https://www.youtube.com/results?search_query=Ata+Gache+Tota+Pakhi+Bengali+Rhyme+Song", title: "আতা গাছে তোতা পাখি", body: "আতা গাছে তোতা পাখি,\nডালিম গাছে মৌ।\nএত ডাকি তবু কথা,\nকও না কেন বউ?" },
-      { cat: "bn_rhyme", catLabel: "🇧🇩 বাংলা ছড়া ও গান", melody: "bengali", songUrl: "https://www.youtube.com/results?search_query=Aay+Aay+Chand+Mama+Bengali+Rhyme+Song", title: "আয় আয় চাঁদ মামা", body: "আয় আয় চাঁদ মামা টিপ দিয়ে যা,\nচাঁদের কপালে চাঁদ টিপ দিয়ে যা।\nমাছ কাটলে মুড়ো দেব,\nধান ভানলে কুঁড়ো দেব,\nকালো গরুর দুধ দেব,\nচাঁদের কপালে চাঁদ টিপ দিয়ে যা।" },
-      { cat: "bn_rhyme", catLabel: "🇧🇩 বাংলা ছড়া ও গান", melody: "bengali", songUrl: "https://www.youtube.com/results?search_query=Hattimatim+Tim+Bengali+Rhyme+Song", title: "হাট্টিমাটিম টিম", body: "হাট্টিমাটিম টিম,\nতারা মাঠে পাড়ে ডিম,\nতাদের খাড়া দুটো শিং,\nতারা হাট্টিমাটিম টিম।" },
-      { cat: "bn_rhyme", catLabel: "🇧🇩 বাংলা ছড়া ও গান", melody: "bengali", songUrl: "https://www.youtube.com/results?search_query=Noton+Noton+Payra+Guli+Bengali+Rhyme+Song", title: "নোটন নোটন পায়রাগুলি", body: "নোটন নোটন পায়রাগুলি ঝোঁটন বেঁধেছে,\nওপারেতে ছেলেমেয়ে নাইতে নেমেছে।\nদুই ধারে দুই রুই কাতলা ভেসে উঠেছে,\nকে দেখেছে কে দেখেছে দাদা দেখেছে।" },
-      { cat: "en_rhyme", catLabel: "🇬🇧 English Rhyme Song", melody: "twinkle", songUrl: "https://www.youtube.com/results?search_query=Twinkle+Twinkle+Little+Star+Nursery+Rhyme", title: "Twinkle, Twinkle, Little Star", body: "Twinkle, twinkle, little star,\nHow I wonder what you are!\nUp above the world so high,\nLike a diamond in the sky." },
-      { cat: "en_rhyme", catLabel: "🇬🇧 English Rhyme Song", melody: "dance", songUrl: "https://www.youtube.com/results?search_query=Johny+Johny+Yes+Papa+Nursery+Rhyme", title: "Johny Johny Yes Papa", body: "Johny, Johny, Yes, Papa?\nEating sugar? No, Papa!\nTelling lies? No, Papa!\nOpen your mouth, Ha! Ha! Ha!" },
-      { cat: "en_rhyme", catLabel: "🇬🇧 English Rhyme Song", melody: "twinkle", songUrl: "https://www.youtube.com/results?search_query=Baa+Baa+Black+Sheep+Nursery+Rhyme", title: "Baa, Baa, Black Sheep", body: "Baa, baa, black sheep, have you any wool?\nYes sir, yes sir, three bags full.\nOne for the master, one for the dame,\nAnd one for the little boy who lives down the lane." },
-      { cat: "en_rhyme", catLabel: "🇬🇧 English Rhyme Song", melody: "dance", songUrl: "https://www.youtube.com/results?search_query=Humpty+Dumpty+Sat+On+A+Wall+Nursery+Rhyme", title: "Humpty Dumpty", body: "Humpty Dumpty sat on a wall,\nHumpty Dumpty had a great fall.\nAll the king's horses and all the king's men,\nCouldn't put Humpty together again." },
-      { cat: "yoga", catLabel: "🧘 ছবিসহ যোগব্যায়াম (Kids Yoga)", melody: "yoga", yogaKey: "tree", title: "১. বৃক্ষাসন (Tree Pose — গাছের মতো দাঁড়ানো)", body: "নিয়ম: সোজা হয়ে দাঁড়িয়ে ডান পা ভাঁজ করে বাম উরুর ওপর রাখো। দুটি হাত নমস্কারের ভঙ্গিতে মাথার ওপর তোলো। গাছের মতো স্থির হয়ে ১০ পর্যন্ত গোনো।" },
-      { cat: "yoga", catLabel: "🧘 ছবিসহ যোগব্যায়াম (Kids Yoga)", melody: "yoga", yogaKey: "butterfly", title: "২. প্রজাপতি আসন (Butterfly Pose)", body: "নিয়ম: মেঝেতে বসে দুই পায়ের পাতা একসাথে জোড়া লাগাও। দুই হাত দিয়ে পায়ের আঙুল ধরে প্রজাপতির ডানার মতো হাঁটু দুটো ওপর-নিচ করো।" },
-      { cat: "yoga", catLabel: "🧘 ছবিসহ যোগব্যায়াম (Kids Yoga)", melody: "yoga", yogaKey: "lion", title: "৩. সিংহাসন ও বেলুন শ্বাস (Lion & Balloon Breath)", body: "নিয়ম: নাক দিয়ে লম্বা শ্বাস নিয়ে পেটটাকে বড় বেলুনের মতো ফোলাও। এবার মুখ হাঁ করে জিভ বের করে সিংহের মতো 'হাঁ...' শব্দ করে শ্বাস ছাড়ো।" },
-      { cat: "dance", catLabel: "💃 নাচ ও ছন্দ (Dance & Action)", melody: "dance", songUrl: "https://www.youtube.com/results?search_query=Projapoti+Projapoti+Bengali+Kids+Song", title: "১. প্রজাপতি নাচ (হাত নেড়ে ও পায়ের তালে)", body: "গানের তালে তালে নাচো:\nপ্রজাপতি, প্রজাপতি,\nকোথায় পেলে ভাই এমন রঙিন পাখা!\n(দুই হাত ডানার মতো মেলে ঘরের চারপাশে ঘুরে ঘুরে নাচো ও তালি দাও!)" },
-      { cat: "dance", catLabel: "💃 নাচ ও ছন্দ (Dance & Action)", melody: "dance", songUrl: "https://www.youtube.com/results?search_query=If+Youre+Happy+And+You+Know+It+Kids+Song", title: "২. If You're Happy and You Know It", body: "If you're happy and you know it, clap your hands! (দুই হাতে তালি দাও)\nIf you're happy and you know it, stomp your feet! (মাটিতে পা ঠোকো)\nIf you're happy and you know it, turn around! (এক পাক ঘুরে নাচো)" },
+      ...BN_RHYMES_100.map(r => ({
+        cat: "bn_rhyme", catLabel: "🇧🇩 বাংলা ছড়া", melody: "bengali",
+        songUrl: "https://www.youtube.com/results?search_query=" + encodeURIComponent(r.t + " Bengali Rhyme"),
+        title: r.t, body: r.b
+      })),
+      ...EN_RHYMES_100.map(r => ({
+        cat: "en_rhyme", catLabel: "🇬🇧 English Rhyme", melody: "twinkle",
+        songUrl: "https://www.youtube.com/results?search_query=" + encodeURIComponent(r.t + " Nursery Rhyme"),
+        title: r.t, body: r.b
+      })),
+      ...YOGA_POSES_50.map(y => ({
+        cat: "yoga", catLabel: "🧘 ছবিসহ যোগব্যায়াম", melody: "yoga",
+        poseType: y.p, bg: y.bg, accent: y.c,
+        title: y.t, body: "নিয়ম: " + y.b
+      })),
+      { cat: "dance", catLabel: "💃 নাচ ও ছন্দ (Dance & Action)", melody: "dance", songUrl: "https://www.youtube.com/results?search_query=Projapoti+Projapoti+Bengali+Kids+Song", title: "১. প্রজাপতি নাচ (হাত নেড়ে ও পায়ের তালে)", body: "প্রজাপতি, প্রজাপতি,\nকোথায় পেলে ভাই এমন রঙিন পাখা!\n(দুই হাত ডানার মতো মেলে ঘরের চারপাশে ঘুরে ঘুরে নাচো!)" },
+      { cat: "dance", catLabel: "💃 নাচ ও ছন্দ (Dance & Action)", melody: "dance", songUrl: "https://www.youtube.com/results?search_query=If+Youre+Happy+And+You+Know+It+Kids+Song", title: "২. If You're Happy and You Know It", body: "If you're happy and you know it, clap your hands!\nIf you're happy and you know it, stomp your feet!\nIf you're happy and you know it, turn around!" },
       { cat: "dance", catLabel: "💃 নাচ ও ছন্দ (Dance & Action)", melody: "dance", songUrl: "https://www.youtube.com/results?search_query=Agdum+Bagdum+Ghoradum+Saje+Bengali+Rhyme", title: "৩. আগডুম বাগডুম ঘোড়াডুম সাজে", body: "আগডুম বাগডুম ঘোড়াডুম সাজে,\nঢাক মৃদং ঝাঁঝর বাজে।\nবাজতে বাজতে চলল ঢুলি,\nঢুলি গেল সেই কমলাফুলি।" },
       { cat: "recite", catLabel: "🎙️ আবৃত্তি (Recitation)", melody: "yoga", songUrl: "https://www.youtube.com/results?search_query=Amader+Choto+Nodi+Rabindranath+Tagore+Recitation", title: "১. আমাদের ছোট নদী — রবীন্দ্রনাথ ঠাকুর", body: "আমাদের ছোট নদী চলে বাঁকে বাঁকে,\nবৈশাখ মাসে তার হাঁটু জল থাকে।\nপার হয়ে যায় গরু, পার হয় গাড়ি,\nদুই ধার উঁচু তার, ঢালু তার পাড়ি।" },
-      { cat: "recite", catLabel: "🎙️ আবৃত্তি (Recitation)", melody: "yoga", songUrl: "https://www.youtube.com/results?search_query=Kajla+Didi+Bengali+Poem+Recitation", title: "২. কাজলা দিদি — যতীন্দ্রমোহন বাগচী", body: "বাঁশ বাগানের মাথার ওপর চাঁদ উঠেছে ওই,\nমাগো আমার শোলক বলা কাজলা দিদি কই?\nপুকুর ধারে নেবুর তলে থোকায় থোকায় জোনাই জ্বলে,\nফুলের গন্ধে ঘুম আসে না একলা জেগে রই।" },
-      { cat: "recite", catLabel: "🎙️ আবৃত্তি (Recitation)", melody: "yoga", songUrl: "https://www.youtube.com/results?search_query=Talgach+Ek+Paye+Dariye+Rabindranath+Tagore", title: "৩. তালগাছ — রবীন্দ্রনাথ ঠাকুর", body: "তালগাছ এক পায়ে দাঁড়িয়ে,\nসব গাছ ছাড়িয়ে,\nউঁকি মারে আকাশে।\nমনে সাধ কালো মেঘ ফুঁড়ে যায়,\nএকবারে উড়ে যায়,\nকোথা পাবে পাখা সে!" }
+      { cat: "recite", catLabel: "🎙️ আবৃত্তি (Recitation)", melody: "yoga", songUrl: "https://www.youtube.com/results?search_query=Kajla+Didi+Bengali+Poem+Recitation", title: "২. কাজলা দিদি — যতীন্দ্রমোহন বাগচী", body: "বাঁশ বাগানের মাথার ওপর চাঁদ উঠেছে ওই,\nমাগো আমার শোলক বলা কাজলা দিদি কই?" },
+      { cat: "recite", catLabel: "🎙️ আবৃত্তি (Recitation)", melody: "yoga", songUrl: "https://www.youtube.com/results?search_query=Talgach+Ek+Paye+Dariye+Rabindranath+Tagore", title: "৩. তালগাছ — রবীন্দ্রনাথ ঠাকুর", body: "তালগাছ এক পায়ে দাঁড়িয়ে,\nসব গাছ ছাড়িয়ে,\nউঁকি মারে আকাশে।" }
     ];
 
     const defaultSpecialPdfs = [
@@ -1177,7 +1167,8 @@
 
     let currentDay = 1;
     let pendingUnlockDay = null;
-    let activeActivityCat = "all";
+    let activeActivityCat = "bn_rhyme";
+    let activityDisplayLimit = 20;
     let activePdfCat = "ALL";
     let activeOlympiadDay = 1;
     let activeOlympiadMonth = 1;
@@ -1448,15 +1439,22 @@
 
     function renderActivitiesList() {
       const container = document.getElementById("rhymeListContainer");
+      const loadMoreBtn = document.getElementById("btnLoadMoreActivities");
+      const searchQ = (document.getElementById("activitySearchInput").value || "").trim().toLowerCase();
       const allItems = getAllActivities();
-      const filtered = activeActivityCat === "all"
-        ? allItems
-        : allItems.filter(item => item.cat === activeActivityCat);
 
-      container.innerHTML = filtered.map((item) => {
+      const filtered = allItems.filter(item => {
+        const catOk = item.cat === activeActivityCat;
+        const searchOk = !searchQ || item.title.toLowerCase().includes(searchQ) || item.body.toLowerCase().includes(searchQ);
+        return catOk && searchOk;
+      });
+
+      const visibleItems = filtered.slice(0, activityDisplayLimit);
+
+      container.innerHTML = visibleItems.map((item) => {
         const realIndex = allItems.indexOf(item);
         const cardCls = getCardClassByCat(item.cat);
-        const yogaPicHtml = (item.yogaKey && YOGA_SVGS[item.yogaKey]) ? YOGA_SVGS[item.yogaKey] : "";
+        const yogaPicHtml = item.poseType ? renderYogaSvg(item.poseType, item.bg || "#f0fdf4", item.accent || "#16a34a", item.title) : "";
         const songBtnHtml = item.songUrl
           ? `<a href="${item.songUrl}" target="_blank" class="btn btn-red" style="padding:6px 11px;font-size:12px;">▶️ YouTube গান</a>`
           : "";
@@ -1469,13 +1467,29 @@
             ${yogaPicHtml}
             <div class="rhyme-lines">${item.body}</div>
             <div class="rhyme-actions">
-              <button class="btn btn-yellow" style="padding:6px 11px;font-size:12px;" onclick="playActivityByIndex(${realIndex})">🔊 অ্যাপে পড়ে শুনুন</button>
+              <button class="btn btn-yellow" style="padding:6px 11px;font-size:12px;" onclick="playActivityByIndex(${realIndex})">🔊 অ্যাপে শুনুন</button>
               ${songBtnHtml}
             </div>
           </div>
         `;
-      }).join("");
+      }).join("") || `<p style="text-align:center;color:#64748b;font-size:13px;">কোনো ফলাফল পাওয়া যায়নি।</p>`;
+
+      if (filtered.length > activityDisplayLimit) {
+        loadMoreBtn.style.display = "block";
+        loadMoreBtn.textContent = `⬇️ আরও দেখুন (${visibleItems.length} / ${filtered.length} দেখানো হচ্ছে)`;
+      } else {
+        loadMoreBtn.style.display = "none";
+      }
     }
+
+    document.getElementById("btnLoadMoreActivities").addEventListener("click", () => {
+      activityDisplayLimit += 25;
+      renderActivitiesList();
+    });
+    document.getElementById("activitySearchInput").addEventListener("input", () => {
+      activityDisplayLimit = 25;
+      renderActivitiesList();
+    });
 
     function playActivityByIndex(idx) {
       const item = getAllActivities()[idx];
@@ -1563,11 +1577,9 @@
         </div>
       `).join("");
 
-      const strokeSel = document.getElementById("strokeSelect");
-      if ([...strokeSel.options].some(o => o.value === lesson.stroke)) {
-        strokeSel.value = lesson.stroke;
-      }
-      drawGuide();
+      activeTraceMode = "bn";
+      activeTraceValue = lesson.stroke || "অ";
+      renderTracePicker();
     }
 
     function speakText(txt, onEndCallback, isSingSong) {
@@ -1584,22 +1596,166 @@
       window.speechSynthesis.speak(u);
     }
 
+    // FULL TRACING (BANGLA BORNO, A-Z, a-z, 1-100, ১-১০০) & CHOBI ANKAA (DRAWING) STUDIO
+    const BN_ALL_CHARS = "অ আ ই ঈ উ ঊ ঋ এ ঐ ও ঔ ক খ গ ঘ ঙ চ ছ জ ঝ ঞ ট ঠ ড ঢ ণ ত থ দ ধ ন প ফ ব ভ ম য র ল শ ষ স হ ড় ঢ় য় ৎ ং ঃ ঁ".split(" ");
+    const EN_CAP_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    const EN_SML_CHARS = "abcdefghijklmnopqrstuvwxyz".split("");
+    const NUM_EN_CHARS = Array.from({length: 100}, (_, i) => String(i + 1));
+    const BN_DIGITS = ["০","১","২","৩","৪","৫","৬","৭","৮","৯"];
+    const toBnNum = (n) => String(n).split("").map(d => BN_DIGITS[Number(d)]).join("");
+    const NUM_BN_CHARS = Array.from({length: 100}, (_, i) => toBnNum(i + 1));
+    const DRAW_TEMPLATES = [
+      { id: "free", label: "✨ ফাঁকা খাতা" },
+      { id: "mango", label: "🥭 আম" },
+      { id: "apple", label: "🍎 আপেল" },
+      { id: "sun", label: "☀️ সূর্য" },
+      { id: "house", label: "🏠 ঘর" },
+      { id: "boat", label: "⛵ নৌকা" },
+      { id: "fish", label: "🐟 মাছ" },
+      { id: "flower", label: "🌸 ফুল" },
+      { id: "tree", label: "🌳 গাছ" },
+      { id: "butterfly", label: "🦋 প্রজাপতি" },
+      { id: "umbrella", label: "☂️ ছাতা" },
+      { id: "star", label: "⭐ তারা" },
+      { id: "ball", label: "⚽ বল" }
+    ];
+
     const canvas = document.getElementById("traceCanvas");
     const ctx = canvas.getContext("2d");
     let drawing = false;
     let brushColor = "#0f766e";
+    let isEraser = false;
+    let activeTraceMode = "bn";
+    let activeTraceValue = "অ";
+
+    function renderTracePicker() {
+      const picker = document.getElementById("traceItemPicker");
+      let items = [];
+      if (activeTraceMode === "bn") items = BN_ALL_CHARS.map(c => ({ v: c, l: c }));
+      else if (activeTraceMode === "en_cap") items = EN_CAP_CHARS.map(c => ({ v: c, l: c }));
+      else if (activeTraceMode === "en_sml") items = EN_SML_CHARS.map(c => ({ v: c, l: c }));
+      else if (activeTraceMode === "num_en") items = NUM_EN_CHARS.map(c => ({ v: c, l: c }));
+      else if (activeTraceMode === "num_bn") items = NUM_BN_CHARS.map(c => ({ v: c, l: c }));
+      else items = DRAW_TEMPLATES.map(d => ({ v: d.id, l: d.label }));
+
+      if (!items.some(x => x.v === activeTraceValue)) activeTraceValue = items[0].v;
+
+      picker.innerHTML = items.map(it => {
+        const isAct = it.v === activeTraceValue;
+        return `<button onclick="selectTraceItem('${it.v}')" style="flex-shrink:0;min-width:44px;padding:7px 11px;border-radius:10px;border:1.5px solid ${isAct ? '#0f766e' : '#cbd5e1'};background:${isAct ? '#0f766e' : '#fff'};color:${isAct ? '#fff' : '#1e293b'};font-weight:700;font-size:15px;cursor:pointer;">${it.l}</button>`;
+      }).join("");
+
+      const lbl = items.find(x => x.v === activeTraceValue)?.l || activeTraceValue;
+      document.getElementById("traceCurrentLabel").textContent = activeTraceMode === "draw" ? `ছবি আঁকা: ${lbl}` : `ট্রেসিং: '${lbl}'`;
+      drawGuide();
+    }
+
+    function selectTraceItem(val) {
+      activeTraceValue = val;
+      isEraser = false;
+      renderTracePicker();
+      if (activeTraceMode !== "draw") speakText(val);
+    }
+
+    document.querySelectorAll("#traceModePills .cat-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#traceModePills .cat-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeTraceMode = btn.dataset.tmode;
+        renderTracePicker();
+      });
+    });
+
+    document.getElementById("btnSpeakCurrentTrace").addEventListener("click", () => {
+      const txt = activeTraceMode === "draw"
+        ? (DRAW_TEMPLATES.find(d => d.id === activeTraceValue)?.label || "ছবি আঁকা")
+        : activeTraceValue;
+      speakText(txt);
+    });
+
+    function drawTemplateOutline(id) {
+      ctx.save();
+      ctx.strokeStyle = "#cbd5e1";
+      ctx.lineWidth = 4;
+      ctx.setLineDash([8, 6]);
+      const cx = canvas.width / 2, cy = canvas.height / 2;
+
+      if (id === "sun") {
+        ctx.beginPath(); ctx.arc(cx, cy, 55, 0, Math.PI * 2); ctx.stroke();
+        for (let a = 0; a < 12; a++) {
+          const rad = (a * Math.PI) / 6;
+          ctx.beginPath();
+          ctx.moveTo(cx + Math.cos(rad) * 68, cy + Math.sin(rad) * 68);
+          ctx.lineTo(cx + Math.cos(rad) * 98, cy + Math.sin(rad) * 98);
+          ctx.stroke();
+        }
+      } else if (id === "house") {
+        ctx.strokeRect(cx - 85, cy - 10, 170, 115);
+        ctx.beginPath(); ctx.moveTo(cx - 105, cy - 10); ctx.lineTo(cx, cy - 100); ctx.lineTo(cx + 105, cy - 10); ctx.closePath(); ctx.stroke();
+        ctx.strokeRect(cx - 22, cy + 45, 44, 60);
+      } else if (id === "boat") {
+        ctx.beginPath(); ctx.moveTo(cx - 110, cy + 30); ctx.lineTo(cx + 110, cy + 30); ctx.lineTo(cx + 75, cy + 85); ctx.lineTo(cx - 75, cy + 85); ctx.closePath(); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx, cy + 30); ctx.lineTo(cx, cy - 85); ctx.lineTo(cx + 75, cy + 15); ctx.lineTo(cx, cy + 15); ctx.stroke();
+      } else if (id === "fish") {
+        ctx.beginPath(); ctx.ellipse(cx - 15, cy, 85, 50, 0, 0, Math.PI * 2); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx + 70, cy); ctx.lineTo(cx + 125, cy - 45); ctx.lineTo(cx + 125, cy + 45); ctx.closePath(); ctx.stroke();
+        ctx.beginPath(); ctx.arc(cx - 58, cy - 12, 8, 0, Math.PI * 2); ctx.stroke();
+      } else if (id === "flower") {
+        ctx.beginPath(); ctx.arc(cx, cy - 15, 28, 0, Math.PI * 2); ctx.stroke();
+        for (let a = 0; a < 6; a++) {
+          const rad = (a * Math.PI) / 3;
+          ctx.beginPath(); ctx.arc(cx + Math.cos(rad) * 52, cy - 15 + Math.sin(rad) * 52, 26, 0, Math.PI * 2); ctx.stroke();
+        }
+        ctx.beginPath(); ctx.moveTo(cx, cy + 62); ctx.lineTo(cx, cy + 120); ctx.stroke();
+      } else if (id === "tree") {
+        ctx.strokeRect(cx - 22, cy + 15, 44, 95);
+        ctx.beginPath(); ctx.arc(cx, cy - 35, 60, 0, Math.PI * 2); ctx.stroke();
+        ctx.beginPath(); ctx.arc(cx - 48, cy - 5, 42, 0, Math.PI * 2); ctx.stroke();
+        ctx.beginPath(); ctx.arc(cx + 48, cy - 5, 42, 0, Math.PI * 2); ctx.stroke();
+      } else if (id === "mango" || id === "apple") {
+        ctx.beginPath(); ctx.ellipse(cx, cy + 10, 62, 78, id === "mango" ? 0.25 : 0, 0, Math.PI * 2); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx, cy - 68); ctx.quadraticCurveTo(cx + 15, cy - 95, cx + 45, cy - 82); ctx.stroke();
+      } else if (id === "butterfly") {
+        ctx.beginPath(); ctx.ellipse(cx, cy, 12, 62, 0, 0, Math.PI * 2); ctx.stroke();
+        ctx.beginPath(); ctx.ellipse(cx - 60, cy - 22, 50, 38, -0.3, 0, Math.PI * 2); ctx.stroke();
+        ctx.beginPath(); ctx.ellipse(cx + 60, cy - 22, 50, 38, 0.3, 0, Math.PI * 2); ctx.stroke();
+        ctx.beginPath(); ctx.ellipse(cx - 48, cy + 32, 36, 28, 0.3, 0, Math.PI * 2); ctx.stroke();
+        ctx.beginPath(); ctx.ellipse(cx + 48, cy + 32, 36, 28, -0.3, 0, Math.PI * 2); ctx.stroke();
+      } else if (id === "umbrella") {
+        ctx.beginPath(); ctx.arc(cx, cy + 10, 95, Math.PI, 0); ctx.closePath(); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx, cy + 10); ctx.lineTo(cx, cy + 95); ctx.arc(cx - 18, cy + 95, 18, 0, Math.PI); ctx.stroke();
+      } else if (id === "star") {
+        ctx.beginPath();
+        for (let i = 0; i < 10; i++) {
+          const r = i % 2 === 0 ? 90 : 38;
+          const a = (i * Math.PI) / 5 - Math.PI / 2;
+          if (i === 0) ctx.moveTo(cx + r * Math.cos(a), cy + r * Math.sin(a));
+          else ctx.lineTo(cx + r * Math.cos(a), cy + r * Math.sin(a));
+        }
+        ctx.closePath(); ctx.stroke();
+      } else if (id === "ball") {
+        ctx.beginPath(); ctx.arc(cx, cy, 85, 0, Math.PI * 2); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx - 85, cy); ctx.quadraticCurveTo(cx, cy - 45, cx + 85, cy); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx, cy - 85); ctx.quadraticCurveTo(cx + 45, cy, cx, cy + 85); ctx.stroke();
+      }
+      ctx.restore();
+    }
 
     function drawGuide() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const char = document.getElementById("strokeSelect").value;
+      if (activeTraceMode === "draw") {
+        if (activeTraceValue !== "free") drawTemplateOutline(activeTraceValue);
+        return;
+      }
       ctx.save();
-      ctx.font = "bold 165px 'Hind Siliguri', sans-serif";
+      const fSize = activeTraceValue.length > 2 ? 120 : 175;
+      ctx.font = `bold ${fSize}px 'Hind Siliguri', 'Poppins', sans-serif`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.strokeStyle = "#cbd5e1";
       ctx.lineWidth = 4;
       ctx.setLineDash([10, 8]);
-      ctx.strokeText(char, canvas.width / 2, canvas.height / 2 + 8);
+      ctx.strokeText(activeTraceValue, canvas.width / 2, canvas.height / 2 + 8);
       ctx.restore();
     }
 
@@ -1619,8 +1775,8 @@
       e.preventDefault();
       const p = getPos(e);
       ctx.lineTo(p.x, p.y);
-      ctx.strokeStyle = brushColor;
-      ctx.lineWidth = 12;
+      ctx.strokeStyle = isEraser ? "#ffffff" : brushColor;
+      ctx.lineWidth = Number(document.getElementById("brushSizeSelect").value) || 13;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
       ctx.setLineDash([]);
@@ -1635,22 +1791,16 @@
     canvas.addEventListener("touchmove", moveDraw, { passive: false });
     canvas.addEventListener("touchend", endDraw);
 
-    const sounds = [
-      { c: "অ", w: "অজগর", say: "অ-তে অজগর" },
-      { c: "আ", w: "আম", say: "আ-তে আম" },
-      { c: "ক", w: "কবুতর", say: "ক-তে কবুতর" },
-      { c: "খ", w: "খরগোশ", say: "খ-তে খরগোশ" },
-      { c: "A", w: "Apple", say: "A for Apple" },
-      { c: "B", w: "Ball", say: "B for Ball" },
-      { c: "C", w: "Cat", say: "C for Cat" },
-      { c: "D", w: "Dog", say: "D for Dog" }
-    ];
-    document.getElementById("soundGrid").innerHTML = sounds.map(s => `
-      <div class="sound-tile" onclick="speakText('${s.say}')">
-        <div class="sound-char">${s.c}</div>
-        <div class="sound-word">${s.w}</div>
-      </div>
-    `).join("");
+    document.getElementById("btnEraser").addEventListener("click", () => {
+      isEraser = !isEraser;
+      document.getElementById("btnEraser").style.background = isEraser ? "#facc15" : "#fef3c7";
+    });
+    document.getElementById("btnSaveDrawing").addEventListener("click", () => {
+      const a = document.createElement("a");
+      a.download = `HATEKHORI_${activeTraceValue}.png`;
+      a.href = canvas.toDataURL("image/png");
+      a.click();
+    });
 
     function switchTab(tabId) {
       document.querySelectorAll(".tab-pane").forEach(p => p.classList.remove("active"));
@@ -1673,6 +1823,7 @@
         document.querySelectorAll("#activityCatPills .cat-btn").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
         activeActivityCat = btn.dataset.cat;
+        activityDisplayLimit = 20;
         renderActivitiesList();
       });
     });
@@ -1716,13 +1867,13 @@
       }
     });
 
-    document.getElementById("strokeSelect").addEventListener("change", drawGuide);
+    
     document.getElementById("btnClearCanvas").addEventListener("click", drawGuide);
     document.querySelectorAll(".color-dot").forEach(dot => {
       dot.addEventListener("click", () => {
         document.querySelectorAll(".color-dot").forEach(d => d.classList.remove("active"));
         dot.classList.add("active");
-        brushColor = dot.dataset.color;
+        isEraser = false; brushColor = dot.dataset.color;
       });
     });
 
@@ -1790,7 +1941,7 @@
         saveState();
         populateDayDropdown();
         document.getElementById("proModal").classList.remove("open");
-        alert("👑 অভিনন্দন! সব ৩০ দিনের ওয়ার্কশিট আনলক হয়ে গেছে!");
+        alert("👑 অভিনন্দন! সব ৬০ দিনের ওয়ার্কশিট আনলক হয়ে গেছে!");
       } else {
         alert("❌ ভুল কোড! সঠিক অ্যাক্টিভেশন কোড দিন (Demo: PRO99)।");
       }
@@ -1963,6 +2114,7 @@
     document.head.appendChild(link);
 
     // Initialize
+    renderTracePicker();
     loadDay(1);
     renderActivitiesList();
     renderOlympiadSection();
