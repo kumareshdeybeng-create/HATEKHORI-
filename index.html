@@ -685,7 +685,7 @@
         <span class="sponsor-tag">SPONSORED / বিশেষ অফার</span>
         <h4 style="margin:4px 0;color:#0f766e;font-size:16px;" id="displayCustomAdTitle">👑 হাতেখড়ি Pro — সব ৩০ দিন আনলক করুন!</h4>
         <img id="displayCustomAdImg" class="sponsor-img" style="display:none;" alt="Sponsor Banner" />
-        <p style="font-size:13px;color:#1e293b;margin:6px 0 10px;" id="displayCustomAdDesc">কোনো বিজ্ঞাপন ছাড়াই Day 1 থেকে Day 30 পর্যন্ত সব ওয়ার্কশিট ও A4 প্রিন্ট আনলক করুন মাত্র ₹৯৯ টাকায়।</p>
+        <p style="font-size:13px;color:#1e293b;margin:6px 0 10px;" id="displayCustomAdDesc">ভারতীয় প্রাক-প্রাথমিক শিক্ষার্থীদের জন্য তৈরি সব ৩০ দিনের ওয়ার্কশিট ও A4 প্রিন্ট আনলক করুন মাত্র ₹৯৯ টাকায়।</p>
         <a id="displayCustomAdBtn" href="#" target="_blank" class="btn btn-primary" style="text-decoration:none;font-size:13px;">👉 বিস্তারিত দেখুন</a>
       </div>
 
@@ -699,7 +699,7 @@
     <div class="modal-box">
       <div style="font-size:36px;">🔒</div>
       <h3 style="margin:6px 0;" id="unlockModalTitle">Day 8 ওয়ার্কশিট লক করা আছে</h3>
-      <p style="font-size:13px;color:#475569;margin-bottom:14px;">একটি ছোট ১৫ সেকেন্ডের বিজ্ঞাপন দেখে এই পাঠটি ফ্রি আনলক করুন, অথবা একসাথে সব ৩০ দিন আনলক করুন।</p>
+      <p style="font-size:13px;color:#475569;margin-bottom:14px;">একটি ছোট ১৫ সেকেন্ডের শিক্ষা-স্পন্সর কার্ড দেখে এই পাঠটি ফ্রি আনলক করুন, অথবা একসাথে সব ৩০ দিন আনলক করুন।</p>
 
       <div id="adTimerArea" style="display:none;background:#f8fafc;padding:12px;border-radius:12px;margin-bottom:12px;">
         <div style="font-weight:700;color:#0f766e;" id="adCountdownText">বিজ্ঞাপন চলছে... ১৫ সেকেন্ড অপেক্ষা করুন</div>
@@ -846,12 +846,12 @@
     const BAKED_CUSTOM_ACTIVITIES = [];
     const BAKED_CONFIG = {
       payLink: "upi://pay?pa=8250912381@ikwik&pn=HateKhori&am=99&cu=INR",
-      adLink: "https://uplcm.com/4/12355529",
+      adLink: "upi://pay?pa=8250912381@ikwik&pn=HateKhoriPro&am=99&cu=INR",
       adminPin: "1234",
-      bannerTitle: "👑 হাতেখড়ি Pro — সব ৩০ দিন আনলক করুন!",
-      bannerDesc: "কোনো বিজ্ঞাপন ছাড়াই Day 1 থেকে Day 30 পর্যন্ত সব ওয়ার্কশিট ও A4 প্রিন্ট শিট আনলক করুন মাত্র ₹৯৯ টাকায়।",
+      bannerTitle: "✏️ প্রাক-প্রাথমিক রঙিন ওয়ার্কশিট ও ছড়া বুক (India Edition)",
+      bannerDesc: "ঘরে বসে বাচ্চাদের পেন্সিল গ্রিপ, বাংলা-ইংরেজি অক্ষর ও অঙ্ক শেখার বিশেষ অফার! মাত্র ₹৯৯ টাকায় সব ৩০ দিন আনলক করুন।",
       bannerImg: "",
-      bannerUrl: "upi://pay?pa=8250912381@ikwik&pn=HateKhori&am=99&cu=INR"
+      bannerUrl: "upi://pay?pa=8250912381@ikwik&pn=HateKhoriPro&am=99&cu=INR"
     };
     /*__BAKED_DATA_END__*/
 
@@ -1382,7 +1382,6 @@
       startBackgroundMelody("bengali");
       speakText(document.getElementById("rhymeText").textContent, () => {
         stopBackgroundMelody();
-        triggerPostRhymeAd();
       }, true);
     });
 
@@ -1393,7 +1392,6 @@
       startBackgroundMelody("bengali");
       speakText(FULL_BN_SWARABORNO, () => {
         stopBackgroundMelody();
-        triggerPostRhymeAd();
       }, true);
     });
 
@@ -1404,12 +1402,10 @@
       startBackgroundMelody("twinkle");
       speakText(FULL_EN_ALPHABET, () => {
         stopBackgroundMelody();
-        triggerPostRhymeAd();
       }, true);
     });
 
     document.getElementById("btnRhymeMonetagContinue").addEventListener("click", () => {
-      if (state.adLink) window.open(state.adLink, "_blank");
       document.getElementById("postRhymeAdModal").classList.remove("open");
     });
     document.getElementById("btnCloseRhymeAd").addEventListener("click", () => {
@@ -1463,7 +1459,6 @@
     });
 
     document.getElementById("btnWatchAd").addEventListener("click", () => {
-      if (state.adLink) window.open(state.adLink, "_blank");
       const timerArea = document.getElementById("adTimerArea");
       const fill = document.getElementById("adProgressFill");
       const txt = document.getElementById("adCountdownText");
