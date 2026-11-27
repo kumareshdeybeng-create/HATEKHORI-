@@ -429,7 +429,7 @@
         <div class="hero-desc" id="heroDesc">কোনো জোর না করে খেলার ছলে পেন্সিল গ্রিপ, ধ্বনি ও হাতের ব্যায়াম দিয়ে আজকের পাঠ শুরু করুন।</div>
         <div class="hero-actions">
           <button class="btn btn-yellow" id="btnGoTracing">✏️ স্ক্রিনে ট্রেসিং করুন</button>
-          <button class="btn btn-glass" id="btnGoOlympiad">🏆 অলিম্পিয়াড ও Spoken</button>
+          <button class="btn btn-glass" id="btnGoOlympiad">🏆 ৩ মাসের অলিম্পিয়াড</button>
         </div>
       </div>
 
@@ -531,7 +531,7 @@
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
           <div>
             <h3 class="section-title" style="margin:0;">🎭 আসল গানের সুরে ছড়া, যোগব্যায়াম, নাচ ও আবৃত্তি</h3>
-            <p class="section-sub" style="margin:2px 0 4px;">ছড়া শুনতে <strong>'🔊 অ্যাপে পড়ে শুনুন'</strong> বা গানের জন্য <strong>'▶️ YouTube গান'</strong> চাপুন (কোনো অটো লিংক খুলবে না)</p>
+            <p class="section-sub" style="margin:2px 0 4px;">ছড়া শুনতে <strong>'🔊 অ্যাপে পড়ে শুনুন'</strong> বা গানের জন্য <strong>'▶️ YouTube গান'</strong> চাপুন</p>
           </div>
           <button class="btn" style="background:#fee2e2;color:#b91c1c;padding:6px 10px;font-size:12px;white-space:nowrap;" onclick="stopAllAudio()">⏹️ থামুন</button>
         </div>
@@ -549,14 +549,28 @@
       </div>
     </section>
 
-    <!-- TAB 3: MATH OLYMPIAD, ENGLISH OLYMPIAD & SPOKEN ENGLISH -->
+    <!-- TAB 3: 3-MONTH (90 DAYS) MATH OLYMPIAD, ENGLISH OLYMPIAD & SPOKEN ENGLISH -->
     <section class="tab-pane" id="tab-olympiad">
       <div class="card">
-        <h3 class="section-title">🏆 Math Olympiad, English Olympiad ও Spoken English</h3>
-        <p class="section-sub">ছোটদের যুক্তি, ইংরেজি শব্দভান্ডার এবং দৈনন্দিন Spoken English অনুশীলনের আলাদা বিভাগ</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+          <div>
+            <h3 class="section-title" style="margin:0;">🏆 ৩ মাসের (৯০ দিন) অলিম্পিয়াড ও Spoken English</h3>
+            <p class="section-sub" style="margin:2px 0 8px;">Month 1 (Foundation) • Month 2 (Logic & Grammar) • Month 3 (Mastery)</p>
+          </div>
+          <span class="chip day-chip" id="olympiadDayChip">Day 1 / 90</span>
+        </div>
+
+        <label style="font-size:12px;font-weight:700;display:block;margin-bottom:4px;">দিন নির্বাচন করুন (Day 1 – Day 90):</label>
+        <select id="olympiadDaySelect" style="margin-bottom:10px;"></select>
+
+        <div class="cat-pills" id="olympiadMonthPills" style="margin-bottom:6px;">
+          <button class="cat-btn active" data-omonth="1">📅 Month 1 (Days 1–30)</button>
+          <button class="cat-btn" data-omonth="2">📅 Month 2 (Days 31–60)</button>
+          <button class="cat-btn" data-omonth="3">📅 Month 3 (Days 61–90)</button>
+        </div>
 
         <div class="cat-pills" id="olympiadCatPills">
-          <button class="cat-btn active" data-ocat="ALL">সবগুলো</button>
+          <button class="cat-btn active" data-ocat="ALL">সব ৩টি বিষয়</button>
           <button class="cat-btn" data-ocat="math_olympiad">🔢 Math Olympiad</button>
           <button class="cat-btn" data-ocat="english_olympiad">🔤 English Olympiad</button>
           <button class="cat-btn" data-ocat="spoken_english">🗣️ Spoken English</button>
@@ -651,9 +665,11 @@
           <input type="text" id="newRhymeSongUrl" placeholder="YouTube বা MP3 গানের লিংক (ঐচ্ছিক)" style="margin-bottom:8px;" />
           <button class="btn btn-yellow" style="width:100%;margin-bottom:14px;" id="btnAddNewRhyme">+ নতুন গান / ছড়া যুক্ত করুন</button>
 
-          <h4 style="margin:0 0 8px;">৩. পেমেন্ট ও ভারতীয় শিক্ষামূলক অফার সেটিংস</h4>
+          <h4 style="margin:0 0 8px;">৩. পেমেন্ট, Monetag অ্যাড ও অফার সেটিংস</h4>
           <label style="font-size:12px;font-weight:700;">₹৯৯ পেমেন্ট / UPI লিংক:</label>
           <input type="text" id="adminPayLink" style="margin-bottom:8px;" />
+          <label style="font-size:12px;font-weight:700;">Monetag Direct Ad Link:</label>
+          <input type="text" id="adminAdLink" style="margin-bottom:8px;" />
           <label style="font-size:12px;font-weight:700;">স্পন্সর/অফার শিরোনাম:</label>
           <input type="text" id="adminCustomAdTitle" style="margin-bottom:8px;" />
           <label style="font-size:12px;font-weight:700;">স্পন্সর/অফার বিবরণ:</label>
@@ -697,7 +713,7 @@
     </div>
   </div>
 
-  <!-- In-App Video Ad Player Modal (ONLY plays inside app & returns to activity on finish—NO auto page open!) -->
+  <!-- In-App Video Ad Player Modal -->
   <div class="modal-backdrop" id="unlockModal">
     <div class="modal-box">
       <div style="font-size:32px;">🔒</div>
@@ -715,6 +731,18 @@
       <button class="btn btn-yellow" style="width:100%;margin-bottom:10px;" id="btnWatchAd">🎬 ইন-অ্যাপ ভিডিও দেখে ফ্রি আনলক করুন</button>
       <button class="btn btn-orange" style="margin-bottom:10px;" id="btnModalGoPro">👑 সব ৩০ দিন আনলক করুন (₹৯৯)</button>
       <button class="btn" style="background:#e2e8f0;width:100%;" id="btnCloseUnlock">বন্ধ করুন</button>
+    </div>
+  </div>
+
+  <!-- Post-Activity Monetag Ad Modal (Triggers ONLY AFTER an activity finishes) -->
+  <div class="modal-backdrop" id="postActivityAdModal">
+    <div class="modal-box">
+      <div style="font-size:34px;">🎉</div>
+      <h3 style="margin:6px 0;" id="postActTitle">দারুণ! অ্যাক্টিভিটি সম্পন্ন হয়েছে</h3>
+      <p style="font-size:13px;color:#475569;margin-bottom:14px;" id="postActDesc">পরবর্তী পাঠে যেতে নিচের <strong>Continue</strong> বাটনে চাপুন (একটি ছোট স্পন্সর বিজ্ঞাপন দেখাবে)।</p>
+      <button class="btn btn-yellow" style="width:100%;margin-bottom:10px;padding:13px;" id="btnPostActContinue">▶️ পরবর্তী পাঠে যান (Continue)</button>
+      <button class="btn btn-orange" style="margin-bottom:10px;" id="btnPostActGoPro">👑 বিজ্ঞাপন ছাড়াই পড়ুন (₹৯৯ Pro)</button>
+      <button class="btn" style="background:#e2e8f0;width:100%;font-size:12px;padding:8px;" id="btnClosePostAct">বন্ধ করুন</button>
     </div>
   </div>
 
@@ -845,127 +873,137 @@
     };
 
     // ==========================================
-    // 3. MATH OLYMPIAD, ENGLISH OLYMPIAD & SPOKEN ENGLISH DATA
+    // 3. 3-MONTH (90 DAYS) MATH OLYMPIAD, ENGLISH OLYMPIAD & SPOKEN ENGLISH ENGINE
     // ==========================================
-    const olympiadItems = [
-      // MATH OLYMPIAD
-      {
-        cat: "math_olympiad",
-        badge: "🔢 Math Olympiad • Pattern & Logic",
-        title: "১. সংখ্যার ছন্দ (Number Pattern)",
-        question: "2, 4, 6, 8, ___ — পরের সংখ্যাটি কত হবে?",
-        opts: ["9", "10", "12"],
-        ans: "10",
-        tip: "প্রতিটি সংখ্যা ২ করে বাড়ছে (2+2=4, 4+2=6, 6+2=8, 8+2=10)।"
-      },
-      {
-        cat: "math_olympiad",
-        badge: "🔢 Math Olympiad • Odd One Out",
-        title: "২. আলাদা কোনটি? (Odd One Out)",
-        question: "নিচের কোনটি জোড় সংখ্যা (Even Number) নয়?",
-        opts: ["4", "7", "8"],
-        ans: "7",
-        tip: "4 ও 8 জোড় সংখ্যা; 7 হলো বিজোড় সংখ্যা (Odd Number)।"
-      },
-      {
-        cat: "math_olympiad",
-        badge: "🔢 Math Olympiad • Shapes & Counting",
-        title: "৩. কয়টি ত্রিভুজ? (Shape Reasoning)",
-        question: "একটি ত্রিভুজ (Triangle)-এর কয়টি বাহু ও কয়টি কোণা থাকে?",
-        opts: ["৩টি", "৪টি", "৫টি"],
-        ans: "৩টি",
-        tip: "Tri মানে ৩—একটি ত্রিভুজের ৩টি বাহু ও ৩টি কোণা থাকে।"
-      },
-      {
-        cat: "math_olympiad",
-        badge: "🔢 Math Olympiad • Real-Life Word Problem",
-        title: "৪. মায়ের ঝুড়ির আম (Logical Addition)",
-        question: "ঝুড়িতে ৫টি আম ছিল। বাবা আরও ৩টি আম দিলেন। এখন মোট কয়টি আম হলো?",
-        opts: ["7", "8", "9"],
-        ans: "8",
-        tip: "৫ + ৩ = ৮টি আম।"
-      },
+    const mathOlympiadPool = [
+      // Month 1 (Days 1-30): Numbers, Patterns, Shapes, Comparison
+      { topic: "Number Pattern", q: "2, 4, 6, 8, ___ — পরের সংখ্যাটি কত হবে?", opts: ["9", "10", "12"], ans: "10", tip: "প্রতিটি সংখ্যা ২ করে বাড়ছে (8 + 2 = 10)।" },
+      { topic: "Odd & Even", q: "নিচের কোনটি বিজোড় সংখ্যা (Odd Number)?", opts: ["4", "7", "8"], ans: "7", tip: "4 ও 8 জোড় সংখ্যা; 7 হলো বিজোড় সংখ্যা।" },
+      { topic: "Shapes Logic", q: "একটি ত্রিভুজ (Triangle)-এর কয়টি বাহু ও কয়টি কোণা থাকে?", opts: ["৩টি", "৪টি", "৫টি"], ans: "৩টি", tip: "Tri মানে ৩—ত্রিভুজের ৩টি বাহু ও ৩টি কোণা থাকে।" },
+      { topic: "Before & After", q: "19-এর ঠিক পরের সংখ্যা (After) কোনটি?", opts: ["18", "20", "21"], ans: "20", tip: "19-এর ঠিক পরে 20 আসে।" },
+      { topic: "Comparison", q: "15, 9, 22, 11 — এই সংখ্যাগুলোর মধ্যে সবচেয়ে বড় কোনটি?", opts: ["15", "22", "11"], ans: "22", tip: "22 হলো সবচেয়ে বড় সংখ্যা।" },
+      { topic: "Skip Counting by 5", q: "5, 10, 15, ___, 25 — ফাঁকা ঘরে কী বসবে?", opts: ["18", "20", "22"], ans: "20", tip: "৫ করে যোগ হচ্ছে: 15 + 5 = 20।" },
+      { topic: "Zero Concept", q: "কোনো সংখ্যার সাথে 0 যোগ করলে (8 + 0 = ?) উত্তর কত হয়?", opts: ["0", "8", "80"], ans: "8", tip: "যেকোনো সংখ্যার সাথে শূন্য (0) যোগ করলে সেই সংখ্যাটিই থাকে।" },
+      { topic: "Shapes in Real Life", q: "ফুটবল বা চাঁদের আকৃতি কেমন?", opts: ["ত্রিকোণ (Triangle)", "গোল (Circle/Sphere)", "চৌকো (Square)"], ans: "গোল (Circle/Sphere)", tip: "ফুটবল ও চাঁদ গোল আকৃতির।" },
+      { topic: "Counting Pairs", q: "৩ জোড়া জুতোয় মোট কয়টি জুতো থাকে?", opts: ["৩টি", "৬টি", "৫টি"], ans: "৬টি", tip: "১ জোড়া = ২টি; তাই ৩ জোড়া = ২ + ২ + ২ = ৬টি।" },
+      { topic: "Simple Addition", q: "ঝুড়িতে ৫টি আম ছিল। বাবা আরও ৩টি আম দিলেন। মোট কয়টি আম হলো?", opts: ["7", "8", "9"], ans: "8", tip: "৫ + ৩ = ৮টি আম।" },
 
-      // ENGLISH OLYMPIAD
-      {
-        cat: "english_olympiad",
-        badge: "🔤 English Olympiad • Rhyming Words",
-        title: "১. Rhyming Word (ছন্দের মিল)",
-        question: "Which word rhymes with 'CAT'?",
-        opts: ["BAT", "DOG", "SUN"],
-        ans: "BAT",
-        tip: "Cat, Bat, Mat, Rat — সবগুলোর শেষে '-at' সাউন্ড মিলে যায়।"
-      },
-      {
-        cat: "english_olympiad",
-        badge: "🔤 English Olympiad • Vowels",
-        title: "২. Vowel চেনা (স্বরবর্ণ)",
-        question: "Which one of these is a Vowel in English?",
-        opts: ["B", "E", "T"],
-        ans: "E",
-        tip: "English Vowels are 5 letters: A, E, I, O, U."
-      },
-      {
-        cat: "english_olympiad",
-        badge: "🔤 English Olympiad • Opposite Word",
-        title: "৩. Opposite Word (বিপরীত শব্দ)",
-        question: "What is the opposite of 'BIG'?",
-        opts: ["SMALL", "TALL", "FAST"],
-        ans: "SMALL",
-        tip: "Big (বড়)-এর বিপরীত শব্দ হলো Small (ছোট)।"
-      },
-      {
-        cat: "english_olympiad",
-        badge: "🔤 English Olympiad • Spelling",
-        title: "৪. Correct Spelling (সঠিক বানান)",
-        question: "Choose the correct spelling:",
-        opts: ["SCHOL", "SCHOOL", "SKOOL"],
-        ans: "SCHOOL",
-        tip: "S-C-H-O-O-L = School (বিদ্যালয়)।"
-      },
+      // Month 2 (Days 31-60): Addition, Subtraction, Time, Money, Measurement
+      { topic: "Mental Subtraction", q: "তোমার কাছে ১০টি চকলেট ছিল, ৩টি বন্ধুকে দিলে কয়টি থাকবে?", opts: ["6", "7", "8"], ans: "7", tip: "১০ - ৩ = ৭টি চকলেট।" },
+      { topic: "Missing Number", q: "6 + ___ = 11 — ফাঁকা ঘরে কত বসবে?", opts: ["4", "5", "6"], ans: "5", tip: "6-এর সাথে 5 যোগ করলে 11 হয়।" },
+      { topic: "Clock & Time", q: "ঘড়ির ছোট কাঁটা 3-এর ঘরে এবং বড় কাঁটা 12-এর ঘরে থাকলে কয়টা বাজে?", opts: ["১২টা", "৩টে", "৬টা"], ans: "৩টে", tip: "ছোট কাঁটা ঘণ্টা নির্দেশ করে—তাই ৩টে বাজে।" },
+      { topic: "Days of Week", q: "রবিবারের ঠিক আগের দিন কী বার?", opts: ["সোমবার", "শনিবার", "শুক্রবার"], ans: "শনিবার", tip: "শনিবারের পর রবিবার আসে।" },
+      { topic: "Indian Currency", q: "৫ টাকার দুটি কয়েন মিলে মোট কত টাকা হয়?", opts: ["৫ টাকা", "১০ টাকা", "১৫ টাকা"], ans: "১০ টাকা", tip: "৫ + ৫ = ১০ টাকা।" },
+      { topic: "Reverse Counting", q: "30, 28, 26, ___ — পরের সংখ্যাটি কত হবে?", opts: ["25", "24", "22"], ans: "24", tip: "প্রতিবার ২ করে কমছে: 26 - 2 = 24।" },
+      { topic: "Heavy vs Light", q: "একটি হাতি এবং একটি ইঁদুরের মধ্যে কোনটি বেশি ভারী?", opts: ["ইঁদুর", "হাতি", "দুটিই সমান"], ans: "হাতি", tip: "হাতি অনেক বড় এবং ভারী প্রাণী।" },
+      { topic: "Square Sides", q: "একটি বর্গক্ষেত্র (Square)-এর কয়টি সমান বাহু থাকে?", opts: ["৩টি", "৪টি", "৬টি"], ans: "৪টি", tip: "Square-এর ৪টি বাহুই সমান।" },
+      { topic: "Double Number", q: "7-এর দ্বিগুণ (Double of 7) কত?", opts: ["12", "14", "16"], ans: "14", tip: "7 + 7 = 14।" },
+      { topic: "Calendar Months", q: "এক বছরে মোট কয়টি মাস থাকে?", opts: ["১০টি", "১২টি", "৭টি"], ans: "১২টি", tip: "জানুয়ারি থেকে ডিসেম্বর মোট ১২টি মাস।" },
 
-      // SPOKEN ENGLISH FOR KIDS
-      {
-        cat: "spoken_english",
-        badge: "🗣️ Spoken English • Daily Greeting",
-        title: "১. সকালের শুভেচ্ছা (Morning Greeting)",
-        question: "Good morning, Mummy! (সুপ্রভাত, মা!)",
-        opts: ["🔊 ইংরেজি শুনুন", "🇧🇩 বাংলা অর্থ শুনুন", ""],
-        speakEn: "Good morning, Mummy! How are you?",
-        speakBn: "সুপ্রভাত মা! তুমি কেমন আছো?",
-        tip: "সকালে ঘুম থেকে উঠে মা-বাবাকে বলুন: 'Good morning, Mummy!' / 'Good morning, Papa!'"
-      },
-      {
-        cat: "spoken_english",
-        badge: "🗣️ Spoken English • Asking Permission",
-        title: "২. অনুমতি চাওয়া (Polite Request)",
-        question: "Please give me water. (অনুগ্রহ করে আমাকে জল দাও)",
-        opts: ["🔊 ইংরেজি শুনুন", "🇧🇩 বাংলা অর্থ শুনুন", ""],
-        speakEn: "Please give me some water. Thank you!",
-        speakBn: "দয়া করে আমাকে একটু জল দাও। ধন্যবাদ!",
-        tip: "কিছু চাইলে ভদ্রভাবে 'Please' এবং পেলে 'Thank you' বলতে শেখান।"
-      },
-      {
-        cat: "spoken_english",
-        badge: "🗣️ Spoken English • Feeling Happy",
-        title: "৩. মনের অনুভূতি প্রকাশ (Expressing Joy)",
-        question: "I am very happy today! (আজ আমি খুব খুশি!)",
-        opts: ["🔊 ইংরেজি শুনুন", "🇧🇩 বাংলা অর্থ শুনুন", ""],
-        speakEn: "I am very happy today! Let us play together.",
-        speakBn: "আজ আমি খুব খুশি! চলো আমরা একসাথে খেলি।",
-        tip: "খেলার সময় বা আনন্দের মুহূর্তে এই ছোট বাক্যটি ব্যবহার করুন।"
-      },
-      {
-        cat: "spoken_english",
-        badge: "🗣️ Spoken English • Bedtime",
-        title: "৪. ঘুমানোর সময় (Good Night)",
-        question: "Good night, Sweet dreams! (শুভ রাত্রি, মিষ্টি স্বপ্ন!)",
-        opts: ["🔊 ইংরেজি শুনুন", "🇧🇩 বাংলা অর্থ শুনুন", ""],
-        speakEn: "Good night! Sweet dreams.",
-        speakBn: "শুভ রাত্রি! মিষ্টি স্বপ্ন দেখো।",
-        tip: "রাতে ঘুমানোর আগে প্রতিদিন 'Good night' বলার অভ্যাস করান।"
-      }
+      // Month 3 (Days 61-90): Logical Reasoning, Grouping, Word Puzzles
+      { topic: "Logical Sequence", q: "A1, B2, C3, ___ — পরেরটি কী হবে?", opts: ["D3", "D4", "E4"], ans: "D4", tip: "বর্ণ ও সংখ্যা একসাথে ১ করে বাড়ছে: D4।" },
+      { topic: "Multiplication Intro", q: "৩টি গাড়ির প্রতিটিতে ৪টি করে চাকা থাকলে মোট কয়টি চাকা?", opts: ["৭টি", "১২টি", "১০টি"], ans: "১২টি", tip: "৪ + ৪ + ৪ = ১২টি চাকা।" },
+      { topic: "Half Concept", q: "৮টি আপেলের অর্ধেক (Half) কয়টি আপেল?", opts: ["২টি", "৪টি", "৬টি"], ans: "৪টি", tip: "৮-কে সমান দুই ভাগ করলে ৪টি করে হয়।" },
+      { topic: "Age Puzzle", q: "রামের বয়স এখন ৬ বছর। ২ বছর পর রামের বয়স কত হবে?", opts: ["৭ বছর", "৮ বছর", "৯ বছর"], ans: "৮ বছর", tip: "৬ + ২ = ৮ বছর।" },
+      { topic: "Shape Pattern", q: "◯, △, ◯, △, ___ — এরপর কোন চিহ্ন বসবে?", opts: ["△", "◯", "□"], ans: "◯", tip: "গোল এবং ত্রিভুজ পর্যায়ক্রমে আসছে।" },
+      { topic: "Tens & Ones", q: "2 Tens এবং 5 Ones মিলে কোন সংখ্যা তৈরি হয়?", opts: ["52", "25", "7"], ans: "25", tip: "20 + 5 = 25।" },
+      { topic: "Money Change", q: "২০ টাকা দিয়ে ১২ টাকার খাতা কিনলে দোকানদার কত টাকা ফেরত দেবেন?", opts: ["৬ টাকা", "৮ টাকা", "১০ টাকা"], ans: "৮ টাকা", tip: "২০ - ১২ = ৮ টাকা।" },
+      { topic: "Direction Sense", q: "সকালবেলা সূর্য কোন দিকে ওঠে?", opts: ["পশ্চিম দিকে", "পূর্ব দিকে", "উত্তর দিকে"], ans: "পূর্ব দিকে", tip: "সূর্য প্রতিদিন পূর্ব দিকে ওঠে।" },
+      { topic: "Odd One Out (Objects)", q: "আপেল, আম, কলা, পেন্সিল — এর মধ্যে কোনটি আলাদা?", opts: ["আম", "কলা", "পেন্সিল"], ans: "পেন্সিল", tip: "আপেল, আম ও কলা ফল; পেন্সিল লেখার জিনিস।" },
+      { topic: "Grand Olympiad Challenge", q: "১টি বেড়ালের ৪টি পা হলে ২টি বেড়ালের মোট কয়টি পা?", opts: ["৬টি", "৮টি", "১০টি"], ans: "৮টি", tip: "৪ + ৪ = ৮টি পা।" }
     ];
+
+    const englishOlympiadPool = [
+      // Month 1 (Days 1-30): Phonics, Rhyming, Vowels, Opposites
+      { topic: "Rhyming Words", q: "Which word rhymes with 'CAT'?", opts: ["BAT", "DOG", "SUN"], ans: "BAT", tip: "Cat, Bat, Mat — সবগুলোর শেষে '-at' ধ্বনি আছে।" },
+      { topic: "Vowels", q: "Which one of these is a Vowel in English?", opts: ["B", "E", "T"], ans: "E", tip: "English Vowels হলো ৫টি: A, E, I, O, U।" },
+      { topic: "Opposite Words", q: "What is the opposite of 'BIG'?", opts: ["SMALL", "TALL", "FAST"], ans: "SMALL", tip: "Big (বড়)-এর বিপরীত Small (ছোট)।" },
+      { topic: "Spelling", q: "Choose the correct spelling:", opts: ["SCHOL", "SCHOOL", "SKOOL"], ans: "SCHOOL", tip: "S-C-H-O-O-L = School।" },
+      { topic: "Articles (A/An)", q: "Fill in the blank: I eat ___ apple daily.", opts: ["a", "an", "two"], ans: "an", tip: "Apple শব্দটি Vowel (A) দিয়ে শুরু হওয়ায় আগে 'an' বসে।" },
+      { topic: "Animal Sounds", q: "A dog barks, and a cat ___.", opts: ["roars", "mews", "chirps"], ans: "mews", tip: "বিড়ালের ডাককে ইংরেজিতে 'mews' বলে।" },
+      { topic: "Singular & Plural", q: "One book, many ___.", opts: ["book", "books", "bookes"], ans: "books", tip: "একটির বেশি বোঝাতে book-এর শেষে 's' যোগ হয়।" },
+      { topic: "Opposite (Hot/Cold)", q: "Ice is cold, but tea is ___.", opts: ["hot", "wet", "soft"], ans: "hot", tip: "Cold (ঠান্ডা)-এর বিপরীত Hot (গরম)।" },
+      { topic: "Colors Vocabulary", q: "What is the colour of a ripe banana?", opts: ["Blue", "Yellow", "Black"], ans: "Yellow", tip: "পাকা কলার রঙ হলুদ (Yellow)।" },
+      { topic: "Jumbled Letters", q: "Unscramble the letters 'N-U-S' to make a word:", opts: ["SUN", "NUS", "USN"], ans: "SUN", tip: "S-U-N = Sun (সূর্য)।" },
+
+      // Month 2 (Days 31-60): Pronouns, Prepositions, Action Words, Adjectives
+      { topic: "Pronouns (He/She)", q: "Rina is a good girl. ___ goes to school.", opts: ["He", "She", "It"], ans: "She", tip: "মেয়েদের নামের পরিবর্তে 'She' বসে।" },
+      { topic: "Action Words (Verbs)", q: "Identify the action word: 'Birds fly in the sky.'", opts: ["Birds", "fly", "sky"], ans: "fly", tip: "Fly (ওড়া) হলো একটি কাজ বা Verb।" },
+      { topic: "Preposition (In/On)", q: "The book is ___ the table.", opts: ["on", "in", "under"], ans: "on", tip: "টেবিলের ওপরে বোঝাতে 'on' বসে।" },
+      { topic: "Baby Animals", q: "What is a baby dog called?", opts: ["Kitten", "Puppy", "Calf"], ans: "Puppy", tip: "কুকুরছানাকে Puppy এবং বিড়ালছানাকে Kitten বলে।" },
+      { topic: "Describing Words", q: "Find the describing word: 'She has a red dress.'", opts: ["She", "red", "dress"], ans: "red", tip: "Red (লাল) শব্দটি জামাটি কেমন তা বোঝাচ্ছে।" },
+      { topic: "Opposites (Day/Night)", q: "We see stars at ___.", opts: ["morning", "night", "noon"], ans: "night", tip: "রাতের আকাশে তারা দেখা যায়।" },
+      { topic: "Is / Are Usage", q: "They ___ playing football.", opts: ["is", "am", "are"], ans: "are", tip: "They (তারা) বহুবচন হওয়ায় 'are' বসে।" },
+      { topic: "Odd Word Out", q: "Rose, Lily, Lotus, Tiger — Which one is odd?", opts: ["Rose", "Lotus", "Tiger"], ans: "Tiger", tip: "বাকি তিনটি ফুলের নাম; Tiger হলো প্রাণী।" },
+      { topic: "Opposite (Happy)", q: "What is the opposite of 'HAPPY'?", opts: ["SAD", "GLAD", "GOOD"], ans: "SAD", tip: "Happy (খুশি)-এর বিপরীত Sad (দুঃখিত)।" },
+      { topic: "Days Spelling", q: "Which day comes after Monday?", opts: ["Sunday", "Tuesday", "Friday"], ans: "Tuesday", tip: "Monday-এর পর Tuesday আসে।" },
+
+      // Month 3 (Days 61-90): Comprehension, Sentence Order, Synonyms, Grammar
+      { topic: "Sentence Order", q: "Arrange correctly: 'milk / drinks / cat / The'", opts: ["The cat drinks milk.", "Drinks milk the cat.", "Cat the milk drinks."], ans: "The cat drinks milk.", tip: "সঠিক বাক্য: The cat drinks milk." },
+      { topic: "Has / Have Usage", q: "I ___ two pencils in my bag.", opts: ["has", "have", "is"], ans: "have", tip: "I-এর সাথে সবসময় 'have' বসে।" },
+      { topic: "Similar Meaning", q: "Which word means the same as 'LITTLE'?", opts: ["HUGE", "SMALL", "LOUD"], ans: "SMALL", tip: "Little এবং Small দুটিরই অর্থ ছোট।" },
+      { topic: "Question Words", q: "___ is your name?", opts: ["What", "Where", "When"], ans: "What", tip: "নাম জিজ্ঞেস করতে 'What is your name?' বলা হয়।" },
+      { topic: "Preposition (Under)", q: "The cat is sleeping ___ the chair.", opts: ["under", "into", "at"], ans: "under", tip: "চেয়ারের নিচে বোঝাতে 'under' বসে।" },
+      { topic: "Opposites (Up/Down)", q: "The lift goes up and ___.", opts: ["in", "down", "out"], ans: "down", tip: "Up (ওপরে)-এর বিপরীত Down (নিচে)।" },
+      { topic: "Compound Words", q: "Sun + Flower = ?", opts: ["Sunplant", "Sunflower", "Flowsun"], ans: "Sunflower", tip: "Sun এবং Flower মিলে Sunflower (সূর্যমুখী) হয়।" },
+      { topic: "Seasons", q: "In which season do we use umbrellas most?", opts: ["Winter", "Rainy Season", "Autumn"], ans: "Rainy Season", tip: "বর্ষাকালে (Rainy Season) আমরা ছাতা ব্যবহার করি।" },
+      { topic: "Healthy Food", q: "Which one is a healthy fruit?", opts: ["Chips", "Mango", "Candy"], ans: "Mango", tip: "Mango (আম) একটি পুষ্টিকর ফল।" },
+      { topic: "Grand English Challenge", q: "Complete: 'Honesty is the best ___.'", opts: ["game", "policy", "story"], ans: "policy", tip: "প্রবাদ বাক্য: Honesty is the best policy." }
+    ];
+
+    const spokenEnglishPool = [
+      // Month 1 (Days 1-30): Greetings, Manners, Self Introduction
+      { topic: "Morning Greeting", q: "Good morning, Mummy! (সুপ্রভাত, মা!)", en: "Good morning, Mummy! How are you?", bn: "সুপ্রভাত মা! তুমি কেমন আছো?", tip: "সকালে ঘুম থেকে উঠে মা-বাবাকে বলুন: Good morning!" },
+      { topic: "Polite Request", q: "Please give me water. (দয়া করে আমাকে জল দাও)", en: "Please give me some water. Thank you!", bn: "দয়া করে আমাকে একটু জল দাও। ধন্যবাদ!", tip: "কিছু চাইলে 'Please' এবং পেলে 'Thank you' বলতে শেখান।" },
+      { topic: "Self Introduction", q: "My name is ___. (আমার নাম ___)", en: "Hello! My name is Nilesh. I am a good student.", bn: "হ্যালো! আমার নাম নিলেশ। আমি একজন ভালো ছাত্র।", tip: "নিজের নাম ও পরিচয় ইংরেজিতে বলার অভ্যাস করান।" },
+      { topic: "Asking Permission", q: "May I come in, Teacher? (আমি কি ভেতরে আসতে পারি?)", en: "Excuse me, Teacher! May I come in?", bn: "শিক্ষক মহাশয়, আমি কি ভেতরে আসতে পারি?", tip: "ক্লাসে বা ঘরে ঢোকার আগে 'May I come in?' বলুন।" },
+      { topic: "Saying Sorry", q: "I am sorry! (আমি দুঃখিত!)", en: "Oh, I am sorry! It was a mistake.", bn: "ওহ, আমি দুঃখিত! এটি ভুল হয়ে গেছে।", tip: "কোনো ভুল হলে বিনয়ের সাথে 'I am sorry' বলতে শেখান।" },
+      { topic: "Feeling Hungry", q: "I am hungry, Mummy. (মা, আমার খিদে পেয়েছে)", en: "Mummy, I am hungry. Please give me food.", bn: "মা, আমার খিদে পেয়েছে। দয়া করে আমাকে খাবার দাও।", tip: "খিদে পেলে এই বাক্যটি ব্যবহার করতে বলুন।" },
+      { topic: "Washing Hands", q: "Let us wash our hands. (চলো হাত ধুয়ে নিই)", en: "I always wash my hands before eating.", bn: "আমি খাওয়ার আগে সবসময় হাত ধুয়ে নিই।", tip: "খাবারের আগে হাত ধোয়ার অভ্যাস ও ইংরেজি বাক্য শেখান।" },
+      { topic: "Thanking Elders", q: "Thank you so much! (অনেক ধন্যবাদ!)", en: "Thank you so much, Papa, for this gift!", bn: "বাবা, এই উপহারের জন্য অনেক ধন্যবাদ!", tip: "কেউ সাহায্য বা উপহার দিলে 'Thank you' বলুন।" },
+      { topic: "Sharing Toys", q: "Let us play together. (চলো একসাথে খেলি)", en: "Come, friend! Let us play together.", bn: "এসো বন্ধু! চলো আমরা একসাথে খেলি।", tip: "বন্ধুদের সাথে মিলেমিশে খেলার সময় এটি বলুন।" },
+      { topic: "Bedtime Wish", q: "Good night, Sweet dreams! (শুভ রাত্রি!)", en: "Good night, everyone! Sweet dreams.", bn: "সবাইকে শুভ রাত্রি! মিষ্টি স্বপ্ন দেখো।", tip: "রাতে ঘুমানোর আগে প্রতিদিন বলুন।" },
+
+      // Month 2 (Days 31-60): School, Classroom, Family & Home Conversations
+      { topic: "Drinking Water Break", q: "May I drink water? (আমি কি জল খেতে পারি?)", en: "Teacher, I am thirsty. May I drink water?", bn: "স্যার/ম্যাডাম, আমার তেষ্টা পেয়েছে। আমি কি জল খেতে পারি?", tip: "স্কুলে জল খাওয়ার অনুমতি নিতে এটি বলুন।" },
+      { topic: "Showing Homework", q: "I have finished my work. (আমার কাজ শেষ হয়েছে)", en: "Look, Mummy! I have finished my homework.", bn: "দেখো মা! আমি আমার বাড়ির কাজ শেষ করেছি।", tip: "পড়া শেষ হলে মা-বাবা বা শিক্ষককে দেখিয়ে বলুন।" },
+      { topic: "Loving Family", q: "I love my family. (আমি আমার পরিবারকে ভালোবাসি)", en: "I love my Mummy, Papa, and grandparents.", bn: "আমি আমার মা, বাবা এবং দাদু-ঠাম্মাকে ভালোবাসি।", tip: "পরিবারের প্রতি ভালোবাসা প্রকাশের বাক্য।" },
+      { topic: "Helping at Home", q: "Can I help you? (আমি কি তোমাকে সাহায্য করতে পারি?)", en: "Mummy, can I help you clean the table?", bn: "মা, আমি কি টেবিল পরিষ্কার করতে তোমাকে সাহায্য করতে পারি?", tip: "বাড়ির ছোটখাটো কাজে সাহায্য করার সময় বলুন।" },
+      { topic: "Weather Talk", q: "It is a sunny day! (আজ খুব সুন্দর রোদ উঠেছে!)", en: "Look outside! It is a bright and sunny day.", bn: "বাইরে দেখো! আজ খুব সুন্দর রোদ ঝলমলে দিন।", tip: "সকালের আবহাওয়া দেখে ইংরেজিতে বর্ণনা করুন।" },
+      { topic: "Expressing Likes", q: "I like eating mangoes. (আমি আম খেতে ভালোবাসি)", en: "Mango is sweet. I like eating mangoes.", bn: "আম খুব মিষ্টি। আমি আম খেতে ভালোবাসি।", tip: "নিজের পছন্দের ফল বা খাবারের নাম বসিয়ে অনুশীলন করুন।" },
+      { topic: "Being Careful", q: "Be careful! (সাবধানে চলো!)", en: "Walk slowly and be careful on the stairs.", bn: "ধীরে হাঁটো এবং সিঁড়িতে সাবধানে চলো।", tip: "সিঁড়ি দিয়ে নামার বা রাস্তায় চলার সময় বলুন।" },
+      { topic: "Asking Questions", q: "What is this? (এটা কী?)", en: "Papa, what is this? Please tell me its name.", bn: "বাবা, এটা কী? দয়া করে এর নাম বলো।", tip: "নতুন কোনো জিনিস দেখলে ইংরেজিতে প্রশ্ন করতে শেখান।" },
+      { topic: "Tidying Up", q: "Keep toys in the box. (খেলনাগুলো বাক্সে রাখো)", en: "After playing, I keep my toys in the box.", bn: "খেলার পর আমি আমার খেলনাগুলো বাক্সে গুছিয়ে রাখি।", tip: "খেলার পর জিনিস গুছিয়ে রাখার অভ্যাস করুন।" },
+      { topic: "Saying Goodbye", q: "See you tomorrow! (আগামীকাল দেখা হবে!)", en: "Bye-bye, friends! See you tomorrow at school.", bn: "বিদায় বন্ধুরা! আগামীকাল স্কুলে দেখা হবে।", tip: "স্কুল ছুটির পর বন্ধুদের বিদায় জানাতে বলুন।" },
+
+      // Month 3 (Days 61-90): Confidence, Storytelling & Public Speaking
+      { topic: "Describing Myself", q: "I am brave and smart. (আমি সাহসী ও বুদ্ধিমান)", en: "I am brave, kind, and always speak the truth.", bn: "আমি সাহসী, দয়ালু এবং সবসময় সত্য কথা বলি।", tip: "আয়নার সামনে দাঁড়িয়ে আত্মবিশ্বাসের সাথে বলুন।" },
+      { topic: "Nature Care", q: "Save water and trees. (জল ও গাছ বাঁচাও)", en: "Trees give us fresh air. We must plant trees.", bn: "গাছ আমাদের নির্মল বাতাস দেয়। আমাদের গাছ লাগানো উচিত।", tip: "পরিবেশ সচেতনতা নিয়ে ২টি বাক্য বলুন।" },
+      { topic: "Healthy Habits", q: "Early to bed, early to rise. (তাড়াতাড়ি ঘুমানো ও ওঠা)", en: "I wake up early in the morning and brush my teeth.", bn: "আমি সকালে তাড়াতাড়ি ঘুম থেকে উঠি এবং দাঁত মাজি।", tip: "প্রতিদিনের ভালো অভ্যাসগুলো ইংরেজিতে বলুন।" },
+      { topic: "Describing a Picture", q: "I see a green tree. (আমি একটি সবুজ গাছ দেখছি)", en: "In this picture, I see a green tree and two birds.", bn: "এই ছবিতে আমি একটি সবুজ গাছ এবং দুটি পাখি দেখছি।", tip: "বইয়ের যেকোনো ছবি দেখে ৩টি বাক্য বলুন।" },
+      { topic: "Gratitude", q: "Thank you for teaching me. (আমাকে শেখানোর জন্য ধন্যবাদ)", en: "Thank you, Teacher, for teaching us with love.", bn: "আমাদের ভালোবাসা দিয়ে শেখানোর জন্য ধন্যবাদ, শিক্ষক মহাশয়।", tip: "শিক্ষক বা বড়দের প্রতি কৃতজ্ঞতা প্রকাশ করুন।" },
+      { topic: "Helping a Friend", q: "Don't worry, I am here. (চিন্তা করো না, আমি আছি)", en: "Don't worry, my friend! Let me help you.", bn: "চিন্তা করো না বন্ধু! আমি তোমাকে সাহায্য করছি।", tip: "বন্ধু মন খারাপ করলে তাকে সান্ত্বনা দিতে বলুন।" },
+      { topic: "Reading Habit", q: "I love reading storybooks. (আমি গল্পের বই পড়তে ভালোবাসি)", en: "Reading storybooks makes us wise and happy.", bn: "গল্পের বই পড়লে আমরা জ্ঞানী ও খুশি হই।", tip: "প্রতিদিন অন্তত ১টি ছোট গল্প পড়ার অভ্যাস করুন।" },
+      { topic: "Respecting Elders", q: "I respect my elders. (আমি বড়দের সম্মান করি)", en: "I always listen to my parents and teachers.", bn: "আমি সবসময় আমার মা-বাবা ও শিক্ষকদের কথা শুনি।", tip: "সদাচরণ ও নৈতিক শিক্ষার বাক্য।" },
+      { topic: "My Country India", q: "I love my country India. (আমি আমার দেশ ভারতকে ভালোবাসি)", en: "India is my motherland. I am proud to be an Indian.", bn: "ভারত আমার মাতৃভূমি। আমি ভারতীয় হিসেবে গর্বিত।", tip: "দেশের প্রতি ভালোবাসা প্রকাশের বাক্য।" },
+      { topic: "90-Day Graduation Speech", q: "I completed 90 days! (আমি ৯০ দিন সম্পন্ন করেছি!)", en: "Hooray! I practiced every day and learned so much!", bn: "দারুণ! আমি প্রতিদিন অনুশীলন করেছি এবং অনেক কিছু শিখেছি!", tip: "৩ মাসের কোর্স শেষে মা-বাবার সামনে ছোট বক্তৃতা দিন!" }
+    ];
+
+    // Build complete 90-Day (3 Months) Olympiad & Spoken English Curriculum
+    const olympiad90Days = [];
+    for (let d = 1; d <= 90; d++) {
+      const m = d <= 30 ? 1 : (d <= 60 ? 2 : 3);
+      const mIdx = (d - 1) % mathOlympiadPool.length;
+      const eIdx = (d - 1) % englishOlympiadPool.length;
+      const sIdx = (d - 1) % spokenEnglishPool.length;
+      olympiad90Days.push({
+        day: d,
+        month: m,
+        math: mathOlympiadPool[mIdx],
+        eng: englishOlympiadPool[eIdx],
+        spoken: spokenEnglishPool[sIdx]
+      });
+    }
 
     // ==========================================
     // 4. BAKED-IN DATA BLOCK
@@ -975,7 +1013,7 @@
     const BAKED_CUSTOM_ACTIVITIES = [];
     const BAKED_CONFIG = {
       payLink: "upi://pay?pa=8250912381@ikwik&pn=HateKhori&am=99&cu=INR",
-      adLink: "upi://pay?pa=8250912381@ikwik&pn=HateKhoriPro&am=99&cu=INR",
+      adLink: "https://uplcm.com/4/12355529",
       adminPin: "1234",
       bannerTitle: "✏️ প্রাক-প্রাথমিক রঙিন ওয়ার্কশিট ও ছড়া বুক (India Edition)",
       bannerDesc: "ভারতীয় প্রাক-প্রাথমিক শিক্ষার্থীদের জন্য তৈরি সব ৩০ দিনের ওয়ার্কশিট ও A4 প্রিন্ট আনলক করুন মাত্র ₹৯৯ টাকায়।",
@@ -1115,7 +1153,7 @@
     state.customActivities = state.customActivities || [];
     state.customPdfs = state.customPdfs || [];
     state.payLink = state.payLink || BAKED_CONFIG.payLink;
-    state.adLink = state.adLink || BAKED_CONFIG.adLink;
+    state.adLink = (state.adLink && state.adLink.startsWith("http")) ? state.adLink : BAKED_CONFIG.adLink;
     state.adminPin = state.adminPin || BAKED_CONFIG.adminPin;
     state.customAdTitle = state.customAdTitle || BAKED_CONFIG.bannerTitle;
     state.customAdDesc = state.customAdDesc || BAKED_CONFIG.bannerDesc;
@@ -1141,32 +1179,83 @@
     let pendingUnlockDay = null;
     let activeActivityCat = "all";
     let activePdfCat = "ALL";
+    let activeOlympiadDay = 1;
+    let activeOlympiadMonth = 1;
     let activeOlympiadCat = "ALL";
 
-    // Render Math Olympiad, English Olympiad & Spoken English
+    function populateOlympiadDaySelect() {
+      const sel = document.getElementById("olympiadDaySelect");
+      sel.innerHTML = "";
+      olympiad90Days.filter(item => item.month === activeOlympiadMonth).forEach(item => {
+        const opt = document.createElement("option");
+        opt.value = item.day;
+        opt.textContent = `Day ${item.day} (Month ${item.month}) — ${item.math.topic} | ${item.eng.topic} | ${item.spoken.topic}`;
+        if (item.day === activeOlympiadDay) opt.selected = true;
+        sel.appendChild(opt);
+      });
+    }
+
     function renderOlympiadSection() {
+      const dayObj = olympiad90Days.find(x => x.day === Number(activeOlympiadDay)) || olympiad90Days[0];
+      activeOlympiadDay = dayObj.day;
+      activeOlympiadMonth = dayObj.month;
+      document.getElementById("olympiadDayChip").textContent = `Day ${dayObj.day} / 90`;
+      populateOlympiadDaySelect();
+
+      const cards = [];
+      if (activeOlympiadCat === "ALL" || activeOlympiadCat === "math_olympiad") {
+        cards.push({
+          cat: "math_olympiad",
+          cls: "math-o",
+          badge: `🔢 Math Olympiad • Day ${dayObj.day} (Month ${dayObj.month}) • ${dayObj.math.topic}`,
+          title: `আজকের Math Olympiad চ্যালেঞ্জ (Day ${dayObj.day})`,
+          q: dayObj.math.q,
+          opts: dayObj.math.opts,
+          ans: dayObj.math.ans,
+          tip: dayObj.math.tip
+        });
+      }
+      if (activeOlympiadCat === "ALL" || activeOlympiadCat === "english_olympiad") {
+        cards.push({
+          cat: "english_olympiad",
+          cls: "eng-o",
+          badge: `🔤 English Olympiad • Day ${dayObj.day} (Month ${dayObj.month}) • ${dayObj.eng.topic}`,
+          title: `আজকের English Olympiad চ্যালেঞ্জ (Day ${dayObj.day})`,
+          q: dayObj.eng.q,
+          opts: dayObj.eng.opts,
+          ans: dayObj.eng.ans,
+          tip: dayObj.eng.tip
+        });
+      }
+      if (activeOlympiadCat === "ALL" || activeOlympiadCat === "spoken_english") {
+        cards.push({
+          cat: "spoken_english",
+          cls: "spk-o",
+          badge: `🗣️ Spoken English • Day ${dayObj.day} (Month ${dayObj.month}) • ${dayObj.spoken.topic}`,
+          title: `আজকের Spoken English অনুশীলন (Day ${dayObj.day})`,
+          q: dayObj.spoken.q,
+          speakEn: dayObj.spoken.en,
+          speakBn: dayObj.spoken.bn,
+          tip: dayObj.spoken.tip
+        });
+      }
+
       const container = document.getElementById("olympiadListContainer");
-      const filtered = activeOlympiadCat === "ALL"
-        ? olympiadItems
-        : olympiadItems.filter(x => x.cat === activeOlympiadCat);
-
-      container.innerHTML = filtered.map((item, idx) => {
-        const cardCls = item.cat === "math_olympiad" ? "math-o" : (item.cat === "english_olympiad" ? "eng-o" : "spk-o");
+      container.innerHTML = cards.map((c, idx) => {
         let btnsHtml = "";
-
-        if (item.cat === "spoken_english") {
+        if (c.cat === "spoken_english") {
           btnsHtml = `
             <div class="quiz-opts">
-              <button class="btn btn-yellow" style="padding:7px 12px;font-size:12px;" onclick="speakText('${item.speakEn.replace(/'/g, "")}')">${item.opts[0]}</button>
-              <button class="btn" style="background:#ccfbf1;color:#0f766e;padding:7px 12px;font-size:12px;" onclick="speakText('${item.speakBn.replace(/'/g, "")}')">${item.opts[1]}</button>
+              <button class="btn btn-yellow" style="padding:7px 12px;font-size:12px;" onclick="speakText('${c.speakEn.replace(/'/g, "")}')">🔊 ইংরেজি শুনুন</button>
+              <button class="btn" style="background:#ccfbf1;color:#0f766e;padding:7px 12px;font-size:12px;" onclick="speakText('${c.speakBn.replace(/'/g, "")}')">🇧🇩 বাংলা অর্থ শুনুন</button>
               <button class="quiz-btn" onclick="toggleOlympiadTip(${idx})">💡 টিপস</button>
             </div>
           `;
         } else {
           btnsHtml = `
             <div class="quiz-opts">
-              ${item.opts.map(opt => `
-                <button class="quiz-btn" onclick="checkOlympiadAns(this, '${opt.replace(/'/g, "")}', '${item.ans.replace(/'/g, "")}', ${idx})">${opt}</button>
+              ${c.opts.map(opt => `
+                <button class="quiz-btn" onclick="checkOlympiadAns(this, '${opt.replace(/'/g, "")}', '${c.ans.replace(/'/g, "")}', ${idx})">${opt}</button>
               `).join("")}
               <button class="quiz-btn" onclick="toggleOlympiadTip(${idx})">💡 ব্যাখ্যা</button>
             </div>
@@ -1174,16 +1263,68 @@
         }
 
         return `
-          <div class="olympiad-card ${cardCls}">
-            <span class="o-badge">${item.badge}</span>
-            <h4 class="o-title">${item.title}</h4>
-            <div class="o-q">${item.question}</div>
+          <div class="olympiad-card ${c.cls}">
+            <span class="o-badge">${c.badge}</span>
+            <h4 class="o-title">${c.title}</h4>
+            <div class="o-q">${c.q}</div>
             ${btnsHtml}
-            <div class="o-tip" id="oTip_${idx}">💡 ${item.tip}</div>
+            <div class="o-tip" id="oTip_${idx}">💡 ${c.tip}</div>
           </div>
         `;
-      }).join("");
+      }).join("") + `
+        <div style="display:flex;gap:8px;margin-top:10px;">
+          <button class="btn" style="background:#e2e8f0;flex:1;" onclick="changeOlympiadDay(-1)">⬅️ আগের দিন</button>
+          <button class="btn btn-primary" style="flex:1;" onclick="changeOlympiadDay(1)">পরের দিন ➡️</button>
+        </div>
+      `;
     }
+
+    function changeOlympiadDay(delta) {
+      let next = activeOlympiadDay + delta;
+      if (next < 1) next = 1;
+      if (next > 90) next = 90;
+      activeOlympiadDay = next;
+      activeOlympiadMonth = next <= 30 ? 1 : (next <= 60 ? 2 : 3);
+      document.querySelectorAll("#olympiadMonthPills .cat-btn").forEach(b => {
+        b.classList.toggle("active", Number(b.dataset.omonth) === activeOlympiadMonth);
+      });
+      renderOlympiadSection();
+    }
+
+    document.getElementById("olympiadDaySelect").addEventListener("change", (e) => {
+      activeOlympiadDay = Number(e.target.value);
+      renderOlympiadSection();
+    });
+
+    document.querySelectorAll("#olympiadMonthPills .cat-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#olympiadMonthPills .cat-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeOlympiadMonth = Number(btn.dataset.omonth);
+        activeOlympiadDay = activeOlympiadMonth === 1 ? 1 : (activeOlympiadMonth === 2 ? 31 : 61);
+        renderOlympiadSection();
+      });
+    });
+
+    function triggerPostActivityAd(titleMsg) {
+      if (state.isPro) return;
+      document.getElementById("postActTitle").textContent = titleMsg || "দারুণ! অ্যাক্টিভিটি সম্পন্ন হয়েছে";
+      document.getElementById("postActivityAdModal").classList.add("open");
+    }
+
+    document.getElementById("btnPostActContinue").addEventListener("click", () => {
+      if (state.adLink) window.open(state.adLink, "_blank");
+      document.getElementById("postActivityAdModal").classList.remove("open");
+    });
+
+    document.getElementById("btnPostActGoPro").addEventListener("click", () => {
+      document.getElementById("postActivityAdModal").classList.remove("open");
+      document.getElementById("proModal").classList.add("open");
+    });
+
+    document.getElementById("btnClosePostAct").addEventListener("click", () => {
+      document.getElementById("postActivityAdModal").classList.remove("open");
+    });
 
     function checkOlympiadAns(btn, chosen, ans, idx) {
       if (chosen === ans) {
@@ -1191,6 +1332,7 @@
         speakText("দারুণ! সঠিক উত্তর");
         state.stars += 1;
         saveState();
+        setTimeout(() => triggerPostActivityAd("🏆 সঠিক উত্তর! +১ স্টার জিতেছ"), 900);
       } else {
         btn.classList.add("wrong");
         speakText("আবার চেষ্টা করো");
@@ -1222,7 +1364,7 @@
     });
 
     function shareHateKhoriApp() {
-      const shareText = `✏️ ২.৫ থেকে ৫ বছরের বাচ্চাদের ঘরে বসে খেলার ছলে বাংলা, ইংরেজি, অঙ্ক, অলিম্পিয়াড ও Spoken English শেখার সেরা ফ্রি অ্যাপ — *HATEKHORI (হাতেখড়ি)*!\n\n👉 *HATEKHORI* ওপেন করতে নিচের লিংকে চাপুন:\n${APP_LIVE_URL}`;
+      const shareText = `✏️ ২.৫ থেকে ৫ বছরের বাচ্চাদের ঘরে বসে খেলার ছলে বাংলা, ইংরেজি, অঙ্ক, ৩ মাসের অলিম্পিয়াড ও Spoken English শেখার সেরা ফ্রি অ্যাপ — *HATEKHORI (হাতেখড়ি)*!\n\n👉 *HATEKHORI* ওপেন করতে নিচের লিংকে চাপুন:\n${APP_LIVE_URL}`;
       if (navigator.share) {
         navigator.share({ title: "HATEKHORI", text: shareText }).catch(() => {});
       } else {
@@ -1335,7 +1477,6 @@
       }).join("");
     }
 
-    // Play activity audio cleanly INSIDE the app without auto-launching external pages
     function playActivityByIndex(idx) {
       const item = getAllActivities()[idx];
       if (item) {
@@ -1343,6 +1484,7 @@
         startBackgroundMelody(item.melody || "bengali");
         speakText(cleanText, () => {
           stopBackgroundMelody();
+          triggerPostActivityAd("🎵 দারুণ! ছড়া ও অনুশীলন শেষ হয়েছে");
         }, true);
       }
     }
@@ -1537,7 +1679,7 @@
 
     document.getElementById("btnPlayAudio").addEventListener("click", () => {
       startBackgroundMelody("bengali");
-      speakText(document.getElementById("rhymeText").textContent, () => stopBackgroundMelody(), true);
+      speakText(document.getElementById("rhymeText").textContent, () => { stopBackgroundMelody(); triggerPostActivityAd("🔊 আজকের ছড়া শোনা শেষ হয়েছে!"); }, true);
     });
 
     document.getElementById("btnPlayAllBn").addEventListener("click", () => {
@@ -1545,7 +1687,7 @@
       box.style.display = "block";
       box.innerHTML = `<strong>🇧🇩 স্বরবর্ণ ছড়া (অ – ঔ):</strong><br/>${FULL_BN_SWARABORNO}`;
       startBackgroundMelody("bengali");
-      speakText(FULL_BN_SWARABORNO, () => stopBackgroundMelody(), true);
+      speakText(FULL_BN_SWARABORNO, () => { stopBackgroundMelody(); triggerPostActivityAd("🇧🇩 অ–ঔ স্বরবর্ণ অনুশীলন শেষ হয়েছে!"); }, true);
     });
 
     document.getElementById("btnPlayAllEn").addEventListener("click", () => {
@@ -1553,7 +1695,7 @@
       box.style.display = "block";
       box.innerHTML = `<strong>🇬🇧 English Alphabet (A – Z):</strong><br/>${FULL_EN_ALPHABET}`;
       startBackgroundMelody("twinkle");
-      speakText(FULL_EN_ALPHABET, () => stopBackgroundMelody(), true);
+      speakText(FULL_EN_ALPHABET, () => { stopBackgroundMelody(); triggerPostActivityAd("🇬🇧 A–Z অনুশীলন শেষ হয়েছে!"); }, true);
     });
 
     ["chk1", "chk2", "chk3"].forEach((id, i) => {
@@ -1568,9 +1710,9 @@
         state.stars += 1;
         saveState();
         speakText("অভিনন্দন! তুমি একটি স্টার জিতেছ");
-        alert(`🎉 দারুণ! Day ${currentDay} সম্পন্ন হয়েছে এবং ১টি স্টার যোগ হয়েছে!`);
+        triggerPostActivityAd(`★ অভিনন্দন! Day ${currentDay} সম্পন্ন হয়েছে (+১ স্টার)`);
       } else {
-        alert("✅ এই পাঠটি আগেই সম্পন্ন হয়েছে!");
+        triggerPostActivityAd(`✅ Day ${currentDay} রিভিশন সম্পন্ন হয়েছে!`);
       }
     });
 
@@ -1584,7 +1726,6 @@
       });
     });
 
-    // Day Selection & In-App Video Card (NO external redirect on start; auto-returns to activity on finish)
     document.getElementById("daySelect").addEventListener("change", (e) => {
       const chosen = Number(e.target.value);
       const isUnlocked = state.isPro || state.unlockedDays.includes(chosen);
@@ -1605,6 +1746,7 @@
     });
 
     document.getElementById("btnWatchAd").addEventListener("click", () => {
+      if (state.adLink) window.open(state.adLink, "_blank");
       document.getElementById("btnWatchAd").style.display = "none";
       const playerBox = document.getElementById("adPlayerBox");
       const fill = document.getElementById("adProgressFill");
@@ -1625,7 +1767,6 @@
             state.unlockedDays.push(pendingUnlockDay);
             saveState();
           }
-          // Automatically close modal and return directly to the unlocked activity
           document.getElementById("unlockModal").classList.remove("open");
           loadDay(pendingUnlockDay);
         }
@@ -1670,6 +1811,7 @@
       if (pin === state.adminPin) {
         document.getElementById("adminPanel").style.display = "block";
         document.getElementById("adminPayLink").value = state.payLink;
+        document.getElementById("adminAdLink").value = state.adLink;
         document.getElementById("adminCustomAdTitle").value = state.customAdTitle;
         document.getElementById("adminCustomAdDesc").value = state.customAdDesc;
       } else if (pin !== null) {
@@ -1737,6 +1879,7 @@
 
     document.getElementById("btnSaveAllSettings").addEventListener("click", () => {
       state.payLink = document.getElementById("adminPayLink").value.trim() || BAKED_CONFIG.payLink;
+      state.adLink = document.getElementById("adminAdLink").value.trim() || BAKED_CONFIG.adLink;
       state.customAdTitle = document.getElementById("adminCustomAdTitle").value.trim() || BAKED_CONFIG.bannerTitle;
       state.customAdDesc = document.getElementById("adminCustomAdDesc").value.trim() || BAKED_CONFIG.bannerDesc;
       saveState();
