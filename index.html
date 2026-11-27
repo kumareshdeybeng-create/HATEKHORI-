@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0f766e" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>HATEKHORI (হাতেখড়ি) - Early Learning App</title>
+  <title>HATEKHORI (হাতেখড়ি) - Early Learning & Olympiad Prep</title>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -110,7 +110,7 @@
       color: #fff; border-radius: 16px; padding: 18px; margin-bottom: 14px;
     }
     .hero-top { display: flex; justify-content: space-between; font-size: 12px; opacity: 0.9; margin-bottom: 6px; }
-    .hero-title { font-size: 21px; font-weight: 700; margin: 4px 0 8px; }
+    .hero-title { font-size: 20px; font-weight: 700; margin: 4px 0 8px; }
     .hero-desc { font-size: 13px; opacity: 0.92; margin-bottom: 14px; }
     .hero-actions { display: flex; gap: 8px; flex-wrap: wrap; }
     .btn {
@@ -149,6 +149,29 @@
     }
     .quiz-btn.correct { background: #dcfce7; border-color: #22c55e; color: #15803d; }
     .quiz-btn.wrong { background: #fee2e2; border-color: #ef4444; color: #b91c1c; }
+
+    /* Olympiad & Spoken English Cards */
+    .olympiad-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+      background: #fff;
+    }
+    .olympiad-card.math-o { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-color: #93c5fd; }
+    .olympiad-card.eng-o { background: linear-gradient(135deg, #fdf2f8, #fce7f3); border-color: #f9a8d4; }
+    .olympiad-card.spk-o { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-color: #86efac; }
+    .o-badge {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      padding: 2px 9px; border-radius: 99px; background: rgba(255,255,255,0.9); color: #0f172a;
+      margin-bottom: 6px;
+    }
+    .o-title { font-size: 16px; font-weight: 700; margin: 0 0 6px; color: #0f172a; }
+    .o-q { font-size: 14px; font-weight: 600; margin: 6px 0 8px; color: #1e293b; }
+    .o-tip {
+      font-size: 12px; color: #334155; background: rgba(255,255,255,0.85);
+      padding: 8px 10px; border-radius: 8px; margin-top: 8px; display: none;
+    }
 
     /* Guardian Request Card */
     .req-card {
@@ -286,28 +309,28 @@
     .block-title { font-size: 12px; font-weight: 700; color: #0f766e; border-bottom: 1px dashed #cbd5e1; padding-bottom: 4px; }
     .block-content { font-size: 14px; text-align: center; padding: 10px 4px; font-weight: 600; }
 
-    /* Bottom Nav */
+    /* Bottom Nav (5 Tabs) */
     .bottom-nav {
       position: fixed; bottom: 0; left: 0; right: 0;
       background: #fff; border-top: 1px solid var(--border);
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      padding: 6px 4px; z-index: 90;
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      padding: 6px 2px; z-index: 90;
     }
     .nav-btn {
-      background: none; border: none; padding: 6px 2px;
+      background: none; border: none; padding: 6px 1px;
       display: flex; flex-direction: column; align-items: center; gap: 3px;
-      font-family: inherit; font-size: 11px; font-weight: 600; color: var(--muted);
+      font-family: inherit; font-size: 10px; font-weight: 600; color: var(--muted);
       cursor: pointer;
     }
     .nav-btn.active { color: var(--primary); font-weight: 700; }
-    .nav-icon { font-size: 18px; }
+    .nav-icon { font-size: 17px; }
 
     .tab-pane { display: none; }
     .tab-pane.active { display: block; }
 
     /* Modals */
     .modal-backdrop {
-      position: fixed; inset: 0; background: rgba(15,23,42,0.75);
+      position: fixed; inset: 0; background: rgba(15,23,42,0.78);
       display: none; align-items: center; justify-content: center;
       padding: 16px; z-index: 200;
     }
@@ -327,30 +350,26 @@
     .progress-bar { width: 100%; height: 10px; background: #e2e8f0; border-radius: 99px; overflow: hidden; margin: 12px 0; }
     .progress-fill { height: 100%; background: #0f766e; width: 0%; transition: width 0.3s; }
 
-    .sponsor-box {
-      background: linear-gradient(135deg, #f0fdfa, #ccfbf1);
-      border: 2px solid #0f766e;
-      border-radius: 14px;
-      padding: 14px;
-      margin: 12px 0;
-      text-align: center;
-    }
-    .sponsor-tag {
-      display: inline-block;
-      background: #0f766e;
+    /* In-App Video Ad Player Box (No auto tab redirect!) */
+    .inapp-ad-player {
+      background: #0f172a;
       color: #fff;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 99px;
-      margin-bottom: 6px;
+      border-radius: 14px;
+      padding: 16px;
+      margin: 12px 0;
+      border: 2px solid #facc15;
     }
-    .sponsor-img {
-      max-width: 100%;
-      max-height: 170px;
-      border-radius: 10px;
-      margin: 6px 0;
-      object-fit: cover;
+    .ad-pulse-ring {
+      width: 54px; height: 54px; border-radius: 50%;
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+      color: #fff; display: flex; align-items: center; justify-content: center;
+      font-size: 24px; margin: 0 auto 10px;
+      animation: pulseAd 1.4s infinite;
+    }
+    @keyframes pulseAd {
+      0% { transform: scale(0.96); box-shadow: 0 0 0 0 rgba(245,158,11,0.7); }
+      70% { transform: scale(1.04); box-shadow: 0 0 0 12px rgba(245,158,11,0); }
+      100% { transform: scale(0.96); box-shadow: 0 0 0 0 rgba(245,158,11,0); }
     }
 
     @media print {
@@ -397,7 +416,7 @@
     <section class="tab-pane active" id="tab-daily">
       <div class="card">
         <label class="section-title" for="daySelect">দিনের পাঠ নির্বাচন করুন (Day 1 – 30)</label>
-        <p class="section-sub">দিন ১–৭ সম্পূর্ণ ফ্রি • পরের দিনগুলো ছোট বিজ্ঞাপন দেখে ফ্রি আনলক করুন</p>
+        <p class="section-sub">দিন ১–৭ সম্পূর্ণ ফ্রি • পরের দিনগুলো ইন-অ্যাপ ভিডিও কার্ড দেখে ফ্রি আনলক করুন</p>
         <select id="daySelect"></select>
       </div>
 
@@ -410,7 +429,7 @@
         <div class="hero-desc" id="heroDesc">কোনো জোর না করে খেলার ছলে পেন্সিল গ্রিপ, ধ্বনি ও হাতের ব্যায়াম দিয়ে আজকের পাঠ শুরু করুন।</div>
         <div class="hero-actions">
           <button class="btn btn-yellow" id="btnGoTracing">✏️ স্ক্রিনে ট্রেসিং করুন</button>
-          <button class="btn btn-glass" id="btnGoPrint">🖨️ PDF ওয়ার্কশিট ও প্রিন্ট</button>
+          <button class="btn btn-glass" id="btnGoOlympiad">🏆 অলিম্পিয়াড ও Spoken</button>
         </div>
       </div>
 
@@ -512,7 +531,7 @@
         <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
           <div>
             <h3 class="section-title" style="margin:0;">🎭 আসল গানের সুরে ছড়া, যোগব্যায়াম, নাচ ও আবৃত্তি</h3>
-            <p class="section-sub" style="margin:2px 0 4px;">আসল গানের সুর শুনতে <strong>'▶️ গানের সুরে শুনুন (YouTube)'</strong> বাটনে চাপুন</p>
+            <p class="section-sub" style="margin:2px 0 4px;">ছড়া শুনতে <strong>'🔊 অ্যাপে পড়ে শুনুন'</strong> বা গানের জন্য <strong>'▶️ YouTube গান'</strong> চাপুন (কোনো অটো লিংক খুলবে না)</p>
           </div>
           <button class="btn" style="background:#fee2e2;color:#b91c1c;padding:6px 10px;font-size:12px;white-space:nowrap;" onclick="stopAllAudio()">⏹️ থামুন</button>
         </div>
@@ -530,11 +549,28 @@
       </div>
     </section>
 
-    <!-- TAB 3: SPECIAL PDF WORKSHEETS LIBRARY (MATH, DRAWING, RHYMES) + 8-BLOCK PRINT -->
+    <!-- TAB 3: MATH OLYMPIAD, ENGLISH OLYMPIAD & SPOKEN ENGLISH -->
+    <section class="tab-pane" id="tab-olympiad">
+      <div class="card">
+        <h3 class="section-title">🏆 Math Olympiad, English Olympiad ও Spoken English</h3>
+        <p class="section-sub">ছোটদের যুক্তি, ইংরেজি শব্দভান্ডার এবং দৈনন্দিন Spoken English অনুশীলনের আলাদা বিভাগ</p>
+
+        <div class="cat-pills" id="olympiadCatPills">
+          <button class="cat-btn active" data-ocat="ALL">সবগুলো</button>
+          <button class="cat-btn" data-ocat="math_olympiad">🔢 Math Olympiad</button>
+          <button class="cat-btn" data-ocat="english_olympiad">🔤 English Olympiad</button>
+          <button class="cat-btn" data-ocat="spoken_english">🗣️ Spoken English</button>
+        </div>
+
+        <div id="olympiadListContainer"></div>
+      </div>
+    </section>
+
+    <!-- TAB 4: SPECIAL PDF WORKSHEETS LIBRARY + 8-BLOCK PRINT -->
     <section class="tab-pane" id="tab-print">
       <div class="card no-print">
         <h3 class="section-title">📚 স্পেশাল PDF ওয়ার্কশিট লাইব্রেরি (অঙ্ক, ড্রয়িং ও ছড়া)</h3>
-        <p class="section-sub">অভিভাবকদের চাহিদা অনুযায়ী আপলোড করা নতুন অঙ্ক (Math), ড্রয়িং (Drawing) ও হাতের লেখার PDF শিট ডাউনলোড বা পড়ুন:</p>
+        <p class="section-sub">অভিভাবকদের চাহিদা অনুযায়ী আপলোড করা নতুন অঙ্ক, ড্রয়িং ও বর্ণমালার PDF শিট:</p>
 
         <div class="cat-pills" id="pdfCatPills">
           <button class="cat-btn active" data-pcat="ALL">সব PDF</button>
@@ -557,22 +593,20 @@
           <div><strong>হাতেখড়ি প্রাক-প্রাথমিক ওয়ার্কশিট</strong> • <span id="sheetDayTitle">Day 1</span></div>
           <div>নাম: _______________ তারিখ: _________</div>
         </div>
-        <div id="customAttachmentBox" style="display:none;text-align:center;margin-bottom:10px;"></div>
-        <div class="blocks-grid" id="blocksGrid"></div>
+        <div id="blocksGrid" class="blocks-grid"></div>
       </div>
     </section>
 
-    <!-- TAB 4: PARENT GUIDE & QUICK UPLOAD ADMIN STUDIO -->
+    <!-- TAB 5: PARENT GUIDE & QUICK UPLOAD ADMIN STUDIO -->
     <section class="tab-pane" id="tab-guide">
       <div class="card">
         <h3 class="section-title">👑 HATEKHORI Pro (সব ৩০ দিন আনলক করুন)</h3>
-        <p class="section-sub">কোনো বিজ্ঞাপন ছাড়াই Day 1 থেকে Day 30 পর্যন্ত সব ওয়ার্কশিট, A4 PDF ও ট্রেসিং আনলক করুন মাত্র ₹৯৯ টাকায়।</p>
+        <p class="section-sub">Day 1 থেকে Day 30 পর্যন্ত সব ওয়ার্কশিট ও A4 প্রিন্ট আনলক করুন মাত্র ₹৯৯ টাকায়।</p>
         <button class="btn btn-orange" id="btnOpenProModal">🔓 ₹৯৯ দিয়ে সব ৩০ দিন আনলক করুন</button>
       </div>
 
       <div class="card">
         <h3 class="section-title">📤 অভিভাবকদের সাথে HATEKHORI শেয়ার করুন</h3>
-        <p class="section-sub">নিচের বাটনে চাপলেই সুন্দর মেসেজ ও HATEKHORI লিংকসহ WhatsApp খুলে যাবে।</p>
         <button class="btn" style="background:#16a34a;color:#fff;width:100%;" id="btnShareAppGuide">📲 HATEKHORI শেয়ার করুন</button>
       </div>
 
@@ -584,57 +618,47 @@
         </div>
       </div>
 
-      <!-- ADMIN STUDIO WITH DIRECT PDF UPLOAD & ONE-CLICK GITHUB PUBLISH -->
+      <!-- ADMIN STUDIO -->
       <div class="card" style="background:#f1f5f9;">
         <h3 class="section-title">⚙️ Admin / Quick Update Studio (শিক্ষক প্যানেল)</h3>
-        <p class="section-sub">অভিভাবকদের অনুরোধ করা PDF (অঙ্ক/ড্রয়িং/গান) সরাসরি ফোনে আপলোড করুন এবং ১ ক্লিকে GitHub-এ পাবলিশ করুন।</p>
+        <p class="section-sub">অভিভাবকদের অনুরোধের PDF আপলোড করুন এবং ১ ক্লিকে GitHub-এ পাঠানোর ফাইল তৈরি করুন।</p>
         <button class="btn" style="background:#1e293b;color:#fff;width:100%;" id="btnOpenAdmin">🔐 Admin Studio খুলুন</button>
 
         <div id="adminPanel" style="display:none;margin-top:14px;border-top:1px solid #cbd5e1;padding-top:14px;">
-
-          <!-- FAST PDF UPLOADER FOR GUARDIAN DEMANDS -->
           <div style="background:#fff;border:1.5px solid #0284c7;border-radius:12px;padding:12px;margin-bottom:14px;">
-            <h4 style="margin:0 0 6px;color:#0369a1;">⚡ ১. অভিভাবকদের অনুরোধের PDF আপলোড করুন (অঙ্ক / ড্রয়িং / ছড়া)</h4>
-            <p style="font-size:11px;color:#64748b;margin:0 0 8px;">Gemini থেকে পাওয়া PDF ফাইলটি ফোন থেকে বাছুন অথবা Google Drive লিংক দিন:</p>
+            <h4 style="margin:0 0 6px;color:#0369a1;">⚡ ১. অভিভাবকদের অনুরোধের PDF আপলোড করুন</h4>
             <select id="adminPdfCat" style="margin-bottom:8px;">
               <option value="Math">🔢 অঙ্ক ওয়ার্কশিট (Math PDF)</option>
               <option value="Drawing">🎨 ড্রয়িং ও কালারিং (Drawing PDF)</option>
               <option value="Bengali_English">🔤 বাংলা ও ইংরেজি (Alphabet/Rhymes PDF)</option>
             </select>
-            <input type="text" id="adminPdfTitle" placeholder="PDF-এর শিরোনাম (যেমন: ১-২০ সংখ্যা গণনা ও অঙ্ক শিট)" style="margin-bottom:8px;" />
-            <input type="text" id="adminPdfDriveUrl" placeholder="Google Drive PDF লিংক (বড় ফাইলের জন্য)" style="margin-bottom:8px;" />
-            <label style="font-size:11px;font-weight:700;display:block;margin-bottom:4px;">অথবা ফোন থেকে সরাসরি PDF ফাইল বাছুন (সর্বোচ্চ ৩ MB):</label>
+            <input type="text" id="adminPdfTitle" placeholder="PDF-এর শিরোনাম লিখুন" style="margin-bottom:8px;" />
+            <input type="text" id="adminPdfDriveUrl" placeholder="Google Drive PDF লিংক (ঐচ্ছিক)" style="margin-bottom:8px;" />
             <input type="file" id="adminPdfFileInput" accept="application/pdf" style="margin-bottom:8px;" />
             <button class="btn btn-primary" id="btnAdminUploadPdf">+ অ্যাপে PDF যুক্ত করুন</button>
           </div>
 
-          <h4 style="margin:0 0 8px;">২. নতুন ছড়া ও আসল গানের লিংক (YouTube / MP3) যোগ করুন</h4>
+          <h4 style="margin:0 0 8px;">২. নতুন গান বা ছড়া যুক্ত করুন</h4>
           <select id="newActivityCat" style="margin-bottom:8px;">
-            <option value="bn_rhyme">🇧🇩 বাংলা ছড়া ও গান (Bengali Rhyme)</option>
-            <option value="en_rhyme">🇬🇧 ইংরেজি ছড়া ও গান (English Rhyme)</option>
-            <option value="yoga">🧘 যোগব্যায়াম (Kids Yoga)</option>
-            <option value="dance">💃 নাচ ও ছন্দ (Dance & Action)</option>
-            <option value="recite">🎙️ আবৃত্তি (Recitation)</option>
+            <option value="bn_rhyme">🇧🇩 বাংলা ছড়া ও গান</option>
+            <option value="en_rhyme">🇬🇧 ইংরেজি ছড়া ও গান</option>
+            <option value="yoga">🧘 যোগব্যায়াম</option>
+            <option value="dance">💃 নাচ ও ছন্দ</option>
+            <option value="recite">🎙️ আবৃত্তি</option>
           </select>
-          <input type="text" id="newRhymeTitle" placeholder="গান বা ছড়ার নাম লিখুন" style="margin-bottom:8px;" />
+          <input type="text" id="newRhymeTitle" placeholder="গান বা ছড়ার নাম" style="margin-bottom:8px;" />
           <textarea id="newRhymeBody" rows="3" placeholder="ছড়ার লাইনগুলো লিখুন..." style="margin-bottom:8px;"></textarea>
           <input type="text" id="newRhymeSongUrl" placeholder="YouTube বা MP3 গানের লিংক (ঐচ্ছিক)" style="margin-bottom:8px;" />
           <button class="btn btn-yellow" style="width:100%;margin-bottom:14px;" id="btnAddNewRhyme">+ নতুন গান / ছড়া যুক্ত করুন</button>
 
-          <h4 style="margin:0 0 8px;">৩. পেমেন্ট, Monetag অ্যাড ও স্পন্সর ব্যানার</h4>
+          <h4 style="margin:0 0 8px;">৩. পেমেন্ট ও ভারতীয় শিক্ষামূলক অফার সেটিংস</h4>
           <label style="font-size:12px;font-weight:700;">₹৯৯ পেমেন্ট / UPI লিংক:</label>
           <input type="text" id="adminPayLink" style="margin-bottom:8px;" />
-          <label style="font-size:12px;font-weight:700;">Monetag / Adsterra Direct Link:</label>
-          <input type="text" id="adminAdLink" style="margin-bottom:8px;" />
-          <label style="font-size:12px;font-weight:700;">স্পন্সর ব্যানার শিরোনাম:</label>
+          <label style="font-size:12px;font-weight:700;">স্পন্সর/অফার শিরোনাম:</label>
           <input type="text" id="adminCustomAdTitle" style="margin-bottom:8px;" />
-          <label style="font-size:12px;font-weight:700;">স্পন্সর ব্যানার বিবরণ:</label>
+          <label style="font-size:12px;font-weight:700;">স্পন্সর/অফার বিবরণ:</label>
           <textarea id="adminCustomAdDesc" rows="2" style="margin-bottom:8px;"></textarea>
-          <label style="font-size:12px;font-weight:700;">স্পন্সর ছবির লিংক (ঐচ্ছিক):</label>
-          <input type="text" id="adminCustomAdImg" style="margin-bottom:8px;" />
-          <label style="font-size:12px;font-weight:700;">স্পন্সর বাটন লিংক:</label>
-          <input type="text" id="adminCustomAdUrl" style="margin-bottom:8px;" />
-          <button class="btn btn-primary" id="btnSaveAllSettings" style="margin-bottom:14px;">Save Ad & Payment Settings</button>
+          <button class="btn btn-primary" id="btnSaveAllSettings" style="margin-bottom:14px;">Save Settings</button>
 
           <h4 style="margin:0 0 8px;">৪. Admin PIN পরিবর্তন করুন</h4>
           <div style="display:flex;gap:8px;margin-bottom:14px;">
@@ -642,10 +666,8 @@
             <button class="btn" style="background:#0f172a;color:#fff;width:auto;white-space:nowrap;" id="btnChangePin">Change PIN</button>
           </div>
 
-          <!-- ONE-CLICK EXPORT FOR ALL GUARDIANS VIA GITHUB -->
           <div style="background:#fef3c7;border:1.5px solid #f59e0b;border-radius:12px;padding:12px;">
             <h4 style="margin:0 0 6px;color:#92400e;">🚀 ৫. সব অভিভাবকের ফোনে একসাথে আপডেট পাঠান</h4>
-            <p style="font-size:12px;color:#78350f;margin:0 0 10px;">নতুন PDF বা গান যোগ করার পর নিচের বাটনে চাপলে আপডেট করা <strong>index.html</strong> ফাইল ডাউনলোড হবে—সেটি GitHub-এ আপলোড করলেই সব অভিভাবকের অ্যাপে সাথে সাথে চলে যাবে!</p>
             <button class="btn btn-orange" id="btnDownloadUpdatedApp">⬇️ আপডেট করা index.html ডাউনলোড করুন</button>
             <a href="https://github.com/kumareshdeybeng-create/HATEKHORI-/upload/main" target="_blank" class="btn" style="background:#1e293b;color:#fff;width:100%;margin-top:8px;font-size:13px;">🌐 সরাসরি GitHub Upload পেজ খুলুন</a>
           </div>
@@ -655,10 +677,11 @@
 
   </main>
 
-  <!-- Bottom Navigation -->
+  <!-- 5-Tab Bottom Navigation -->
   <nav class="bottom-nav">
     <button class="nav-btn active" data-target="tab-daily"><span class="nav-icon">📅</span>আজকের পাঠ</button>
-    <button class="nav-btn" data-target="tab-tracing"><span class="nav-icon">🎭</span>ছড়া ও ব্যায়াম</button>
+    <button class="nav-btn" data-target="tab-tracing"><span class="nav-icon">🎭</span>ছড়া ও ট্রেসিং</button>
+    <button class="nav-btn" data-target="tab-olympiad"><span class="nav-icon">🏆</span>অলিম্পিয়াড</button>
     <button class="nav-btn" data-target="tab-print"><span class="nav-icon">📄</span>PDF ও প্রিন্ট</button>
     <button class="nav-btn" data-target="tab-guide"><span class="nav-icon">👑</span>গাইড ও প্রো</button>
   </nav>
@@ -674,39 +697,22 @@
     </div>
   </div>
 
-  <!-- Post-Rhyme Dual Ad Modal -->
-  <div class="modal-backdrop" id="postRhymeAdModal">
-    <div class="modal-box">
-      <div style="font-size:30px;">🎉</div>
-      <h3 style="margin:4px 0;">দারুণ! অনুশীলন সম্পন্ন হয়েছে</h3>
-      <p style="font-size:12px;color:#64748b;margin:0 0 8px;">অভিভাবকদের জন্য বিশেষ তথ্য ও স্পন্সর বার্তা:</p>
-
-      <div class="sponsor-box" id="customSponsorCard">
-        <span class="sponsor-tag">SPONSORED / বিশেষ অফার</span>
-        <h4 style="margin:4px 0;color:#0f766e;font-size:16px;" id="displayCustomAdTitle">👑 হাতেখড়ি Pro — সব ৩০ দিন আনলক করুন!</h4>
-        <img id="displayCustomAdImg" class="sponsor-img" style="display:none;" alt="Sponsor Banner" />
-        <p style="font-size:13px;color:#1e293b;margin:6px 0 10px;" id="displayCustomAdDesc">ভারতীয় প্রাক-প্রাথমিক শিক্ষার্থীদের জন্য তৈরি সব ৩০ দিনের ওয়ার্কশিট ও A4 প্রিন্ট আনলক করুন মাত্র ₹৯৯ টাকায়।</p>
-        <a id="displayCustomAdBtn" href="#" target="_blank" class="btn btn-primary" style="text-decoration:none;font-size:13px;">👉 বিস্তারিত দেখুন</a>
-      </div>
-
-      <button class="btn btn-yellow" style="width:100%;margin-bottom:8px;" id="btnRhymeMonetagContinue">🎬 পরবর্তী পাঠ আনলক করুন (Continue)</button>
-      <button class="btn" style="background:#e2e8f0;width:100%;font-size:12px;padding:8px;" id="btnCloseRhymeAd">বন্ধ করুন</button>
-    </div>
-  </div>
-
-  <!-- Unlock / Ad Modal -->
+  <!-- In-App Video Ad Player Modal (ONLY plays inside app & returns to activity on finish—NO auto page open!) -->
   <div class="modal-backdrop" id="unlockModal">
     <div class="modal-box">
-      <div style="font-size:36px;">🔒</div>
-      <h3 style="margin:6px 0;" id="unlockModalTitle">Day 8 ওয়ার্কশিট লক করা আছে</h3>
-      <p style="font-size:13px;color:#475569;margin-bottom:14px;">একটি ছোট ১৫ সেকেন্ডের শিক্ষা-স্পন্সর কার্ড দেখে এই পাঠটি ফ্রি আনলক করুন, অথবা একসাথে সব ৩০ দিন আনলক করুন।</p>
+      <div style="font-size:32px;">🔒</div>
+      <h3 style="margin:6px 0;" id="unlockModalTitle">Day 8 পাঠ লক করা আছে</h3>
+      <p style="font-size:13px;color:#475569;margin-bottom:8px;">ইন-অ্যাপ ভিডিও কার্ডটি শেষ হলেই আপনি স্বয়ংক্রিয়ভাবে পাঠে ফিরে যাবেন।</p>
 
-      <div id="adTimerArea" style="display:none;background:#f8fafc;padding:12px;border-radius:12px;margin-bottom:12px;">
-        <div style="font-weight:700;color:#0f766e;" id="adCountdownText">বিজ্ঞাপন চলছে... ১৫ সেকেন্ড অপেক্ষা করুন</div>
+      <div class="inapp-ad-player" id="adPlayerBox" style="display:none;">
+        <div class="ad-pulse-ring">▶</div>
+        <div style="font-size:11px;color:#facc15;font-weight:700;margin-bottom:4px;">INDIA EARLY LEARNING SPONSOR • IN-APP VIDEO</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:4px;" id="adSponsorHeadline">HATEKHORI Smart Kids — বাংলা, ইংরেজি, অঙ্ক ও Spoken English</div>
+        <div style="font-size:12px;color:#cbd5e1;" id="adCountdownText">ভিডিও চলছে... ১০ সেকেন্ড অপেক্ষা করুন</div>
         <div class="progress-bar"><div class="progress-fill" id="adProgressFill"></div></div>
       </div>
 
-      <button class="btn btn-yellow" style="width:100%;margin-bottom:10px;" id="btnWatchAd">🎬 ১৫ সেকেন্ড বিজ্ঞাপন দেখে ফ্রি আনলক করুন</button>
+      <button class="btn btn-yellow" style="width:100%;margin-bottom:10px;" id="btnWatchAd">🎬 ইন-অ্যাপ ভিডিও দেখে ফ্রি আনলক করুন</button>
       <button class="btn btn-orange" style="margin-bottom:10px;" id="btnModalGoPro">👑 সব ৩০ দিন আনলক করুন (₹৯৯)</button>
       <button class="btn" style="background:#e2e8f0;width:100%;" id="btnCloseUnlock">বন্ধ করুন</button>
     </div>
@@ -718,7 +724,7 @@
       <div style="font-size:36px;">👑</div>
       <h3 style="margin:6px 0;">HATEKHORI Pro (Lifetime Access)</h3>
       <p style="font-size:13px;color:#475569;">মাত্র ₹৯৯ টাকা পেমেন্ট করে সব ৩০ দিনের ওয়ার্কশিট ও প্রিন্ট পিডিএফ আনলক করুন।</p>
-      <a id="payExternalLink" href="upi://pay?pa=8250912381@ikwik&pn=HateKhori&am=99&cu=INR" target="_blank" class="btn btn-orange" style="text-decoration:none;margin-bottom:12px;">💳 ₹৯৯ পেমেন্ট করুন (UPI / Card)</a>
+      <a id="payExternalLink" href="upi://pay?pa=8250912381@ikwik&pn=HateKhori&am=99&cu=INR" target="_blank" class="btn btn-orange" style="text-decoration:none;margin-bottom:12px;">💳 ₹৯৯ পেমেন্ট করুন (UPI)</a>
       <div style="border-top:1px solid #e2e8f0;padding-top:12px;margin-top:8px;">
         <label style="font-size:12px;font-weight:700;display:block;margin-bottom:6px;">পেমেন্টের পর অ্যাক্টিভেশন কোড দিন (Demo কোড: PRO99):</label>
         <div style="display:flex;gap:8px;">
@@ -839,7 +845,130 @@
     };
 
     // ==========================================
-    // 3. BAKED-IN DATA BLOCK (AUTO-UPDATED ON EXPORT)
+    // 3. MATH OLYMPIAD, ENGLISH OLYMPIAD & SPOKEN ENGLISH DATA
+    // ==========================================
+    const olympiadItems = [
+      // MATH OLYMPIAD
+      {
+        cat: "math_olympiad",
+        badge: "🔢 Math Olympiad • Pattern & Logic",
+        title: "১. সংখ্যার ছন্দ (Number Pattern)",
+        question: "2, 4, 6, 8, ___ — পরের সংখ্যাটি কত হবে?",
+        opts: ["9", "10", "12"],
+        ans: "10",
+        tip: "প্রতিটি সংখ্যা ২ করে বাড়ছে (2+2=4, 4+2=6, 6+2=8, 8+2=10)।"
+      },
+      {
+        cat: "math_olympiad",
+        badge: "🔢 Math Olympiad • Odd One Out",
+        title: "২. আলাদা কোনটি? (Odd One Out)",
+        question: "নিচের কোনটি জোড় সংখ্যা (Even Number) নয়?",
+        opts: ["4", "7", "8"],
+        ans: "7",
+        tip: "4 ও 8 জোড় সংখ্যা; 7 হলো বিজোড় সংখ্যা (Odd Number)।"
+      },
+      {
+        cat: "math_olympiad",
+        badge: "🔢 Math Olympiad • Shapes & Counting",
+        title: "৩. কয়টি ত্রিভুজ? (Shape Reasoning)",
+        question: "একটি ত্রিভুজ (Triangle)-এর কয়টি বাহু ও কয়টি কোণা থাকে?",
+        opts: ["৩টি", "৪টি", "৫টি"],
+        ans: "৩টি",
+        tip: "Tri মানে ৩—একটি ত্রিভুজের ৩টি বাহু ও ৩টি কোণা থাকে।"
+      },
+      {
+        cat: "math_olympiad",
+        badge: "🔢 Math Olympiad • Real-Life Word Problem",
+        title: "৪. মায়ের ঝুড়ির আম (Logical Addition)",
+        question: "ঝুড়িতে ৫টি আম ছিল। বাবা আরও ৩টি আম দিলেন। এখন মোট কয়টি আম হলো?",
+        opts: ["7", "8", "9"],
+        ans: "8",
+        tip: "৫ + ৩ = ৮টি আম।"
+      },
+
+      // ENGLISH OLYMPIAD
+      {
+        cat: "english_olympiad",
+        badge: "🔤 English Olympiad • Rhyming Words",
+        title: "১. Rhyming Word (ছন্দের মিল)",
+        question: "Which word rhymes with 'CAT'?",
+        opts: ["BAT", "DOG", "SUN"],
+        ans: "BAT",
+        tip: "Cat, Bat, Mat, Rat — সবগুলোর শেষে '-at' সাউন্ড মিলে যায়।"
+      },
+      {
+        cat: "english_olympiad",
+        badge: "🔤 English Olympiad • Vowels",
+        title: "২. Vowel চেনা (স্বরবর্ণ)",
+        question: "Which one of these is a Vowel in English?",
+        opts: ["B", "E", "T"],
+        ans: "E",
+        tip: "English Vowels are 5 letters: A, E, I, O, U."
+      },
+      {
+        cat: "english_olympiad",
+        badge: "🔤 English Olympiad • Opposite Word",
+        title: "৩. Opposite Word (বিপরীত শব্দ)",
+        question: "What is the opposite of 'BIG'?",
+        opts: ["SMALL", "TALL", "FAST"],
+        ans: "SMALL",
+        tip: "Big (বড়)-এর বিপরীত শব্দ হলো Small (ছোট)।"
+      },
+      {
+        cat: "english_olympiad",
+        badge: "🔤 English Olympiad • Spelling",
+        title: "৪. Correct Spelling (সঠিক বানান)",
+        question: "Choose the correct spelling:",
+        opts: ["SCHOL", "SCHOOL", "SKOOL"],
+        ans: "SCHOOL",
+        tip: "S-C-H-O-O-L = School (বিদ্যালয়)।"
+      },
+
+      // SPOKEN ENGLISH FOR KIDS
+      {
+        cat: "spoken_english",
+        badge: "🗣️ Spoken English • Daily Greeting",
+        title: "১. সকালের শুভেচ্ছা (Morning Greeting)",
+        question: "Good morning, Mummy! (সুপ্রভাত, মা!)",
+        opts: ["🔊 ইংরেজি শুনুন", "🇧🇩 বাংলা অর্থ শুনুন", ""],
+        speakEn: "Good morning, Mummy! How are you?",
+        speakBn: "সুপ্রভাত মা! তুমি কেমন আছো?",
+        tip: "সকালে ঘুম থেকে উঠে মা-বাবাকে বলুন: 'Good morning, Mummy!' / 'Good morning, Papa!'"
+      },
+      {
+        cat: "spoken_english",
+        badge: "🗣️ Spoken English • Asking Permission",
+        title: "২. অনুমতি চাওয়া (Polite Request)",
+        question: "Please give me water. (অনুগ্রহ করে আমাকে জল দাও)",
+        opts: ["🔊 ইংরেজি শুনুন", "🇧🇩 বাংলা অর্থ শুনুন", ""],
+        speakEn: "Please give me some water. Thank you!",
+        speakBn: "দয়া করে আমাকে একটু জল দাও। ধন্যবাদ!",
+        tip: "কিছু চাইলে ভদ্রভাবে 'Please' এবং পেলে 'Thank you' বলতে শেখান।"
+      },
+      {
+        cat: "spoken_english",
+        badge: "🗣️ Spoken English • Feeling Happy",
+        title: "৩. মনের অনুভূতি প্রকাশ (Expressing Joy)",
+        question: "I am very happy today! (আজ আমি খুব খুশি!)",
+        opts: ["🔊 ইংরেজি শুনুন", "🇧🇩 বাংলা অর্থ শুনুন", ""],
+        speakEn: "I am very happy today! Let us play together.",
+        speakBn: "আজ আমি খুব খুশি! চলো আমরা একসাথে খেলি।",
+        tip: "খেলার সময় বা আনন্দের মুহূর্তে এই ছোট বাক্যটি ব্যবহার করুন।"
+      },
+      {
+        cat: "spoken_english",
+        badge: "🗣️ Spoken English • Bedtime",
+        title: "৪. ঘুমানোর সময় (Good Night)",
+        question: "Good night, Sweet dreams! (শুভ রাত্রি, মিষ্টি স্বপ্ন!)",
+        opts: ["🔊 ইংরেজি শুনুন", "🇧🇩 বাংলা অর্থ শুনুন", ""],
+        speakEn: "Good night! Sweet dreams.",
+        speakBn: "শুভ রাত্রি! মিষ্টি স্বপ্ন দেখো।",
+        tip: "রাতে ঘুমানোর আগে প্রতিদিন 'Good night' বলার অভ্যাস করান।"
+      }
+    ];
+
+    // ==========================================
+    // 4. BAKED-IN DATA BLOCK
     // ==========================================
     /*__BAKED_DATA_START__*/
     const BAKED_CUSTOM_PDFS = [];
@@ -849,14 +978,14 @@
       adLink: "upi://pay?pa=8250912381@ikwik&pn=HateKhoriPro&am=99&cu=INR",
       adminPin: "1234",
       bannerTitle: "✏️ প্রাক-প্রাথমিক রঙিন ওয়ার্কশিট ও ছড়া বুক (India Edition)",
-      bannerDesc: "ঘরে বসে বাচ্চাদের পেন্সিল গ্রিপ, বাংলা-ইংরেজি অক্ষর ও অঙ্ক শেখার বিশেষ অফার! মাত্র ₹৯৯ টাকায় সব ৩০ দিন আনলক করুন।",
+      bannerDesc: "ভারতীয় প্রাক-প্রাথমিক শিক্ষার্থীদের জন্য তৈরি সব ৩০ দিনের ওয়ার্কশিট ও A4 প্রিন্ট আনলক করুন মাত্র ₹৯৯ টাকায়।",
       bannerImg: "",
       bannerUrl: "upi://pay?pa=8250912381@ikwik&pn=HateKhoriPro&am=99&cu=INR"
     };
     /*__BAKED_DATA_END__*/
 
     // ==========================================
-    // 4. CURRICULUM (30 DAYS WITH UNIQUE MONTESSORI & PLAY ACTIVITIES)
+    // 5. CURRICULUM (30 DAYS)
     // ==========================================
     const FULL_BN_SWARABORNO = "অ-তে অজগর আসছে তেড়ে। আ-তে আমটি আমি খাব পেড়ে। ই-তে ইঁদুর ছানা ভয়ে মরে। ঈ-তে ঈগল পাখি পাছে ধরে। উ-তে উট চলেছে মুখটি তুলে। ঊ-তে ঊষা হাসে পুব আকাশে। ঋ-তে ঋষি মশাই বসেন পূজায়। এ-তে এক্কাগাড়ি খুব ছুটেছে। ঐ-তে ঐরাবতটি আসছে তেড়ে। ও-তে ওল খেও না ধরবে গলা। ঔ-তে ঔষধ খেতে মিছে বলা।";
 
@@ -964,24 +1093,9 @@
       { cat: "recite", catLabel: "🎙️ আবৃত্তি (Recitation)", melody: "yoga", songUrl: "https://www.youtube.com/results?search_query=Talgach+Ek+Paye+Dariye+Rabindranath+Tagore", title: "৩. তালগাছ — রবীন্দ্রনাথ ঠাকুর", body: "তালগাছ এক পায়ে দাঁড়িয়ে,\nসব গাছ ছাড়িয়ে,\nউঁকি মারে আকাশে।\nমনে সাধ কালো মেঘ ফুঁড়ে যায়,\nএকবারে উড়ে যায়,\nকোথা পাবে পাখা সে!" }
     ];
 
-    // Built-in Special PDFs (Sample + Baked-in Admin PDFs)
     const defaultSpecialPdfs = [
-      {
-        id: 101,
-        cat: "Math",
-        catLabel: "🔢 অঙ্ক (Math)",
-        title: "নমুনা অঙ্ক ওয়ার্কশিট: ১ থেকে ১০ সংখ্যা গণনা ও মিলানো",
-        driveUrl: "",
-        dataUrl: ""
-      },
-      {
-        id: 102,
-        cat: "Drawing",
-        catLabel: "🎨 ড্রয়িং (Drawing)",
-        title: "নমুনা ড্রয়িং শিট: সহজ রেখায় আম, বল, ছাতা ও প্রজাপতি আঁকা",
-        driveUrl: "",
-        dataUrl: ""
-      }
+      { id: 101, cat: "Math", catLabel: "🔢 অঙ্ক (Math)", title: "নমুনা অঙ্ক ওয়ার্কশিট: ১ থেকে ১০ সংখ্যা গণনা ও মিলানো", driveUrl: "", dataUrl: "" },
+      { id: 102, cat: "Drawing", catLabel: "🎨 ড্রয়িং (Drawing)", title: "নমুনা ড্রয়িং শিট: সহজ রেখায় আম, বল, ছাতা ও প্রজাপতি আঁকা", driveUrl: "", dataUrl: "" }
     ];
 
     const APP_LIVE_URL = "https://kumareshdeybeng-create.github.io/HATEKHORI-/";
@@ -1011,9 +1125,7 @@
     function saveState() {
       try {
         localStorage.setItem("hatekhori_state", JSON.stringify(state));
-      } catch (e) {
-        alert("⚠️ ফোনের স্টোরেজ পূর্ণ! বড় PDF হলে Google Drive লিংক দিন।");
-      }
+      } catch (e) {}
       updateHeaderUI();
     }
 
@@ -1029,6 +1141,76 @@
     let pendingUnlockDay = null;
     let activeActivityCat = "all";
     let activePdfCat = "ALL";
+    let activeOlympiadCat = "ALL";
+
+    // Render Math Olympiad, English Olympiad & Spoken English
+    function renderOlympiadSection() {
+      const container = document.getElementById("olympiadListContainer");
+      const filtered = activeOlympiadCat === "ALL"
+        ? olympiadItems
+        : olympiadItems.filter(x => x.cat === activeOlympiadCat);
+
+      container.innerHTML = filtered.map((item, idx) => {
+        const cardCls = item.cat === "math_olympiad" ? "math-o" : (item.cat === "english_olympiad" ? "eng-o" : "spk-o");
+        let btnsHtml = "";
+
+        if (item.cat === "spoken_english") {
+          btnsHtml = `
+            <div class="quiz-opts">
+              <button class="btn btn-yellow" style="padding:7px 12px;font-size:12px;" onclick="speakText('${item.speakEn.replace(/'/g, "")}')">${item.opts[0]}</button>
+              <button class="btn" style="background:#ccfbf1;color:#0f766e;padding:7px 12px;font-size:12px;" onclick="speakText('${item.speakBn.replace(/'/g, "")}')">${item.opts[1]}</button>
+              <button class="quiz-btn" onclick="toggleOlympiadTip(${idx})">💡 টিপস</button>
+            </div>
+          `;
+        } else {
+          btnsHtml = `
+            <div class="quiz-opts">
+              ${item.opts.map(opt => `
+                <button class="quiz-btn" onclick="checkOlympiadAns(this, '${opt.replace(/'/g, "")}', '${item.ans.replace(/'/g, "")}', ${idx})">${opt}</button>
+              `).join("")}
+              <button class="quiz-btn" onclick="toggleOlympiadTip(${idx})">💡 ব্যাখ্যা</button>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="olympiad-card ${cardCls}">
+            <span class="o-badge">${item.badge}</span>
+            <h4 class="o-title">${item.title}</h4>
+            <div class="o-q">${item.question}</div>
+            ${btnsHtml}
+            <div class="o-tip" id="oTip_${idx}">💡 ${item.tip}</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function checkOlympiadAns(btn, chosen, ans, idx) {
+      if (chosen === ans) {
+        btn.classList.add("correct");
+        speakText("দারুণ! সঠিক উত্তর");
+        state.stars += 1;
+        saveState();
+      } else {
+        btn.classList.add("wrong");
+        speakText("আবার চেষ্টা করো");
+      }
+      document.getElementById("oTip_" + idx).style.display = "block";
+    }
+
+    function toggleOlympiadTip(idx) {
+      const el = document.getElementById("oTip_" + idx);
+      el.style.display = el.style.display === "block" ? "none" : "block";
+    }
+
+    document.querySelectorAll("#olympiadCatPills .cat-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#olympiadCatPills .cat-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeOlympiadCat = btn.dataset.ocat;
+        renderOlympiadSection();
+      });
+    });
 
     // Guardian WhatsApp Request Button
     document.getElementById("btnSendGuardianReq").addEventListener("click", () => {
@@ -1039,9 +1221,8 @@
       document.getElementById("guardianReqInput").value = "";
     });
 
-    // Share App with clean HATEKHORI branding
     function shareHateKhoriApp() {
-      const shareText = `✏️ ২.৫ থেকে ৫ বছরের বাচ্চাদের ঘরে বসে খেলার ছলে বাংলা, ইংরেজি, অঙ্ক ও ড্রয়িং শেখার সেরা ফ্রি অ্যাপ — *HATEKHORI (হাতেখড়ি)*!\n\n✅ ৩০ দিনের সহজ পাঠ ও আঙুলে ট্রেসিং\n✅ সুরসহ বাংলা ও ইংরেজি ছড়া, যোগব্যায়াম ও নাচ\n✅ অঙ্ক ও ড্রয়িংয়ের প্রিন্টেবল PDF ওয়ার্কশিট\n\n👉 *HATEKHORI* ওপেন করতে নিচের লিংকে চাপুন:\n${APP_LIVE_URL}`;
+      const shareText = `✏️ ২.৫ থেকে ৫ বছরের বাচ্চাদের ঘরে বসে খেলার ছলে বাংলা, ইংরেজি, অঙ্ক, অলিম্পিয়াড ও Spoken English শেখার সেরা ফ্রি অ্যাপ — *HATEKHORI (হাতেখড়ি)*!\n\n👉 *HATEKHORI* ওপেন করতে নিচের লিংকে চাপুন:\n${APP_LIVE_URL}`;
       if (navigator.share) {
         navigator.share({ title: "HATEKHORI", text: shareText }).catch(() => {});
       } else {
@@ -1067,7 +1248,6 @@
       document.getElementById("payExternalLink").href = state.payLink;
     }
 
-    // Render Special PDFs Library
     function renderSpecialPdfs() {
       const container = document.getElementById("specialPdfList");
       const allPdfs = getAllSpecialPdfs();
@@ -1136,7 +1316,7 @@
         const cardCls = getCardClassByCat(item.cat);
         const yogaPicHtml = (item.yogaKey && YOGA_SVGS[item.yogaKey]) ? YOGA_SVGS[item.yogaKey] : "";
         const songBtnHtml = item.songUrl
-          ? `<button class="btn btn-red" style="padding:6px 11px;font-size:12px;" onclick="playRealSong(${realIndex})">▶️ গানের সুরে শুনুন (YouTube)</button>`
+          ? `<a href="${item.songUrl}" target="_blank" class="btn btn-red" style="padding:6px 11px;font-size:12px;">▶️ YouTube গান</a>`
           : "";
         return `
           <div class="rhyme-card ${cardCls}">
@@ -1147,37 +1327,15 @@
             ${yogaPicHtml}
             <div class="rhyme-lines">${item.body}</div>
             <div class="rhyme-actions">
-              ${songBtnHtml}
               <button class="btn btn-yellow" style="padding:6px 11px;font-size:12px;" onclick="playActivityByIndex(${realIndex})">🔊 অ্যাপে পড়ে শুনুন</button>
+              ${songBtnHtml}
             </div>
           </div>
         `;
       }).join("");
     }
 
-    function playRealSong(idx) {
-      const item = getAllActivities()[idx];
-      if (item && item.songUrl) {
-        window.open(item.songUrl, "_blank");
-        setTimeout(() => { triggerPostRhymeAd(); }, 1200);
-      }
-    }
-
-    function triggerPostRhymeAd() {
-      if (state.isPro) return;
-      document.getElementById("displayCustomAdTitle").textContent = state.customAdTitle;
-      document.getElementById("displayCustomAdDesc").textContent = state.customAdDesc;
-      const imgEl = document.getElementById("displayCustomAdImg");
-      if (state.customAdImg) {
-        imgEl.src = state.customAdImg;
-        imgEl.style.display = "inline-block";
-      } else {
-        imgEl.style.display = "none";
-      }
-      document.getElementById("displayCustomAdBtn").href = state.customAdUrl || state.payLink;
-      document.getElementById("postRhymeAdModal").classList.add("open");
-    }
-
+    // Play activity audio cleanly INSIDE the app without auto-launching external pages
     function playActivityByIndex(idx) {
       const item = getAllActivities()[idx];
       if (item) {
@@ -1185,7 +1343,6 @@
         startBackgroundMelody(item.melody || "bengali");
         speakText(cleanText, () => {
           stopBackgroundMelody();
-          triggerPostRhymeAd();
         }, true);
       }
     }
@@ -1365,6 +1522,10 @@
       btn.addEventListener("click", () => switchTab(btn.dataset.target));
     });
 
+    document.getElementById("btnGoTracing").addEventListener("click", () => switchTab("tab-tracing"));
+    document.getElementById("btnGoOlympiad").addEventListener("click", () => switchTab("tab-olympiad"));
+    document.getElementById("btnPrintSheet").addEventListener("click", () => window.print());
+
     document.querySelectorAll("#activityCatPills .cat-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         document.querySelectorAll("#activityCatPills .cat-btn").forEach(b => b.classList.remove("active"));
@@ -1374,15 +1535,9 @@
       });
     });
 
-    document.getElementById("btnGoTracing").addEventListener("click", () => switchTab("tab-tracing"));
-    document.getElementById("btnGoPrint").addEventListener("click", () => switchTab("tab-print"));
-    document.getElementById("btnPrintSheet").addEventListener("click", () => window.print());
-
     document.getElementById("btnPlayAudio").addEventListener("click", () => {
       startBackgroundMelody("bengali");
-      speakText(document.getElementById("rhymeText").textContent, () => {
-        stopBackgroundMelody();
-      }, true);
+      speakText(document.getElementById("rhymeText").textContent, () => stopBackgroundMelody(), true);
     });
 
     document.getElementById("btnPlayAllBn").addEventListener("click", () => {
@@ -1390,9 +1545,7 @@
       box.style.display = "block";
       box.innerHTML = `<strong>🇧🇩 স্বরবর্ণ ছড়া (অ – ঔ):</strong><br/>${FULL_BN_SWARABORNO}`;
       startBackgroundMelody("bengali");
-      speakText(FULL_BN_SWARABORNO, () => {
-        stopBackgroundMelody();
-      }, true);
+      speakText(FULL_BN_SWARABORNO, () => stopBackgroundMelody(), true);
     });
 
     document.getElementById("btnPlayAllEn").addEventListener("click", () => {
@@ -1400,16 +1553,7 @@
       box.style.display = "block";
       box.innerHTML = `<strong>🇬🇧 English Alphabet (A – Z):</strong><br/>${FULL_EN_ALPHABET}`;
       startBackgroundMelody("twinkle");
-      speakText(FULL_EN_ALPHABET, () => {
-        stopBackgroundMelody();
-      }, true);
-    });
-
-    document.getElementById("btnRhymeMonetagContinue").addEventListener("click", () => {
-      document.getElementById("postRhymeAdModal").classList.remove("open");
-    });
-    document.getElementById("btnCloseRhymeAd").addEventListener("click", () => {
-      document.getElementById("postRhymeAdModal").classList.remove("open");
+      speakText(FULL_EN_ALPHABET, () => stopBackgroundMelody(), true);
     });
 
     ["chk1", "chk2", "chk3"].forEach((id, i) => {
@@ -1440,6 +1584,7 @@
       });
     });
 
+    // Day Selection & In-App Video Card (NO external redirect on start; auto-returns to activity on finish)
     document.getElementById("daySelect").addEventListener("change", (e) => {
       const chosen = Number(e.target.value);
       const isUnlocked = state.isPro || state.unlockedDays.includes(chosen);
@@ -1447,8 +1592,9 @@
         loadDay(chosen);
       } else {
         pendingUnlockDay = chosen;
-        document.getElementById("unlockModalTitle").textContent = `Day ${chosen} ওয়ার্কশিট লক করা আছে`;
-        document.getElementById("adTimerArea").style.display = "none";
+        document.getElementById("unlockModalTitle").textContent = `Day ${chosen} পাঠ লক করা আছে`;
+        document.getElementById("adPlayerBox").style.display = "none";
+        document.getElementById("btnWatchAd").style.display = "inline-flex";
         document.getElementById("unlockModal").classList.add("open");
         e.target.value = currentDay;
       }
@@ -1459,24 +1605,29 @@
     });
 
     document.getElementById("btnWatchAd").addEventListener("click", () => {
-      const timerArea = document.getElementById("adTimerArea");
+      document.getElementById("btnWatchAd").style.display = "none";
+      const playerBox = document.getElementById("adPlayerBox");
       const fill = document.getElementById("adProgressFill");
       const txt = document.getElementById("adCountdownText");
-      timerArea.style.display = "block";
-      let sec = 15;
+      playerBox.style.display = "block";
+      fill.style.width = "0%";
+
+      startBackgroundMelody("twinkle");
+      let sec = 10;
       const iv = setInterval(() => {
         sec--;
-        fill.style.width = `${((15 - sec) / 15) * 100}%`;
-        txt.textContent = `বিজ্ঞাপন চলছে... ${sec} সেকেন্ড অপেক্ষা করুন`;
+        fill.style.width = `${((10 - sec) / 10) * 100}%`;
+        txt.textContent = `ইন-অ্যাপ ভিডিও চলছে... ${sec} সেকেন্ড পর পাঠে ফিরে যাবেন`;
         if (sec <= 0) {
           clearInterval(iv);
+          stopBackgroundMelody();
           if (pendingUnlockDay && !state.unlockedDays.includes(pendingUnlockDay)) {
             state.unlockedDays.push(pendingUnlockDay);
             saveState();
           }
+          // Automatically close modal and return directly to the unlocked activity
           document.getElementById("unlockModal").classList.remove("open");
           loadDay(pendingUnlockDay);
-          alert(`🎉 অভিনন্দন! Day ${pendingUnlockDay} ফ্রি আনলক হয়ে গেছে!`);
         }
       }, 1000);
     });
@@ -1513,19 +1664,14 @@
       }
     });
 
-    // ==========================================
-    // 5. ADMIN STUDIO: UPLOAD PDF + ONE-CLICK EXPORT FOR ALL GUARDIANS
-    // ==========================================
+    // Admin Studio
     document.getElementById("btnOpenAdmin").addEventListener("click", () => {
       const pin = prompt("Admin PIN দিন:");
       if (pin === state.adminPin) {
         document.getElementById("adminPanel").style.display = "block";
         document.getElementById("adminPayLink").value = state.payLink;
-        document.getElementById("adminAdLink").value = state.adLink;
         document.getElementById("adminCustomAdTitle").value = state.customAdTitle;
         document.getElementById("adminCustomAdDesc").value = state.customAdDesc;
-        document.getElementById("adminCustomAdImg").value = state.customAdImg;
-        document.getElementById("adminCustomAdUrl").value = state.customAdUrl;
       } else if (pin !== null) {
         alert("❌ ভুল পিন!");
       }
@@ -1544,7 +1690,7 @@
       if (fileInput.files && fileInput.files[0]) {
         const file = fileInput.files[0];
         if (file.size > 3 * 1024 * 1024) {
-          return alert("⚠️ ফাইলটি ৩ MB-এর বড়! অনুগ্রহ করে ফাইলটি Google Drive-এ আপলোড করে লিংক দিন।");
+          return alert("⚠️ ফাইলটি ৩ MB-এর বড়! Google Drive লিংক দিন।");
         }
         const reader = new FileReader();
         reader.onload = function(e) {
@@ -1553,7 +1699,7 @@
           renderSpecialPdfs();
           document.getElementById("adminPdfTitle").value = "";
           document.getElementById("adminPdfFileInput").value = "";
-          alert("✅ PDF ফাইলটি অ্যাপে যুক্ত হয়েছে! এবার নিচের 'আপডেট করা index.html ডাউনলোড করুন' বাটনে চাপুন।");
+          alert("✅ PDF যুক্ত হয়েছে! নিচে থেকে আপডেট করা index.html ডাউনলোড করুন।");
         };
         reader.readAsDataURL(file);
       } else if (driveUrl) {
@@ -1562,7 +1708,7 @@
         renderSpecialPdfs();
         document.getElementById("adminPdfTitle").value = "";
         document.getElementById("adminPdfDriveUrl").value = "";
-        alert("✅ PDF লিংক যুক্ত হয়েছে! এবার নিচের 'আপডেট করা index.html ডাউনলোড করুন' বাটনে চাপুন।");
+        alert("✅ PDF লিংক যুক্ত হয়েছে! নিচে থেকে আপডেট করা index.html ডাউনলোড করুন।");
       } else {
         alert("ফোন থেকে একটি PDF ফাইল বাছুন অথবা Google Drive লিংক দিন!");
       }
@@ -1586,18 +1732,15 @@
       document.getElementById("newRhymeTitle").value = "";
       document.getElementById("newRhymeBody").value = "";
       document.getElementById("newRhymeSongUrl").value = "";
-      alert("✅ নতুন গান/ছড়া যুক্ত হয়েছে! সবার ফোনে পাঠাতে নিচে থেকে আপডেট করা index.html ডাউনলোড করুন।");
+      alert("✅ নতুন গান/ছড়া যুক্ত হয়েছে!");
     });
 
     document.getElementById("btnSaveAllSettings").addEventListener("click", () => {
       state.payLink = document.getElementById("adminPayLink").value.trim() || BAKED_CONFIG.payLink;
-      state.adLink = document.getElementById("adminAdLink").value.trim() || BAKED_CONFIG.adLink;
       state.customAdTitle = document.getElementById("adminCustomAdTitle").value.trim() || BAKED_CONFIG.bannerTitle;
       state.customAdDesc = document.getElementById("adminCustomAdDesc").value.trim() || BAKED_CONFIG.bannerDesc;
-      state.customAdImg = document.getElementById("adminCustomAdImg").value.trim();
-      state.customAdUrl = document.getElementById("adminCustomAdUrl").value.trim() || state.payLink;
       saveState();
-      alert("✅ পেমেন্ট ও অ্যাড সেটিংস সেভ হয়েছে!");
+      alert("✅ সেটিংস সেভ হয়েছে!");
     });
 
     document.getElementById("btnChangePin").addEventListener("click", () => {
@@ -1612,7 +1755,6 @@
       }
     });
 
-    // ONE-CLICK SELF-BAKING HTML EXPORT FOR GITHUB
     document.getElementById("btnDownloadUpdatedApp").addEventListener("click", () => {
       const mergedPdfs = [...BAKED_CUSTOM_PDFS, ...state.customPdfs];
       const mergedActs = [...BAKED_CUSTOM_ACTIVITIES, ...state.customActivities];
@@ -1649,7 +1791,7 @@
       a.href = url;
       a.download = "index.html";
       a.click();
-      alert("✅ আপডেট করা index.html ডাউনলোড হয়েছে! এবার নিচের 'সরাসরি GitHub Upload পেজ খুলুন' বাটনে চেপে ফাইলটি আপলোড করে Commit changes দিন।");
+      alert("✅ আপডেট করা index.html ডাউনলোড হয়েছে!");
     });
 
     let deferredPrompt;
@@ -1680,6 +1822,7 @@
     // Initialize
     loadDay(1);
     renderActivitiesList();
+    renderOlympiadSection();
     renderSpecialPdfs();
   </script>
 </body>
